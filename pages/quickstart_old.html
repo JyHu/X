@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速上手 - TransX</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-wrap">
+        <a href="../index.html" class="brand"><div class="brand-icon">T</div><span>TransX</span></a>
+        <nav class="nav">
+          <a href="../index.html" class="nav-link">首页</a>
+          <a href="quickstart.html" class="nav-link active">快速上手</a>
+          <a href="docs.html" class="nav-link">文档</a>
+          <a href="download.html" class="nav-link">下载</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+    <aside class="doc-sidebar">
+      <nav class="sidebar-nav">
+        <a href="#overview" class="active">概述</a>
+        <a href="#features">核心功能</a>
+        <a href="#workflow">快速上手</a>
+        <a href="#scenarios">适用场景</a>
+      </nav>
+    </aside>
+
+    <main class="content-section">
+      <h1>快速上手</h1>
+      <p style="font-size:1.125rem;color:var(--muted);margin-bottom:24px">TransX 是一款专为 Xcode 项目设计的专业多语言本地化管理工具，旨在提升 iOS/macOS 应用开发中的国际化工作效率。</p>
+
+      <section id="overview" style="margin-bottom:48px">
+        <h2 style="color:var(--accent)">概述</h2>
+        <p style="color:var(--muted);line-height:1.8">本工具全面支持 .strings 文件的创建、编辑、管理和维护，帮助开发者更轻松地处理项目中的多语言内容。通过直观的界面和强大的功能，TransX 让多语言管理变得简单高效。</p>
+      </section>
+
+      <section id="features" style="margin-bottom:48px">
+        <h2 style="color:var(--accent)">核心功能特性</h2>
+        
+        <div class="feature-card" style="margin-bottom:20px">
+          <h3 style="color:var(--accent);margin-bottom:12px">📁 项目管理</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>多项目支持：可同时管理多个 Xcode 项目的本地化内容</li>
+            <li>历史记录：自动记录最近打开的项目，支持快速访问</li>
+            <li>项目配置：为每个项目提供独立的配置选项</li>
+          </ul>
+        </div>
+
+        <div class="feature-card" style="margin-bottom:20px">
+          <h3 style="color:var(--accent);margin-bottom:12px">📄 .strings 文件管理</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>智能解析：自动扫描并解析项目中的所有 .strings 文件</li>
+            <li>分组管理：支持使用 <code>// MARK: -</code> 标记对本地化条目进行分组组织</li>
+            <li>多文件切换：在同一项目的多个 .strings 文件间快速切换</li>
+          </ul>
+        </div>
+
+        <div class="feature-card" style="margin-bottom:20px">
+          <h3 style="color:var(--accent);margin-bottom:12px">🔐 常量模式支持</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>类型安全：为每个本地化 key 生成对应的常量，避免字符串拼写错误</li>
+            <li>编译时检查：利用编译器检查常量名称的正确性</li>
+            <li>多语言支持：兼容 Swift 和 Objective-C 项目</li>
+            <li>灵活配置：支持 Normal、LocalizedStringKey、StaticString 等多种常量样式</li>
+          </ul>
+        </div>
+
+        <div class="feature-card" style="margin-bottom:20px">
+          <h3 style="color:var(--accent);margin-bottom:12px">✏️ 内容编辑与校验</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>可视化编辑：提供直观的界面编辑多语言内容</li>
+            <li>实时校验：支持对 key 和常量设置正则表达式校验规则</li>
+            <li>空白字符处理：自动检测并清理隐藏的空白字符</li>
+            <li>内容补全：可使用指定语言的内容快速补齐其他语言的缺失项</li>
+          </ul>
+        </div>
+
+        <div class="feature-card" style="margin-bottom:20px">
+          <h3 style="color:var(--accent);margin-bottom:12px">🔍 高级搜索与筛选</h3>
+          <ul style="color:var(--muted);line-height:1.8">
+            <li>多维度筛选：内容缺失、新建内容、改动内容、未使用的 key、完全重复内容、关联内容等</li>
+            <li>灵活搜索：支持正则表达式、精确匹配等多种搜索模式</li>
+            <li>批量操作：支持对筛选结果进行批量编辑、导出等操作</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="workflow" style="margin-bottom:48px">
+        <h2 style="color:var(--accent)">快速上手流程</h2>
+        
+        <div class="screenshot" style="margin-bottom:20px"><img src="../assets/images/img1.png" alt="欢迎页面"></div>
+        
+        <ol class="steps-list">
+          <li>启动应用，进入欢迎页面</li>
+          <li>新建项目：选择 Xcode 项目路径，配置筛选规则；或从历史记录中打开已有项目</li>
+          <li>配置项目参数：设置基础语言、配置空白字符处理、选择常量模式（推荐）</li>
+          <li>开始管理：在主窗口中浏览、编辑多语言内容，使用筛选功能定位需要处理的条目</li>
+          <li>导出保存：将修改导出到项目的 .strings 文件，如启用常量模式则同时导出常量文件</li>
+        </ol>
+
+        <div class="screenshot" style="margin-top:24px"><img src="../assets/images/img6.png" alt="主窗口"></div>
+      </section>
+
+      <section id="scenarios">
+        <h2 style="color:var(--accent)">适用场景</h2>
+        <ul style="color:var(--muted);line-height:1.8;padding-left:24px">
+          <li>iOS/macOS 应用的国际化开发</li>
+          <li>多语言内容的集中管理与维护</li>
+          <li>本地化内容的质量检查与审核</li>
+          <li>团队协作的多语言项目管理</li>
+          <li>现有项目的本地化重构与优化</li>
+        </ul>
+
+        <div style="background:var(--card);border-left:4px solid var(--accent);padding:20px;border-radius:8px;margin-top:32px">
+          <h3 style="color:var(--accent);margin-bottom:12px;font-size:18px">💡 注意事项</h3>
+          <ul style="padding-left:20px;line-height:1.8;color:var(--muted)">
+            <li>建议在进行大规模修改前做好项目备份或使用 Git 版本管理</li>
+            <li>使用常量模式时，请确保常量文件路径正确配置</li>
+            <li>导出操作会直接修改本地 .strings 文件，请谨慎操作</li>
+            <li>建议定期使用筛选功能检查内容缺失和重复项</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>© 2024 TransX. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="docs.html" class="footer-link">文档</a>
+          <a href="download.html" class="footer-link">下载</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
+

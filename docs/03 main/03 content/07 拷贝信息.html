@@ -1,0 +1,185 @@
+<article class="doc-article">
+<h1 id="拷贝信息">拷贝信息</h1>
+<p><img src="./imgs/img25.png" /></p>
+<h2 id="功能概述">功能概述</h2>
+<p>拷贝信息功能提供了灵活的数据导出方式，允许用户将选中条目的本地化数据以多种格式复制到系统剪贴板。该功能支持精确控制导出的数据维度（Key、常量、特定语言、所有语言等），便于在文档编写、代码开发、团队沟通和数据分析等场景中快速获取和分享本地化内容。</p>
+<h2 id="可复制的内容类型">可复制的内容类型</h2>
+<h3 id="1-key-列表">1. Key 列表</h3>
+<p><strong>说明</strong>：仅复制选中条目的 Key
+值，每行一个，不包含翻译内容。</p>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>在代码中快速查找这些 Key 的使用位置</li>
+<li>生成需要翻译的 Key 清单提供给翻译团队</li>
+<li>在文档或邮件中列举需要讨论的条目</li>
+<li>作为脚本处理的输入数据</li>
+</ul>
+<p><strong>输出格式示例</strong>：</p>
+<pre><code>com.auu.localization.backAction
+com.auu.localization.backToList
+com.auu.localization.backgroundColor
+com.auu.localization.baseLanguage
+com.auu.localization.baseLanguageFirst</code></pre>
+<h3 id="2-常量列表">2. 常量列表</h3>
+<p><strong>说明</strong>：复制选中条目对应的常量名称，基于偏好设置中配置的常量生成规则。</p>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>在代码中引用本地化字符串时快速获取常量名</li>
+<li>生成常量定义文件的内容片段</li>
+<li>检查常量命名是否符合规范</li>
+<li>在代码审查中讨论常量使用</li>
+</ul>
+<p><strong>输出格式示例</strong>：</p>
+<pre><code>kBackAction
+kBackToList
+kBackgroundColor
+kBaseLanguage
+kBaseLanguageFirst</code></pre>
+<h3 id="3-特定语言内容">3. 特定语言内容</h3>
+<p><strong>说明</strong>：复制选中条目在某一种特定语言中的翻译文本。</p>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>将某语言的翻译内容提供给审核人员</li>
+<li>在文档中引用实际的界面文案</li>
+<li>对比不同版本间某语言的翻译变化</li>
+<li>导出到翻译记忆库或 CAT 工具</li>
+</ul>
+<p><strong>输出格式示例</strong>（中文）：</p>
+<pre><code>返回
+返回列表
+背景色
+Strings基础语言
+基础语言在第一列</code></pre>
+<h3 id="4-完整信息所有语言">4. 完整信息（所有语言）</h3>
+<p><strong>说明</strong>：复制选中条目的 Key
+及其在所有配置语言中的翻译，采用缩进结构清晰展示。</p>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>在团队讨论中完整展示某条目的所有翻译</li>
+<li>生成本地化内容的文档或报告</li>
+<li>审核多语言翻译的一致性和质量</li>
+<li>作为翻译参考资料分享</li>
+</ul>
+<p><strong>输出格式示例</strong>：</p>
+<pre><code>com.auu.localization.backAction
+    de: zurück
+    en: Back
+    ja: リターンマッチ
+    zh-Hans: 返回
+    zh-Hant: 返回
+com.auu.localization.backToList
+    de: Zurück zur Liste
+    en: Back To List
+    ja: リストに戻る
+    zh-Hans: 返回列表
+    zh-Hant: 返回列表
+com.auu.localization.backgroundColor
+    de: Hintergrundfarbe
+    en: Background Color
+    ja: 背景色
+    zh-Hans: 背景色
+    zh-Hant: 背景色
+com.auu.localization.baseLanguage
+    de: Strings-Grundsprache
+    en: Strings basic language
+    ja: Strings 基本言語
+    zh-Hans: Strings基础语言
+    zh-Hant: Strings基礎語言
+com.auu.localization.baseLanguageFirst
+    de: Basissprache in der ersten Spalte anzeigen
+    en: Base Language First
+    ja: ベース言語を最初の列に表示
+    zh-Hans: 基础语言在第一列
+    zh-Hant: 基礎語言顯示在第一欄</code></pre>
+<h2 id="操作步骤">操作步骤</h2>
+<h3 id="基本操作流程">基本操作流程</h3>
+<ol type="1">
+<li><p><strong>选择条目</strong>：</p>
+<ul>
+<li>在内容列表中选中一条或多条需要复制的本地化条目</li>
+<li>支持使用 <code>Command + 点击</code> 进行多选</li>
+<li>支持使用 <code>Shift + 点击</code> 选择连续范围</li>
+<li>可以使用 <code>Command + A</code> 全选所有条目</li>
+</ul></li>
+<li><p><strong>打开菜单</strong>：</p>
+<ul>
+<li>在选中区域右键点击</li>
+<li>找到"拷贝"或"复制信息"子菜单</li>
+</ul></li>
+<li><p><strong>选择复制类型</strong>：</p>
+<ul>
+<li>根据需求选择要复制的内容类型（Key、常量、特定语言、全部信息等）</li>
+<li>对于特定语言，可能需要在子菜单中选择具体的语言</li>
+</ul></li>
+<li><p><strong>使用数据</strong>：</p>
+<ul>
+<li>复制完成后，数据已保存到系统剪贴板</li>
+<li>可以在任何支持文本粘贴的应用中使用 <code>Command + V</code>
+粘贴</li>
+</ul></li>
+</ol>
+<h2 id="使用场景详解">使用场景详解</h2>
+<h3 id="场景-1生成常量定义文件">场景 1：生成常量定义文件</h3>
+<p><strong>背景</strong>：开发人员需要创建或更新常量定义文件，包含所有本地化
+Key 的常量。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>在 TransX 中全选所有条目（<code>Command + A</code>）</li>
+<li>右键选择"拷贝 &gt; 常量列表"</li>
+<li>打开代码编辑器，创建 <code>LocalizationKeys.swift</code> 文件</li>
+<li>粘贴复制的常量列表</li>
+<li>根据需要添加常量值定义和注释</li>
+</ol>
+<h3 id="场景-2翻译审核文档">场景 2：翻译审核文档</h3>
+<p><strong>背景</strong>：需要将某些条目的多语言翻译发送给审核人员或客户确认。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>筛选或搜索出需要审核的条目</li>
+<li>选中这些条目</li>
+<li>右键选择"拷贝 &gt; 全部信息"</li>
+<li>在邮件或文档中粘贴，附上审核说明</li>
+</ol>
+<h3 id="场景-3文档撰写">场景 3：文档撰写</h3>
+<p><strong>背景</strong>：编写产品文档或用户手册时，需要引用应用中的实际界面文案。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>在 TransX 中找到相关的界面文案条目</li>
+<li>选择需要引用的条目</li>
+<li>右键选择"拷贝 &gt; 特定语言"（如中文）</li>
+<li>在文档中粘贴引用</li>
+</ol>
+<h3 id="场景-4代码搜索和重构">场景 4：代码搜索和重构</h3>
+<p><strong>背景</strong>：需要在代码库中查找所有使用了某些本地化 Key
+的地方。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>在 TransX 中选择相关条目</li>
+<li>复制 Key 列表</li>
+<li>在 IDE 中使用全局搜索功能</li>
+<li>批量搜索这些 Key 的使用情况</li>
+</ol>
+<h2 id="注意事项">注意事项</h2>
+<ol type="1">
+<li><strong>格式保持</strong>：复制的内容保持结构化格式，粘贴到纯文本编辑器中效果最佳</li>
+<li><strong>大量数据</strong>：复制大量条目时，生成的文本可能较长，注意目标应用的处理能力</li>
+<li><strong>字符编码</strong>：确保粘贴目标支持 UTF-8
+编码，以正确显示多语言字符</li>
+<li><strong>换行符</strong>：不同系统的换行符可能不同，必要时需要转换（Windows
+使用 CRLF，macOS/Linux 使用 LF）</li>
+<li><strong>常量规则</strong>：复制常量时，确保偏好设置中的常量生成规则已正确配置</li>
+<li><strong>隐藏内容</strong>：如果某些语言列被隐藏（如在单语言模式下），复制"全部信息"仍会包含所有语言</li>
+<li><strong>空白处理</strong>：缺失翻译的语言在复制时可能显示为空白或占位符</li>
+<li><strong>特殊字符</strong>：注意转义字符（如
+<code>\n</code>、<code>\t</code>）在不同上下文中的表示方式</li>
+</ol>
+<h2 id="最佳实践">最佳实践</h2>
+<ol type="1">
+<li><strong>选择性复制</strong>：根据实际需求选择最合适的复制类型，避免信息过载</li>
+<li><strong>验证内容</strong>：复制后在粘贴前，建议先在文本编辑器中预览确认格式正确</li>
+<li><strong>批量处理</strong>：对于大量条目，考虑分批复制和处理，避免一次性操作过多数据</li>
+<li><strong>二次加工</strong>：复制的纯文本数据可以通过脚本进一步处理，生成所需格式</li>
+<li><strong>文档记录</strong>：在团队协作中，建议记录复制数据的来源和时间，便于追溯</li>
+<li><strong>隐私保护</strong>：复制包含敏感信息的本地化内容时，注意数据安全和隐私保护</li>
+</ol>
+
+</article>

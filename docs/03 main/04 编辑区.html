@@ -1,0 +1,429 @@
+<article class="doc-article">
+<h1 id="编辑区">编辑区</h1>
+<p><img src="./imgs/img38.png" /></p>
+<p>编辑区是 TransX
+的内容生产核心区域，位于主窗口右侧，提供了完整的多语言文案创建和编辑功能。该区域采用表单式布局，集成了智能输入辅助、自动翻译、格式验证等多项高级功能，旨在提升本地化内容的创建效率和质量。</p>
+<h2 id="界面布局">界面布局</h2>
+<p>编辑区采用垂直布局，从上到下依次包含：</p>
+<ul>
+<li>Key 输入区</li>
+<li>常量输入区</li>
+<li>分组选择器</li>
+<li>快速填充工具</li>
+<li>多语言输入区域</li>
+<li>操作按钮组（保存/取消/删除）</li>
+</ul>
+<h2 id="1-key-输入">1. Key 输入</h2>
+<h3 id="功能说明">功能说明</h3>
+<p>Key 是多语言文案在代码中的唯一标识符，是
+<code>NSLocalizedString</code> 等本地化API 的第一个参数。合理的 Key
+命名对于代码的可读性和维护性至关重要。</p>
+<h3 id="输入规范">输入规范</h3>
+<p><strong>命名约定：</strong>
+采用分层命名结构，清晰表达文案的用途和位置：</p>
+<pre><code>模块.功能.元素.动作
+
+示例：
+login.button.submit          // 登录按钮-提交
+trade.alert.success          // 交易提示-成功
+settings.label.username      // 设置标签-用户名
+error.network.timeout        // 错误-网络-超时</code></pre>
+<p><strong>格式规则：</strong></p>
+<ul>
+<li>使用小写字母</li>
+<li>单词间用点号（.）或下划线（_）分隔</li>
+<li>避免使用特殊字符和空格</li>
+<li>长度建议控制在 3-100 个字符</li>
+<li>不使用中文或其他非 ASCII 字符</li>
+</ul>
+<h3 id="智能辅助">智能辅助</h3>
+<p><strong>格式验证：</strong> 在项目设置中可以配置 Key 的验证规则：</p>
+<ul>
+<li>正则表达式验证</li>
+<li>自定义命名规范检查</li>
+<li>重复性检测（实时提示已存在的 Key）</li>
+<li>长度限制</li>
+</ul>
+<h3 id="随机生成">随机生成</h3>
+<p>点击输入框右侧的 🎲 按钮或使用快捷键 <code>⌘ + R</code> 生成随机
+Key：</p>
+<p><strong>生成策略：</strong></p>
+<ol type="1">
+<li>基于当前设定的前缀</li>
+<li>使用项目配置的命名模板</li>
+<li>添加随机后缀确保唯一性</li>
+<li>符合项目的 Key 格式规范</li>
+</ol>
+<p><strong>生成示例：</strong></p>
+<pre><code>当前分组：用户认证
+模板：{group}.{type}.{random}
+生成：auth.label.8f3k2d9s</code></pre>
+<h3 id="复制与粘贴">复制与粘贴</h3>
+<p><strong>粘贴智能识别：</strong></p>
+<ul>
+<li>自动清除多余空格和换行</li>
+<li>转换大写为小写（如果规范要求）</li>
+<li>替换非法字符为合法分隔符</li>
+<li>提示格式问题并提供修正建议</li>
+</ul>
+<h2 id="2-常量输入">2. 常量输入</h2>
+<h3 id="功能说明-1">功能说明</h3>
+<p>常量是代码中引用 Key
+的更优雅方式，可以提供编译时检查和代码补全支持。将字符串 Key
+转换为常量是一种最佳实践。</p>
+<h3 id="命名规范">命名规范</h3>
+<p><strong>Swift 常量示例：</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Key: login.button.submit</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 常量: LOGIN_BUTTON_SUBMIT</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">extension</span> String <span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">LOGIN_BUTTON_SUBMIT</span> <span class="op">=</span> <span class="st">&quot;login.button.submit&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>Text<span class="op">(</span>NSLocalizedString<span class="op">(.</span>LOGIN_BUTTON_SUBMIT<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">))</span></span></code></pre></div>
+<p><strong>Objective-C 常量示例：</strong></p>
+<pre class="objc"><code>// .h 文件
+extern NSString * const LOGIN_BUTTON_SUBMIT;
+
+// .m 文件
+NSString * const LOGIN_BUTTON_SUBMIT = @&quot;login.button.submit&quot;;
+
+// 使用
+NSLocalizedString(LOGIN_BUTTON_SUBMIT, @&quot;&quot;)</code></pre>
+<h3 id="格式规则">格式规则</h3>
+<p><strong>通用规范：</strong></p>
+<ul>
+<li>全大写字母</li>
+<li>单词间用下划线分隔</li>
+<li>与 Key 保持语义一致</li>
+<li>避免过长（建议 &lt; 60 字符）</li>
+</ul>
+<p><strong>自定义规则：</strong> 在项目设置中配置：</p>
+<ul>
+<li>命名风格（UPPER_CASE、PascalCase、camelCase）</li>
+<li>前缀/后缀（如 <code>k</code>、<code>_KEY</code>）</li>
+<li>特殊字符替换规则</li>
+<li>缩写词处理（如 HTTP → HTTP 还是 Http）</li>
+</ul>
+<h3 id="自动转换">自动转换</h3>
+<p>点击输入框右侧的 ➡️ 按钮或按下快捷键 <code>⌘ + T</code> 可以自动将
+Key 转换为常量：</p>
+<p><strong>转换规则示例：</strong></p>
+<pre><code>Key                          → 常量
+login.button.submit          → LOGIN_BUTTON_SUBMIT
+user.profile.edit            → USER_PROFILE_EDIT
+error.network.timeout        → ERROR_NETWORK_TIMEOUT
+settings.privacy.title       → SETTINGS_PRIVACY_TITLE</code></pre>
+<p><strong>自定义转换脚本：</strong> 可以配置<a
+href="https://github.com/JyHu/X/tree/main/Scripts/templates/const_generator">自定义的转换脚本</a>（JavaScript）：</p>
+<h3 id="质量建议">质量建议</h3>
+<pre><code>✅ 优秀：LOGIN_BUTTON_SUBMIT（清晰、规范）
+⚠️  可改进：BTN_LOGIN（不够描述性）
+❌ 不推荐：login_button_submit（应该全大写）</code></pre>
+<h3 id="常量管理">常量管理</h3>
+<p><strong>代码生成：</strong> 可以批量导出所有常量定义：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// LocalizationKeys.swift（自动生成）</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">extension</span> String <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// MARK: - 用户认证</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">LOGIN_BUTTON_SUBMIT</span> <span class="op">=</span> <span class="st">&quot;login.button.submit&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">LOGIN_BUTTON_CANCEL</span> <span class="op">=</span> <span class="st">&quot;login.button.cancel&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">LOGIN_ERROR_INVALID</span> <span class="op">=</span> <span class="st">&quot;login.error.invalid&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// MARK: - 交易</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">TRADE_BUTTON_BUY</span> <span class="op">=</span> <span class="st">&quot;trade.button.buy&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">TRADE_BUTTON_SELL</span> <span class="op">=</span> <span class="st">&quot;trade.button.sell&quot;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="3-分组选择">3. 分组选择</h2>
+<h3 id="功能说明-2">功能说明</h3>
+<p>分组是组织多语言文案的重要维度，合理的分组有助于团队协作和内容管理。</p>
+<h3 id="选择方式">选择方式</h3>
+<p><strong>下拉列表：</strong></p>
+<ul>
+<li>显示所有可用分组</li>
+<li>显示每个分组的文案数量</li>
+</ul>
+<p><strong>快速创建：</strong></p>
+<ul>
+<li>在下拉框中输入不存在的分组名</li>
+<li>系统提示创建新分组</li>
+<li>回车确认创建并应用</li>
+</ul>
+<h2 id="4-从粘贴板粘贴">4. 从粘贴板粘贴</h2>
+<h3 id="功能说明-3">功能说明</h3>
+<p>这是一个强大的批量输入功能，可以一次性填充所有语言的翻译内容，极大提升了内容创建效率。特别适合配合
+AI 翻译工具或外部翻译服务使用。</p>
+<h3 id="工作原理">工作原理</h3>
+<p><strong>数据格式：</strong> 支持多种常见的多语言数据格式：</p>
+<p><strong>格式 1：语言代码前缀</strong></p>
+<pre><code>en: Switched to file: ${file}
+zh-Hans: 已切换到文件: ${file}
+zh-Hant: 已切換到檔案：${file}
+de: Zu Datei gewechselt: ${file}
+ja: ファイルを切り替えました: ${file}</code></pre>
+<p><strong>格式 2：JSON 格式</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;en&quot;</span><span class="fu">:</span> <span class="st">&quot;Switched to file: ${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;zh-Hans&quot;</span><span class="fu">:</span> <span class="st">&quot;已切换到文件: ${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;zh-Hant&quot;</span><span class="fu">:</span> <span class="st">&quot;已切換到檔案：${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;de&quot;</span><span class="fu">:</span> <span class="st">&quot;Zu Datei gewechselt: ${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;ja&quot;</span><span class="fu">:</span> <span class="st">&quot;ファイルを切り替えました: ${file}&quot;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>格式 3：CSV格式</strong></p>
+<pre><code>en      zh-Hans         zh-Hant         de              ja
+Submit  提交            提交            Einreichen      提出</code></pre>
+<h3 id="使用流程">使用流程</h3>
+<p><strong>步骤 1：准备数据</strong> 使用 ChatGPT、DeepL、Google
+Translate 等工具翻译内容：</p>
+<pre><code>提示词示例：
+请将以下英文翻译成中文简体、中文繁体、德语、日语，
+并按以下格式输出：
+en: [英文内容]
+zh-Hans: [中文简体]
+zh-Hant: [中文繁体]
+de: [德语]
+ja: [日语]
+
+原文：Switched to file: ${file}</code></pre>
+<p><strong>步骤 2：复制结果</strong> 将 AI
+或翻译工具输出的格式化内容复制到粘贴板。</p>
+<p><strong>步骤 3：一键填充</strong></p>
+<ul>
+<li>点击 📋 "从粘贴板粘贴" 按钮</li>
+<li>系统自动解析粘贴板内容</li>
+<li>匹配语言代码，填充到对应输入框</li>
+<li>提示成功填充的语言数量</li>
+</ul>
+<p><strong>步骤 4：检查确认</strong></p>
+<ul>
+<li>预览填充的内容</li>
+<li>调整或修改不准确的翻译</li>
+<li>保存文案</li>
+</ul>
+<h3 id="智能识别">智能识别</h3>
+<p><strong>语言代码识别：</strong> 支持多种语言代码标准：</p>
+<ul>
+<li>BCP 47（zh-Hans、en-US）</li>
+<li>ISO 639-1（zh、en）</li>
+</ul>
+<p><strong>多行支持：</strong>
+内容可以包含换行，只要以支持的语言代码开头：</p>
+<pre><code>zh-Hans: 欢迎使用 TransX
+这是一款强大的多语言管理工具
+适用于 iOS 和 macOS 开发
+
+en: Welcome to TransX
+A powerful multilingual management tool
+For iOS and macOS development</code></pre>
+<h3 id="自动触发">自动触发</h3>
+<p>如果粘贴板中有格式化的多语言内容，新建文案时会自动解析并填充。</p>
+<h3 id="高级用法">高级用法</h3>
+<p><strong>配合翻译API：</strong></p>
+<ol type="1">
+<li>在编辑区输入英文原文</li>
+<li>点击"翻译所有"按钮</li>
+<li>调用配置的翻译 API</li>
+<li>自动填充所有语言</li>
+<li>审核调整后保存</li>
+</ol>
+<p><strong>批量导入：</strong></p>
+<ol type="1">
+<li>准备 CSV 或 Excel 文件</li>
+<li>使用工具转换为支持的格式</li>
+<li>逐条复制粘贴或使用脚本批量处理</li>
+</ol>
+<h2 id="5-语言内容输入框">5. 语言内容输入框</h2>
+<h3 id="功能概述">功能概述</h3>
+<p>语言输入区是编辑区的核心部分，为项目支持的每种语言提供独立的输入框，确保所有语言版本的文案都能被妥善编辑和管理。</p>
+<h3 id="输入框布局">输入框布局</h3>
+<p><strong>每个输入框包含：</strong></p>
+<ul>
+<li>左上角：
+<ul>
+<li>语言代码标识（如 <code>en</code>、<code>zh-Hans</code>）</li>
+<li>放大按钮</li>
+</ul></li>
+<li>主体：多行文本输入区域</li>
+<li>右上角：操作按钮组
+<ul>
+<li>恢复按钮（如果当前存在修改前的内容）</li>
+<li>操作菜单（翻译、复制等）</li>
+</ul></li>
+</ul>
+<p><strong>自动布局：</strong>
+可以在设置中设置最大显示个数，如果超过设定数量会采用滑动页面的展示方式。</p>
+<h3 id="51-恢复按钮">5.1 恢复按钮</h3>
+<p><img src="./imgs/img39.png" /></p>
+<p><strong>触发条件：</strong>
+当之前有修改过内容，并保存后，再次修改这条多语言文案时，右上角会显示一个
+↩︎️ 恢复按钮。</p>
+<p><strong>功能说明：</strong></p>
+<ul>
+<li>一键恢复到最后保存的状态</li>
+<li>撤销当前输入框的所有修改</li>
+<li>仅影响当前语言，不影响其他语言的输入框</li>
+</ul>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>误操作后快速恢复</li>
+<li>尝试不同翻译方案时回退</li>
+<li>清除错误的粘贴内容</li>
+</ul>
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>恢复操作不可撤销</li>
+<li>恢复后按钮自动隐藏</li>
+<li>保存文案后，恢复按钮失效</li>
+</ul>
+<h3 id="52-操作菜单">5.2 操作菜单</h3>
+<p><img src="./imgs/img40.png" /></p>
+<p>点击输入框右上角的功能按钮，打开操作菜单，提供针对当前输入框的快捷操作。</p>
+<h4 id="1-复制">1. 复制</h4>
+<p><strong>功能说明：</strong> 将当前输入框的内容复制到系统粘贴板。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>复制到其他应用进行审校</li>
+<li>分享给团队成员</li>
+<li>作为翻译的参考文本</li>
+</ul>
+<h4 id="2-翻译">2. 翻译</h4>
+<p><strong>功能说明：</strong>
+调用配置的翻译脚本，将当前输入框的内容翻译为该输入框对应的目标语言，并自动填充到输入框中。</p>
+<p><strong>前提条件：</strong></p>
+<ol type="1">
+<li>已在脚本管理中设置了翻译脚本且标记为使用状态</li>
+<li>当前输入框内容不为空</li>
+</ol>
+<p><strong>工作流程：</strong></p>
+<ol type="1">
+<li>点击"翻译"</li>
+<li>调用翻译脚本</li>
+<li>日志区显示翻译过程</li>
+<li>翻译完成后自动填充到输入框</li>
+<li>可以预览并确认或修改</li>
+</ol>
+<p><strong>翻译脚本示例：</strong> <a
+href="https://github.com/JyHu/X/tree/main/Scripts/templates/translate"><span>https://github.com/JyHu/X/tree/main/Scripts/templates/translate</span></a></p>
+<p><strong>错误处理：</strong></p>
+<ul>
+<li>API 调用失败：显示错误信息，不修改输入框</li>
+<li>网络超时：提示重试</li>
+</ul>
+<h4 id="3-翻译到">3. 翻译到</h4>
+<p><strong>功能说明：</strong>
+将当前输入框的内容作为源文本，翻译到其他一个或多个目标语言。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>从熟悉的语言翻译到不熟悉的语言</li>
+<li>以中文为基准翻译到多个其他语言</li>
+<li>统一更新多个语言的翻译</li>
+</ul>
+<p><strong>操作流程：</strong></p>
+<ol type="1">
+<li>点击"翻译到"</li>
+<li>显示目标语言选择菜单项</li>
+<li>选择需要翻译的目标语言</li>
+<li>可以选择"其他所有语言"</li>
+<li>批量翻译并填充</li>
+</ol>
+<p><strong>批量翻译示例：</strong></p>
+<pre><code>当前输入框：en = &quot;Submit&quot;
+选择翻译到：zh-Hans, zh-Hant, ja, de
+
+结果：
+zh-Hans: &quot;提交&quot;
+zh-Hant: &quot;提交&quot;
+ja: &quot;提出&quot;
+de: &quot;Einreichen&quot;</code></pre>
+<h4 id="4-复制到">4. 复制到</h4>
+<p><strong>功能说明：</strong>
+将当前输入框的内容直接复制到其他语言的输入框，不经过翻译。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>多个语言使用相同的文案（如品牌名、专有名词）</li>
+<li>临时占位，待后续专业翻译</li>
+<li>某些语言暂时使用英文回退</li>
+</ul>
+<p><strong>操作流程：</strong></p>
+<ol type="1">
+<li>点击"复制到"</li>
+<li>选择目标语言</li>
+<li>直接复制原文</li>
+</ol>
+<p><strong>示例：</strong></p>
+<pre><code>场景：品牌名在所有语言中保持一致
+
+en: &quot;TransX&quot;
+操作：复制到所有语言
+
+结果：
+zh-Hans: &quot;TransX&quot;
+zh-Hant: &quot;TransX&quot;
+ja: &quot;TransX&quot;
+de: &quot;TransX&quot;</code></pre>
+<h3 id="53-放大功能">5.3 放大功能</h3>
+<p><img src="./imgs/img41.png" /></p>
+<p><strong>功能说明：</strong>
+放大单个输入框，提供更宽敞的编辑空间，特别适合处理长文本内容。</p>
+<p><strong>触发方式：</strong> 点击输入框左上角的放大按钮</p>
+<p><strong>放大模式界面：</strong></p>
+<p><strong>顶部导航：</strong></p>
+<ul>
+<li>语言选择下拉框：快速切换到其他语言的输入框</li>
+<li>显示/隐藏其他语言：控制是否显示其他语言的内容预览</li>
+<li>关闭按钮：退出放大模式</li>
+</ul>
+<p><strong>主编辑区：</strong></p>
+<ul>
+<li>占据大部分屏幕空间</li>
+<li>多行文本编辑器，支持：
+<ul>
+<li>自动换行</li>
+<li>拼写检查</li>
+<li>字数统计</li>
+</ul></li>
+</ul>
+<p><strong>预览区：</strong>（可选显示）</p>
+<ul>
+<li>显示所有其他语言的内容</li>
+<li>便于对比和参考</li>
+<li>点击可快速切换到该语言编辑</li>
+</ul>
+<p><strong>语言快速切换：</strong>
+在放大模式下，可以使用快捷键快速切换到其他语言：</p>
+<ul>
+<li><code>Control + ⇥</code>：切换到下一个语言</li>
+<li><code>Control + Shift + ⇥</code>：切换到上一个语言</li>
+</ul>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>编辑长段落文本（如用户协议、帮助文档）</li>
+<li>需要专注编辑单个语言时</li>
+<li>对比参考其他语言的翻译</li>
+<li>处理包含复杂格式的文本</li>
+</ul>
+<p><strong>保存与关闭：</strong></p>
+<ul>
+<li>关闭放大模式不会丢失未保存的修改</li>
+<li>可以直接在放大模式下保存文案</li>
+</ul>
+<h2 id="编辑模式">编辑模式</h2>
+<h3 id="新建模式">新建模式</h3>
+<p>点击导航区的"新建"按钮进入新建模式：</p>
+<ul>
+<li>所有输入框为空</li>
+<li>Key 输入框自动聚焦</li>
+<li>不显示删除按钮</li>
+<li>保存后可选择继续新建或关闭</li>
+</ul>
+<h3 id="编辑模式-1">编辑模式</h3>
+<p>从内容区选择文案进入编辑模式：</p>
+<ul>
+<li>加载现有文案的所有信息</li>
+<li>保存后返回内容区</li>
+</ul>
+
+</article>

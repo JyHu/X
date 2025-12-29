@@ -1,0 +1,545 @@
+<article class="doc-article">
+<h1 id="菜单">菜单</h1>
+<p>TransX
+提供了丰富的菜单系统和快捷键支持，让您能够通过键盘快速执行各种操作，无需频繁使用鼠标。熟练掌握这些快捷键可以显著提升工作效率。本文档详细介绍应用程序菜单栏中的各个菜单项及其对应的快捷键。</p>
+<h2 id="transx">TransX</h2>
+<p><img src="./imgs/img59.png" /></p>
+<p>应用程序主菜单，包含全局级别的应用管理功能。这是 macOS
+标准应用菜单的位置，在 Windows 和 Linux
+系统中，这些选项通常会整合到其他菜单中。</p>
+<h3 id="菜单项说明">菜单项说明</h3>
+<h4 id="关于-transx">关于 TransX</h4>
+<p>显示应用程序的基本信息，包括：</p>
+<ul>
+<li>应用程序版本号和构建信息</li>
+<li>开发团队和版权声明</li>
+<li>许可证（License）状态和类型</li>
+<li>官方网站和技术支持链接</li>
+</ul>
+<p>这个对话框也是验证您使用的 TransX
+版本的主要途径，在报告问题或寻求技术支持时，版本信息是重要的参考。</p>
+<h4 id="偏好设置-">偏好设置 <kbd>⌘,</kbd></h4>
+<p>打开偏好设置窗口，用于配置 TransX
+的全局行为和外观。详细配置选项请参考 <a
+href="./0x05%20setting.md">偏好设置</a> 文档。</p>
+<p>快捷键 <code>Command + ,</code>（逗号）是 macOS
+应用程序的标准偏好设置快捷键，符合系统级交互惯例。</p>
+<h4 id="隐藏-transx-h">隐藏 TransX <kbd>⌘H</kbd></h4>
+<p>隐藏 TransX 窗口，但应用程序继续在后台运行。这是 macOS
+标准的窗口管理功能，用于快速清理桌面空间而不关闭应用程序。</p>
+<h4 id="隐藏其他应用-h">隐藏其他应用 <kbd>⌥⌘H</kbd></h4>
+<p>隐藏除 TransX
+之外的所有其他应用程序窗口，让您专注于本地化工作。快捷键为
+<code>Option + Command + H</code>。</p>
+<h4 id="全部显示">全部显示</h4>
+<p>显示所有之前隐藏的应用程序窗口，恢复完整的工作环境。</p>
+<h4 id="退出-transx-q">退出 TransX <kbd>⌘Q</kbd></h4>
+<p>完全退出应用程序。TransX
+会在退出前保存所有未保存的项目配置，并询问是否保存正在编辑的内容。</p>
+<h2 id="文件">文件</h2>
+<p><img src="./imgs/img60.png" /></p>
+<p>文件菜单包含项目和文件管理相关的核心操作，是日常使用频率最高的菜单之一。这里集中了从创建新项目到导入导出数据的完整文件操作流程。</p>
+<h3 id="菜单项详解">菜单项详解</h3>
+<h4 id="新建-n">新建 <kbd>⌘N</kbd></h4>
+<p>在当前 <code>.strings</code>
+文件中创建一个新的本地化条目。执行此命令后，会在主窗口启动编辑区，您可以立即输入新的键值对。</p>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>添加新的 UI 文本</li>
+<li>补充遗漏的本地化内容</li>
+<li>快速创建测试条目</li>
+</ul>
+<p>快捷键 <code>Command + N</code> 遵循"New"的通用约定。</p>
+<h4 id="新建项目-n">新建项目 <kbd>⇧⌘N</kbd></h4>
+<p>启动新建项目向导，创建一个全新的 TransX
+项目。会引导您完成项目选择、参数配置、常量设置等初始化步骤。详见 <a
+href="./0x02%20new%20project.md">新建项目</a>。</p>
+<p>快捷键 <code>Shift + Command + N</code> 是"New
+Project"的标准快捷键，在很多 IDE 中都采用此约定。</p>
+<h4 id="打开-o">打开 <kbd>⌘O</kbd></h4>
+<p>打开一个已存在的 TransX
+项目。会弹出文件选择器，您可以浏览并选择之前创建的项目配置文件。</p>
+<p><strong>支持的操作</strong>：</p>
+<ul>
+<li>通过文件浏览器选择项目</li>
+<li>拖拽项目文件夹到 TransX 图标</li>
+<li>在 Finder 中双击项目配置文件</li>
+</ul>
+<p>快捷键 <code>Command + O</code> 是"Open"的通用约定。</p>
+<h4 id="打开最近">打开最近</h4>
+<p>快速访问最近打开过的项目列表。TransX
+会记录最近访问的项目及其打开时间，让您能够快速切换工作项目。</p>
+<p><strong>功能特点</strong>：</p>
+<ul>
+<li>显示项目名称和路径</li>
+<li>显示最后访问时间</li>
+<li>支持清除历史记录</li>
+</ul>
+<p>这个功能对于需要在多个项目间频繁切换的开发者特别有用。</p>
+<h4 id="入口-o">入口 <kbd>⇧⌘O</kbd></h4>
+<p>返回到应用程序启动时的入口页面。入口页面提供了三个选项：</p>
+<ol type="1">
+<li>创建新项目</li>
+<li>打开已有项目</li>
+<li>访问最近的项目</li>
+</ol>
+<p>这个功能允许您在不关闭当前项目的情况下快速切换到项目选择界面，方便多项目管理。</p>
+<p>快捷键 <code>Shift + Command + O</code> 可以理解为"Open Entry"。</p>
+<h4 id="导出">导出</h4>
+<p>将当前项目的本地化内容导出为外部格式。TransX 支持多种导出目标：</p>
+<p><strong>导出到项目</strong>（必要操作）：</p>
+<ul>
+<li>将所有修改写回到原始的 <code>.strings</code> 文件</li>
+<li>更新常量文件（如果启用了常量模式）</li>
+<li>这是完成编辑后的<strong>必须操作</strong>，否则修改不会生效</li>
+</ul>
+<p><strong>导出到外部格式</strong>：</p>
+<ul>
+<li><strong>CSV</strong>：通用的表格格式，可用 Excel 或 Google Sheets
+打开，方便与翻译团队协作</li>
+<li><strong>JSON</strong>：结构化数据格式，便于脚本处理或与其他工具集成</li>
+<li><strong>XML</strong>：XML
+本地化交换文件格式，专业翻译工具的标准格式</li>
+</ul>
+<p><strong>重要提示</strong>：每次编辑完本地化内容后，必须执行"导出到项目"，否则您的修改只存在于
+TransX 的内部数据库中，不会写入实际的 <code>.strings</code> 文件，Xcode
+构建时看不到这些修改。</p>
+<h4 id="导入-i">导入 <kbd>⌘I</kbd></h4>
+<p>从外部文件导入本地化内容到当前项目。TransX 支持导入：</p>
+<p><strong>CSV 格式</strong>：</p>
+<ul>
+<li>第一行应为标题行，包含语言代码</li>
+<li>后续每行为一个本地化条目</li>
+<li>自动识别分隔符（逗号、制表符等）</li>
+</ul>
+<p><strong>JSON 格式</strong>：</p>
+<ul>
+<li>支持嵌套结构或扁平键值对</li>
+<li>自动映射到对应的语言</li>
+</ul>
+<p><strong>导入策略</strong>：</p>
+<ul>
+<li><strong>合并模式</strong>：保留现有内容，只添加新条目或更新修改的条目</li>
+<li><strong>覆盖模式</strong>：完全替换现有内容（谨慎使用）</li>
+<li><strong>冲突处理</strong>：当键值冲突时，选择保留原值或使用新值</li>
+</ul>
+<p><strong>典型使用场景</strong>：</p>
+<ul>
+<li>从翻译团队接收 CSV 格式的翻译内容</li>
+<li>批量添加新的本地化条目</li>
+<li>从其他本地化工具迁移数据</li>
+</ul>
+<p>快捷键 <code>Command + I</code> 代表"Import"。</p>
+<h4 id="保存-s">保存 <kbd>⌘S</kbd></h4>
+<p>保存当前项目的配置变更。注意，这里保存的是：</p>
+<ul>
+<li>项目设置（偏好配置）</li>
+<li>文件筛选规则</li>
+<li>常量配置</li>
+<li>其他元数据</li>
+</ul>
+<p><strong>不包括</strong>本地化文案的实际内容。文案内容需要通过"导出到项目"来持久化。</p>
+<p>快捷键 <code>Command + S</code> 是最常用的"Save"快捷键。</p>
+<p><strong>设计说明</strong>：将配置保存和内容导出分离的设计是为了：</p>
+<ol type="1">
+<li>避免误操作覆盖文件</li>
+<li>允许批量编辑后统一导出</li>
+<li>支持预览和验证后再提交</li>
+</ol>
+<h4 id="关闭-w">关闭 <kbd>⌘W</kbd></h4>
+<p>关闭当前窗口。如果有未保存的配置或未导出的内容修改，TransX
+会弹出提示询问是否保存。</p>
+<p>快捷键 <code>Command + W</code> 是"Close Window"的标准快捷键。</p>
+<h2 id="操作">操作</h2>
+<p><img src="./imgs/img61.png" /></p>
+<p>操作菜单汇集了 TransX
+的高级功能和批量处理工具，以及分散在应用各处的重要功能的集中入口。这些操作通常涉及整个项目级别的处理，需要一定的时间来执行。</p>
+<h3 id="菜单项详解-1">菜单项详解</h3>
+<h4 id="同步创建">同步创建</h4>
+<p>切换"同步创建"模式的显示状态。同步创建是一个便捷功能，用于在编辑某个语言的内容时，自动在其他语言中创建相同键的空白条目。</p>
+<p><strong>工作原理</strong>：</p>
+<ul>
+<li>当在基础语言中添加新条目时</li>
+<li>TransX 自动在所有选中的其他语言的 <code>.strings</code>
+文件中创建相同的键值、常量等</li>
+</ul>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>快速建立多语言结构骨架</li>
+<li>确保所有语言的键值保持同步</li>
+<li>避免遗漏某些语言的翻译</li>
+</ul>
+<p><strong>界面影响</strong>：
+此菜单项控制主窗口编辑区是否显示同步创建的相关控件和提示。</p>
+<h4 id="隐藏文件">隐藏文件</h4>
+<p>管理哪些 <code>.strings</code>
+文件在导航区中显示或隐藏。打开此选项会显示一个文件列表，您可以：</p>
+<ul>
+<li>勾选要显示的文件</li>
+<li>取消勾选要临时隐藏的文件</li>
+<li>隐藏的文件不会被删除，只是不在界面中显示</li>
+</ul>
+<p><strong>典型应用</strong>：</p>
+<ul>
+<li>隐藏已废弃但尚未删除的旧文件</li>
+<li>隐藏不需要当前处理的文件，简化界面</li>
+<li>隐藏自动生成的 Storyboard 或 XIB 的 <code>.strings</code> 文件</li>
+</ul>
+<p>这个功能不影响文件的实际存在，只影响 TransX 界面中的可见性。</p>
+<h4 id="切换-strings-文件">切换 strings 文件</h4>
+<p>在主窗口中快速切换当前管理的 <code>.strings</code>
+文件。虽然可以通过导航区点击切换，但这个菜单提供了一个快捷列表，显示：</p>
+<ul>
+<li>所有可用的 <code>.strings</code> 文件</li>
+<li>每个文件的路径（如有重名）</li>
+<li>当前选中的文件（标记）</li>
+</ul>
+<p><strong>快捷键提示</strong>：
+很多开发者会为常用的几个文件设置自定义快捷键，通过快捷键直接跳转。</p>
+<h4 id="筛查-storyboard-内容">筛查 Storyboard 内容</h4>
+<p>针对 Interface Builder（Storyboard/XIB）自动生成的
+<code>.strings</code> 文件的特殊功能。</p>
+<p><strong>背景知识</strong>： 当 Xcode 项目中有 Storyboard 或 XIB
+文件启用了本地化，Xcode 会自动生成对应的 <code>.strings</code>
+文件。这些文件的内容与 Storyboard 中的视图元素强相关，包含 Object ID
+和控件类型等信息。</p>
+<p><strong>功能说明</strong>： 此操作会：</p>
+<ol type="1">
+<li>解析对应的 Storyboard/XIB 文件</li>
+<li>检查当前 <code>.strings</code> 文件中的所有条目</li>
+<li>标识出已失效的条目（对应的视图元素已被删除）</li>
+<li>标识出缺失的条目（新增的需要本地化的视图元素）</li>
+<li>提供批量清理和补全选项</li>
+</ol>
+<p><strong>使用时机</strong>：</p>
+<ul>
+<li>Storyboard 经过重大改动后</li>
+<li>发现本地化内容与界面不匹配时</li>
+<li>定期维护，清理冗余条目</li>
+</ul>
+<p><strong>可用性</strong>： 此菜单项仅在当前选中的
+<code>.strings</code> 文件对应于 Storyboard 或 XIB
+时才启用（不灰置）。</p>
+<h4 id="常量修复">常量修复</h4>
+<p>自动化工具，用于修复代码中直接使用字符串键值的地方，将其替换为对应的常量引用。</p>
+<p><strong>前提条件</strong>：</p>
+<ol type="1">
+<li>项目启用了常量模式</li>
+<li>在项目配置中正确设置了本地化方法（例如
+<code>NSLocalizedString</code>、<code>LL()</code> 等）</li>
+</ol>
+<p><strong>工作流程</strong>：</p>
+<ol type="1">
+<li>扫描项目代码文件（.swift, .m, .mm 等）</li>
+<li>识别本地化方法的调用（如
+<code>NSLocalizedString("key", comment: "")</code>）</li>
+<li>检查是否直接使用了字符串键值而非常量</li>
+<li>查找对应的常量定义</li>
+<li>替换为常量引用（如
+<code>NSLocalizedString(lMyKey, comment: "")</code>）</li>
+</ol>
+<p><strong>示例</strong>：</p>
+<p>修复前：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">title</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span><span class="st">&quot;com.app.settings.title&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">message</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.app.error.network&quot;</span><span class="op">)</span></span></code></pre></div>
+<p>修复后：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">title</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span>lSettingsTitle<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">message</span> <span class="op">=</span> LL<span class="op">(</span>lErrorNetwork<span class="op">)</span></span></code></pre></div>
+<p><strong>价值</strong>：
+这个功能对于将旧项目迁移到常量模式特别有用，可以自动完成大量重复性的代码修改工作。</p>
+<h4 id="删除当前文件">删除当前文件</h4>
+<p>删除当前在主窗口中选中的 <code>.strings</code> 文件。</p>
+<p><strong>⚠️ 高危操作警告</strong>： 此操作会：</p>
+<ul>
+<li>从文件系统中物理删除文件</li>
+<li>同时删除所有语言版本的对应文件</li>
+<li>删除相关的常量定义</li>
+<li>操作<strong>不可逆</strong>（除非有版本控制）</li>
+</ul>
+<p><strong>执行流程</strong>：</p>
+<ol type="1">
+<li>TransX 会弹出多重确认对话框</li>
+<li>显示将要删除的文件列表</li>
+<li>记录删除操作到日志</li>
+</ol>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>项目重构，移除废弃的模块</li>
+<li>合并或拆分本地化文件</li>
+<li>清理错误创建的文件</li>
+</ul>
+<p><strong>最佳实践</strong>：</p>
+<ul>
+<li>删除前确保有版本控制备份</li>
+<li>确认文件确实不再被任何代码引用</li>
+<li>考虑先使用"隐藏文件"功能观察一段时间</li>
+</ul>
+<h4 id="打开项目所在文件夹">打开项目所在文件夹</h4>
+<p>在系统文件管理器（Finder/资源管理器）中打开当前项目的根目录。</p>
+<p><strong>便利性</strong>：</p>
+<ul>
+<li>快速访问项目文件</li>
+<li>查看文件结构</li>
+<li>使用外部工具编辑文件</li>
+<li>检查文件的实际存储状态</li>
+</ul>
+<h4 id="清除日志">清除日志</h4>
+<p>清空主窗口日志区的所有日志记录。这是一个纯粹的 UI 操作，不影响：</p>
+<ul>
+<li>项目数据或配置</li>
+<li>当前的工作状态</li>
+</ul>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>日志累积过多，影响查看</li>
+<li>开始新的操作流程前清理旧日志</li>
+<li>准备截图或演示，需要干净的界面</li>
+</ul>
+<p>日志清除后，后续的操作仍会继续记录。</p>
+<h4 id="项目配置">项目配置</h4>
+<p>打开当前项目的配置窗口，等同于通过菜单栏或快捷键访问项目配置。详见 <a
+href="./0x04%20preference.md">项目配置</a>。</p>
+<p>这个菜单项提供了一个便捷的入口，特别是在主窗口工作时快速调整项目设置。</p>
+<h4 id="重新查找所有文件">重新查找所有文件</h4>
+<p>重新扫描项目目录，刷新 <code>.strings</code> 文件列表。</p>
+<p><strong>触发重新扫描的场景</strong>：</p>
+<ul>
+<li>在 TransX 外部添加了新的 <code>.strings</code> 文件</li>
+<li>重命名或移动了 <code>.strings</code> 文件</li>
+<li>修改了项目配置中的搜索或忽略目录</li>
+<li>从版本控制系统拉取了新内容</li>
+</ul>
+<p><strong>扫描过程</strong>：</p>
+<ol type="1">
+<li>根据项目配置的搜索路径和忽略规则重新遍历目录</li>
+<li>识别所有 <code>.strings</code> 文件</li>
+<li>解析文件内容</li>
+<li>更新导航区的文件列表</li>
+<li>刷新统计信息</li>
+</ol>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>大型项目的重新扫描可能需要一些时间</li>
+<li>扫描期间界面可能短暂无响应</li>
+<li>进度会在日志区显示</li>
+</ul>
+<h2 id="脚本">脚本</h2>
+<p><img src="./imgs/img62.png" /></p>
+<p>TransX 提供了灵活的脚本扩展机制，允许开发者使用 JavaScript
+编写自定义脚本来扩展应用的功能。脚本系统为高级用户提供了自动化和定制化的能力，可以实现批量处理、数据转换、自定义导出等功能。</p>
+<h3 id="脚本系统特点">脚本系统特点</h3>
+<h4 id="脚本语言">脚本语言</h4>
+<p>TransX 的脚本系统基于 <strong>JavaScript（ES6+）</strong>，选择
+JavaScript 的原因包括：</p>
+<ul>
+<li>广泛的开发者基础，学习曲线平缓</li>
+<li>丰富的语言特性和标准库</li>
+<li>跨平台支持，无需额外运行时</li>
+<li>强大的文本处理和数据操作能力</li>
+</ul>
+<h4 id="脚本能力">脚本能力</h4>
+<p>通过 TransX 提供的 API，脚本可以：</p>
+<ul>
+<li>访问和修改本地化内容</li>
+<li>遍历和筛选字符串条目</li>
+<li>执行批量替换和转换</li>
+<li>生成自定义报表</li>
+<li>导出为自定义格式</li>
+<li>与外部服务集成</li>
+<li>自动化重复性任务</li>
+</ul>
+<h3 id="脚本开发资源">脚本开发资源</h3>
+<h4 id="官方脚本仓库">官方脚本仓库</h4>
+<p>TransX 团队在 GitHub 上维护了一个官方脚本仓库，包含：</p>
+<ul>
+<li><strong>示例脚本</strong>：涵盖常见使用场景的完整示例</li>
+<li><strong>模板脚本</strong>：快速上手的脚本模板</li>
+<li><strong>API 文档</strong>：详细的 JavaScript API 参考</li>
+<li><strong>最佳实践</strong>：脚本开发的建议和技巧</li>
+<li><strong>社区贡献</strong>：用户分享的实用脚本</li>
+</ul>
+<p><strong>仓库地址</strong>：<a
+href="https://github.com/JyHu/X/tree/main/Scripts"><span>https://github.com/JyHu/X/tree/main/Scripts</span></a></p>
+<h4 id="示例脚本说明">示例脚本说明</h4>
+<p>仓库中包含的示例脚本类型：</p>
+<ol type="1">
+<li><p><strong>批量处理脚本</strong></p>
+<ul>
+<li>批量添加前缀或后缀</li>
+<li>统一修改特定模式的键名</li>
+<li>批量删除符合条件的条目</li>
+</ul></li>
+<li><p><strong>数据转换脚本</strong></p>
+<ul>
+<li>转换键名格式（驼峰、下划线、短横线等）</li>
+<li>标准化翻译文本（统一标点、规范术语）</li>
+<li>数据清洗（移除多余空格、统一引号风格）</li>
+</ul></li>
+<li><p><strong>导出脚本</strong></p>
+<ul>
+<li>生成 Markdown 格式的本地化文档</li>
+<li>导出为自定义 JSON 结构</li>
+<li>生成翻译进度报告</li>
+</ul></li>
+<li><p><strong>分析脚本</strong></p>
+<ul>
+<li>检测未翻译或缺失的条目</li>
+<li>统计字符长度和复杂度</li>
+<li>查找重复或相似的翻译</li>
+<li>生成本地化完成度报告</li>
+</ul></li>
+<li><p><strong>集成脚本</strong></p>
+<ul>
+<li>调用在线翻译 API（Google Translate、DeepL 等）</li>
+<li>导入外部翻译记忆库</li>
+<li>与项目管理工具集成</li>
+<li>自动创建本地化任务</li>
+</ul></li>
+</ol>
+<h3 id="脚本安全性">脚本安全性</h3>
+<p><strong>沙盒环境</strong>： TransX
+在受限的沙盒环境中执行脚本，脚本：</p>
+<ul>
+<li>只能访问 TransX 提供的 API</li>
+<li>无法访问文件系统的任意位置</li>
+<li>无法执行系统命令</li>
+<li>网络访问需要用户授权</li>
+</ul>
+<p><strong>权限管理</strong>：
+某些脚本可能需要特殊权限（如网络访问），TransX
+会在首次运行时请求用户授权。</p>
+<h3 id="快速入门示例">快速入门示例</h3>
+<p>一个简单的脚本示例，将所有键名转换为小写：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 获取当前选中的 .strings 文件</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> file <span class="op">=</span> transx<span class="op">.</span><span class="fu">getCurrentFile</span>()<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 遍历所有条目</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>file<span class="op">.</span><span class="at">entries</span><span class="op">.</span><span class="fu">forEach</span>(entry <span class="kw">=&gt;</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 将键名转换为小写</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    entry<span class="op">.</span><span class="at">key</span> <span class="op">=</span> entry<span class="op">.</span><span class="at">key</span><span class="op">.</span><span class="fu">toLowerCase</span>()<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">// 保存修改</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>file<span class="op">.</span><span class="fu">save</span>()<span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">// 输出日志</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>transx<span class="op">.</span><span class="fu">log</span>(<span class="vs">`已处理 </span><span class="sc">${</span>file<span class="op">.</span><span class="at">entries</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> 个条目`</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="学习路径">学习路径</h3>
+<ol type="1">
+<li><strong>查看官方示例</strong>：从 GitHub 仓库下载并研究示例脚本</li>
+<li><strong>阅读 API 文档</strong>：了解 TransX 提供的 JavaScript
+API</li>
+<li><strong>修改现有脚本</strong>：在示例基础上修改以适应自己的需求</li>
+<li><strong>编写自定义脚本</strong>：根据项目特定需求开发专用脚本</li>
+<li><strong>分享贡献</strong>：将有用的脚本贡献回社区</li>
+</ol>
+<h3 id="脚本菜单内容">脚本菜单内容</h3>
+<p>"脚本"菜单会动态显示：</p>
+<ul>
+<li><strong>刷新脚本列表</strong>：重新扫描脚本目录</li>
+<li><strong>打开脚本文件夹</strong>：在文件管理器中打开脚本目录</li>
+<li><strong>脚本文档</strong>：链接到官方 API 文档</li>
+<li><strong>分隔线</strong></li>
+<li><strong>已安装的脚本列表</strong>：每个脚本作为一个菜单项</li>
+</ul>
+<p>通过脚本系统，TransX
+的功能可以无限扩展，满足各种复杂和定制化的本地化管理需求。</p>
+<h2 id="字符串">字符串</h2>
+<p><img src="./imgs/img63.png" /></p>
+<p>字符串菜单提供了针对本地化条目的各种操作，这些操作与主窗口内容区的右键上下文菜单功能相同。菜单中的命令主要响应当前激活窗口（前台窗口）内容区中选中的条目。</p>
+<h3 id="菜单设计理念">菜单设计理念</h3>
+<p>字符串菜单的设计遵循了以下原则：</p>
+<ol type="1">
+<li><strong>上下文响应</strong>：菜单项根据当前选中内容的状态动态启用或禁用</li>
+<li><strong>批量操作支持</strong>：大多数操作支持多选批量执行</li>
+<li><strong>快捷键覆盖</strong>：常用操作都提供了快捷键，提升效率</li>
+<li><strong>一致性</strong>：与内容区右键菜单保持完全一致，降低学习成本</li>
+</ol>
+<h3 id="快捷键策略">快捷键策略</h3>
+<p>字符串菜单的快捷键设计考虑了：</p>
+<ul>
+<li><strong>频率优先</strong>：最常用的操作使用单键或简单组合键</li>
+<li><strong>系统一致性</strong>：遵循操作系统的标准快捷键约定（如 ⌘C
+复制）</li>
+<li><strong>逻辑分组</strong>：相关操作使用相近的快捷键组合</li>
+<li><strong>避免冲突</strong>：不与系统或其他应用的全局快捷键冲突</li>
+</ul>
+<h3 id="上下文敏感性">上下文敏感性</h3>
+<p>字符串菜单会根据当前状态动态调整：</p>
+<p><strong>未选中任何条目时</strong>：</p>
+<ul>
+<li>大部分操作项灰置（不可用）</li>
+<li>仅"新建"等不依赖选择的操作可用</li>
+</ul>
+<p><strong>选中单个条目时</strong>：</p>
+<ul>
+<li>所有单条目操作可用</li>
+<li>显示该条目的详细信息</li>
+</ul>
+<p><strong>选中多个条目时</strong>：</p>
+<ul>
+<li>批量操作项启用</li>
+<li>单条目特定操作（如"编辑"）可能变为"批量编辑"</li>
+</ul>
+<p><strong>只读文件或锁定条目</strong>：</p>
+<ul>
+<li>修改类操作禁用</li>
+<li>查看和复制操作仍可用</li>
+</ul>
+<h3 id="与右键菜单的关系">与右键菜单的关系</h3>
+<p>字符串菜单与内容区的右键上下文菜单完全同步：</p>
+<ul>
+<li><strong>功能相同</strong>：提供相同的操作选项</li>
+<li><strong>状态同步</strong>：启用/禁用状态保持一致</li>
+<li><strong>快捷键共享</strong>：使用相同的快捷键绑定</li>
+</ul>
+<p>两者的区别仅在于访问方式：</p>
+<ul>
+<li><strong>字符串菜单</strong>：通过菜单栏访问，适合使用键盘操作</li>
+<li><strong>右键菜单</strong>：通过鼠标右键访问，适合鼠标操作流程</li>
+</ul>
+<h3 id="最佳实践">最佳实践</h3>
+<ol type="1">
+<li><strong>熟记常用快捷键</strong>：编辑、复制、删除等高频操作的快捷键</li>
+<li><strong>批量操作前先预览</strong>：批量修改前使用筛选功能确认选择范围</li>
+<li><strong>善用查找功能</strong>：通过查找引用功能了解条目的实际使用情况</li>
+<li><strong>添加备注说明</strong>：为复杂或容易误解的条目添加备注</li>
+<li><strong>定期标记状态</strong>：使用状态标记追踪翻译进度</li>
+</ol>
+<hr />
+<h2 id="其他系统菜单">其他系统菜单</h2>
+<p>除了上述主要菜单外，TransX 还包含以下标准系统菜单：</p>
+<h3 id="编辑菜单">编辑菜单</h3>
+<p>提供标准的文本编辑操作：</p>
+<ul>
+<li>撤销/重做</li>
+<li>剪切/复制/粘贴</li>
+<li>全选</li>
+<li>查找和替换</li>
+</ul>
+<h3 id="视图菜单">视图菜单</h3>
+<p>控制界面显示：</p>
+<ul>
+<li>全屏模式</li>
+<li>显示/隐藏工具栏</li>
+<li>显示/隐藏侧边栏</li>
+<li>缩放界面</li>
+</ul>
+<h3 id="窗口菜单">窗口菜单</h3>
+<p>窗口管理操作：</p>
+<ul>
+<li>最小化</li>
+<li>缩放</li>
+<li>置于最前</li>
+<li>在多个打开的项目窗口间切换</li>
+</ul>
+<h3 id="帮助菜单">帮助菜单</h3>
+<p>获取帮助和支持。</p>
+<hr />
+<p>通过熟悉和掌握 TransX
+的菜单系统，您可以高效地使用键盘完成大部分操作，显著提升本地化管理工作的效率。建议新用户首先熟悉文件、操作和字符串这三个核心菜单，它们涵盖了日常工作的绝大部分需求。</p>
+
+</article>

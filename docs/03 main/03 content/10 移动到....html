@@ -1,0 +1,435 @@
+<article class="doc-article">
+<h1 id="移动到">移动到...</h1>
+<p><img src="./imgs/img28.png" /></p>
+<h2 id="功能概述">功能概述</h2>
+<p>"移动到..."功能用于在同一项目的不同 .strings
+文件之间转移本地化条目。与"复制到"功能的根本区别在于:移动操作会从源文件中删除条目,并将其添加到目标文件中,实现条目的完全迁移而非复制。该功能特别适合修正文件归属错误、项目结构重组或模块化拆分等场景,是管理多文件本地化项目的重要工具。</p>
+<h2 id="工作原理">工作原理</h2>
+<h3 id="移动操作的完整流程">移动操作的完整流程</h3>
+<ol type="1">
+<li><strong>读取源数据</strong>：从源文件中读取选中条目的完整信息（Key、所有语言翻译、常量等）</li>
+<li><strong>写入目标</strong>：将条目数据写入目标 .strings 文件</li>
+<li><strong>删除源数据</strong>：从源文件中删除该条目</li>
+<li><strong>更新索引</strong>：更新两个文件的内部索引和元数据</li>
+<li><strong>标记修改</strong>：将两个文件都标记为已修改状态</li>
+</ol>
+<h3 id="原子性保证">原子性保证</h3>
+<p>TransX 会尽量保证移动操作的原子性：</p>
+<ul>
+<li>如果目标文件写入失败，源文件不会删除条目</li>
+<li>如果操作中断，会尽量保持数据一致性</li>
+<li>建议移动前保存当前更改，并使用版本控制</li>
+</ul>
+<h2 id="使用场景详解">使用场景详解</h2>
+<h3 id="场景-1修正文件归属错误">场景 1：修正文件归属错误</h3>
+<p><strong>背景</strong>： 项目中有
+<code>Localizable.strings</code>（主应用）和
+<code>Widget.strings</code>（小组件）两个文件。开发人员在快速开发时，忘记切换文件，直接在
+<code>Localizable.strings</code> 中创建了几条本应属于小组件的文案。</p>
+<p><strong>传统处理方式的问题</strong>：</p>
+<ol type="1">
+<li>在 Widget.strings 中重新创建这几条
+<ul>
+<li>需要重新输入所有 Key</li>
+<li>需要重新输入或复制所有语言的翻译</li>
+<li>容易出错，特别是有很多条目时</li>
+<li>浪费时间</li>
+</ul></li>
+<li>从 Localizable.strings 中删除
+<ul>
+<li>如果已经有翻译，删除会造成工作浪费</li>
+<li>删除后找不回，风险较大</li>
+</ul></li>
+</ol>
+<p><strong>使用"移动到..."的解决方案</strong>：</p>
+<ol type="1">
+<li>在 <code>Localizable.strings</code> 中选中误创建的条目</li>
+<li>右键选择"移动到..."</li>
+<li>在弹出的文件列表中选择 <code>Widget.strings</code></li>
+<li>确认操作</li>
+<li>条目立即从 Localizable.strings 消失，出现在 Widget.strings 中</li>
+<li>所有翻译内容完整保留，无需重新输入</li>
+</ol>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>一步到位，无需重复工作</li>
+<li>数据完整性有保障</li>
+<li>避免手工复制粘贴的错误</li>
+<li>节省时间和精力</li>
+</ul>
+<h3 id="场景-2模块化重构">场景 2：模块化重构</h3>
+<p><strong>背景</strong>： 应用进行架构重构，原本在
+<code>Localizable.strings</code> 中的设置相关文案需要独立到
+<code>Settings.strings</code> 文件中。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>创建新的 <code>Settings.strings</code> 文件并添加到项目</li>
+<li>在 TransX 中刷新项目，识别新文件</li>
+<li>在 <code>Localizable.strings</code> 中筛选或搜索所有设置相关的条目
+<ul>
+<li>可以搜索 Key 中包含 "settings" 的条目</li>
+<li>或按分组筛选出设置分组的所有条目</li>
+</ul></li>
+<li>全选这些条目</li>
+<li>使用"移动到..."功能，选择 <code>Settings.strings</code>
+作为目标</li>
+<li>确认操作</li>
+<li>验证移动成功：
+<ul>
+<li>在 Localizable.strings 中这些条目已不存在</li>
+<li>在 Settings.strings 中可以找到所有移动的条目</li>
+<li>翻译内容完整无损</li>
+</ul></li>
+</ol>
+<p><strong>收益</strong>：</p>
+<ul>
+<li>代码模块化，每个模块有独立的本地化文件</li>
+<li>便于不同团队独立维护各自模块的本地化</li>
+<li>减少单个文件的条目数量，提高管理效率</li>
+<li>支持按模块编译和加载本地化资源</li>
+</ul>
+<h3 id="场景-3扩展分离">场景 3：扩展分离</h3>
+<p><strong>背景</strong>： 最初应用和扩展（Extension）共享同一个
+Localizable.strings，后来发现扩展和主应用需要独立的本地化文件。</p>
+<p><strong>目标</strong>：
+将扩展专用的本地化条目从主应用的文件移动到扩展的专属文件。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>为扩展创建独立的 .strings 文件（如
+<code>ShareExtension.strings</code>）</li>
+<li>识别哪些条目是扩展专用的
+<ul>
+<li>可以通过 Key 前缀识别（如 <code>share.</code>）</li>
+<li>或查看代码引用</li>
+</ul></li>
+<li>选中这些扩展专用的条目</li>
+<li>使用"移动到..."移动到扩展的 .strings 文件</li>
+<li>更新扩展的代码引用配置</li>
+</ol>
+<p><strong>技术考虑</strong>：</p>
+<ul>
+<li>扩展和主应用是独立的 Bundle，本地化文件也应独立</li>
+<li>移动后需要确保扩展能正确加载新的 .strings 文件</li>
+<li>如果有共享的文案，应该在两个文件中都保留（使用"复制到"而非"移动到..."）</li>
+</ul>
+<h3 id="场景-4废弃功能清理">场景 4：废弃功能清理</h3>
+<p><strong>背景</strong>：
+应用移除了某个功能，相关的本地化条目需要从主文件移到归档文件。</p>
+<p><strong>操作流程</strong>：</p>
+<ol type="1">
+<li>创建 <code>Deprecated.strings</code> 归档文件</li>
+<li>识别废弃功能相关的所有本地化条目</li>
+<li>使用"移动到..."将它们移到归档文件</li>
+<li>保留归档文件在项目中，但不包含在编译目标中</li>
+</ol>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>保留历史数据，便于未来可能的功能恢复</li>
+<li>清理主文件，保持整洁</li>
+<li>便于统计和分析废弃内容</li>
+</ul>
+<h3 id="场景-5环境分离">场景 5：环境分离</h3>
+<p><strong>背景</strong>：
+开发环境、测试环境、生产环境使用不同的文案。</p>
+<p><strong>组织方式</strong>：</p>
+<ul>
+<li><code>Localizable.strings</code>：生产环境文案</li>
+<li><code>Localizable_Debug.strings</code>：开发测试环境专用文案</li>
+<li>根据编译配置加载不同的文件</li>
+</ul>
+<p><strong>操作流程</strong>：
+当某些调试文案需要移到生产环境时，使用"移动到..."功能在不同环境文件间转移。</p>
+<h2 id="操作步骤详解">操作步骤详解</h2>
+<h3 id="标准移动流程">标准移动流程</h3>
+<ol type="1">
+<li><p><strong>确认源文件</strong>：</p>
+<ul>
+<li>在导航区选择包含要移动内容的源 .strings 文件</li>
+<li>确保文件已加载并显示在内容区</li>
+</ul></li>
+<li><p><strong>选择条目</strong>：</p>
+<ul>
+<li>在内容列表中选中一条或多条要移动的条目</li>
+<li>使用 <code>Command + 点击</code> 多选不连续的条目</li>
+<li>使用 <code>Shift + 点击</code> 选择连续的多条</li>
+<li>可以使用搜索或筛选功能先定位目标条目</li>
+</ul></li>
+<li><p><strong>执行移动</strong>：</p>
+<ul>
+<li>在选中的条目上右键点击</li>
+<li>选择"移动到..."菜单项</li>
+<li>在弹出的对话框中查看可用的目标文件列表</li>
+</ul></li>
+<li><p><strong>选择目标文件</strong>：</p>
+<ul>
+<li>从列表中选择目标 .strings 文件</li>
+<li>对话框会显示每个文件的路径、当前条目数等信息</li>
+<li>确认选择了正确的目标文件</li>
+</ul></li>
+<li><p><strong>处理冲突</strong>（如果有）：</p>
+<ul>
+<li>如果目标文件中已存在相同的 Key，会弹出冲突处理对话框</li>
+<li>选择合适的处理方式（跳过、覆盖、重命名等）</li>
+</ul></li>
+<li><p><strong>确认操作</strong>：</p>
+<ul>
+<li>移动内容后，移动结果会在日志区显示</li>
+</ul></li>
+<li><p><strong>验证结果</strong>：</p>
+<ul>
+<li>在源文件中确认条目已被删除</li>
+<li>切换到目标文件，确认条目已成功添加</li>
+<li>检查所有语言的翻译是否都已正确移动</li>
+<li>检查注释、常量等附加信息是否完整</li>
+</ul></li>
+</ol>
+<h3 id="批量移动技巧">批量移动技巧</h3>
+<p><strong>使用搜索</strong>：</p>
+<ol type="1">
+<li>搜索需要移动的条目（如 Key 包含 "widget"）</li>
+<li>在搜索结果中全选</li>
+<li>执行移动操作</li>
+</ol>
+<p><strong>使用筛选</strong>：</p>
+<ol type="1">
+<li>应用筛选条件</li>
+<li>在筛选结果中选择条目</li>
+<li>批量移动</li>
+</ol>
+<p><strong>使用暂存区</strong>：</p>
+<ol type="1">
+<li>从不同位置将需要移动的条目加入暂存区</li>
+<li>在暂存区中全选</li>
+<li>统一移动到目标文件</li>
+</ol>
+<h2 id="key-冲突处理">Key 冲突处理</h2>
+<h3 id="冲突场景">冲突场景</h3>
+<p>当目标文件中已存在相同 Key 的条目时，会发生冲突。</p>
+<h3 id="处理选项">处理选项</h3>
+<p><strong>1. 跳过（Skip）</strong>：</p>
+<ul>
+<li>不移动此条目，保留在源文件中</li>
+<li>目标文件中的现有条目保持不变</li>
+<li>适用于：确认目标文件的版本是正确的</li>
+</ul>
+<p><strong>2. 覆盖（Overwrite）</strong>：</p>
+<ul>
+<li>用源文件的条目覆盖目标文件中的现有条目</li>
+<li>源文件中删除该条目</li>
+<li>目标文件中的旧条目被完全替换</li>
+<li>适用于：确认源文件的版本是正确的，需要更新目标</li>
+</ul>
+<p><strong>3. 重命名（Rename）</strong>：</p>
+<ul>
+<li>为移动的条目生成新的 Key（如添加后缀 <code>_moved</code>）</li>
+<li>两个版本的条目都保留</li>
+<li>适用于：需要保留两个版本，稍后手动合并</li>
+</ul>
+<h2 id="与复制到功能的对比">与"复制到"功能的对比</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>移动到...</th>
+<th>复制到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>源文件变化</td>
+<td><strong>删除条目</strong></td>
+<td>保留条目</td>
+</tr>
+<tr>
+<td>目标文件变化</td>
+<td>添加条目</td>
+<td>添加条目</td>
+</tr>
+<tr>
+<td>数据完整性</td>
+<td>完整转移</td>
+<td>完整复制</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td><strong>纠错、重组、归档</strong></td>
+<td>复用、共享</td>
+</tr>
+<tr>
+<td>Key 冲突处理</td>
+<td>需要处理</td>
+<td>需要处理</td>
+</tr>
+<tr>
+<td>可撤销性</td>
+<td>需要移动回去</td>
+<td>删除目标文件中的条目</td>
+</tr>
+<tr>
+<td>风险程度</td>
+<td><strong>较高（删除源数据）</strong></td>
+<td>较低（源数据保留）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="选择建议">选择建议</h3>
+<p><strong>使用"移动到..."的情况</strong>：</p>
+<ul>
+<li>条目属于错误的文件，需要纠正</li>
+<li>项目重组，条目需要转移归属</li>
+<li>废弃功能，需要归档文案</li>
+<li>确定内容只应存在于一个文件中</li>
+</ul>
+<p><strong>使用"复制到"的情况</strong>：</p>
+<ul>
+<li>内容需要在多个文件中同时存在</li>
+<li>主应用和扩展需要相同的文案</li>
+<li>创建备份或模板</li>
+<li>不确定是否应该删除源文件中的内容</li>
+</ul>
+<p><strong>安全建议</strong>：</p>
+<ul>
+<li>如果不确定，先使用"复制到"，验证后再手动删除源文件中的条目</li>
+<li>在进行大规模移动前，先提交当前更改到版本控制系统</li>
+<li>对于关键项目，先在测试分支上操作，验证后再应用到主分支</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<ol type="1">
+<li><strong>不可逆性</strong>：移动操作会删除源文件中的条目，虽然可以移回，但如果没有版本控制，删除是不可逆的</li>
+<li><strong>保存提醒</strong>：移动操作会同时修改源文件和目标文件，都需要保存</li>
+<li><strong>版本控制必备</strong>：强烈建议在移动前提交当前更改到 Git
+等版本控制系统</li>
+<li><strong>Key 冲突风险</strong>：移动前检查目标文件是否已有相同的
+Key，避免不必要的冲突</li>
+<li><strong>代码引用影响</strong>：移动后，如果代码中使用了不同的 Bundle
+加载不同的 .strings 文件，需要更新代码引用</li>
+<li><strong>翻译完整性</strong>：移动后检查目标文件中的条目是否有缺失的翻译</li>
+<li><strong>权限检查</strong>：确保源文件和目标文件都可写且未被其他程序锁定</li>
+<li><strong>大量移动耗时</strong>：移动数百条记录时可能需要较长时间，请耐心等待</li>
+<li><strong>原子性限制</strong>：虽然 TransX
+尽量保证操作的原子性，但在极端情况下（如程序崩溃）可能导致数据不一致</li>
+<li><strong>团队同步</strong>：在团队协作中，移动操作后记得及时同步给团队成员，避免版本冲突</li>
+</ol>
+<h2 id="最佳实践">最佳实践</h2>
+<h3 id="移动前的准备工作">移动前的准备工作</h3>
+<ol type="1">
+<li><p><strong>备份数据</strong>：</p>
+<ul>
+<li>提交当前更改到版本控制系统</li>
+<li>或手动备份相关的 .strings 文件</li>
+<li>记录移动前的文件状态（条目数量等）</li>
+</ul></li>
+<li><p><strong>规划移动方案</strong>：</p>
+<ul>
+<li>明确哪些条目需要移动</li>
+<li>确定目标文件</li>
+<li>预判可能的 Key 冲突</li>
+</ul></li>
+<li><p><strong>评估影响范围</strong>：</p>
+<ul>
+<li>检查代码中是否有对这些 Key 的引用</li>
+<li>确认移动后代码是否需要调整</li>
+<li>评估对翻译工作流的影响</li>
+</ul></li>
+</ol>
+<h3 id="移动操作中">移动操作中</h3>
+<ol type="1">
+<li><p><strong>小批量验证</strong>：</p>
+<ul>
+<li>先移动少量条目进行验证</li>
+<li>确认移动正确后再批量操作</li>
+<li>避免一次性移动过多导致难以回退</li>
+</ul></li>
+<li><p><strong>处理冲突时谨慎</strong>：</p>
+<ul>
+<li>仔细对比冲突的内容</li>
+<li>不确定时选择"跳过"或"重命名"</li>
+<li>避免盲目选择"覆盖"</li>
+</ul></li>
+<li><p><strong>及时保存</strong>：</p>
+<ul>
+<li>每完成一批移动就保存</li>
+<li>避免因意外导致数据丢失</li>
+</ul></li>
+</ol>
+<h3 id="移动后的验证">移动后的验证</h3>
+<ol type="1">
+<li><p><strong>数据完整性检查</strong>：</p>
+<ul>
+<li>在源文件中确认条目已删除</li>
+<li>在目标文件中确认条目已添加</li>
+<li>检查所有语言的翻译都已正确移动</li>
+<li>验证注释、常量等附加信息</li>
+</ul></li>
+<li><p><strong>功能测试</strong>：</p>
+<ul>
+<li>运行应用，测试移动的本地化内容是否正常显示</li>
+<li>测试不同语言环境</li>
+<li>确认没有因文件归属变化导致的问题</li>
+</ul></li>
+<li><p><strong>代码审查</strong>：</p>
+<ul>
+<li>如果涉及代码引用的变化，进行代码审查</li>
+<li>确保所有引用都已正确更新</li>
+</ul></li>
+<li><p><strong>文档更新</strong>：</p>
+<ul>
+<li>更新项目文档，说明文件结构的变化</li>
+<li>记录移动操作的原因和影响</li>
+<li>通知团队成员</li>
+</ul></li>
+</ol>
+<h3 id="异常情况处理">异常情况处理</h3>
+<p><strong>如果移动后发现错误</strong>：</p>
+<ol type="1">
+<li>不要继续操作，避免问题扩大</li>
+<li>如果刚移动且未保存，可以关闭文件不保存</li>
+<li>如果已保存，使用版本控制回退</li>
+<li>或手动将条目移回原文件</li>
+</ol>
+<p><strong>如果出现冲突无法解决</strong>：</p>
+<ol type="1">
+<li>取消当前操作</li>
+<li>手动分析冲突原因</li>
+<li>可能需要先清理目标文件中的重复条目</li>
+<li>或者调整移动策略</li>
+</ol>
+<h2 id="团队协作建议">团队协作建议</h2>
+<h3 id="沟通机制">沟通机制</h3>
+<p>在进行文件间移动前：</p>
+<ol type="1">
+<li>在团队会议或群组中提前通知</li>
+<li>说明移动的原因和影响范围</li>
+<li>确保没有其他成员正在编辑相关文件</li>
+<li>约定移动操作的时间窗口</li>
+</ol>
+<h3 id="版本控制策略">版本控制策略</h3>
+<ol type="1">
+<li><p><strong>独立提交</strong>：</p>
+<ul>
+<li>移动操作单独提交，不与其他修改混在一起</li>
+<li>Commit message 清晰说明移动了哪些内容</li>
+<li>例如："Move widget-related localization from Localizable.strings to
+Widget.strings"</li>
+</ul></li>
+<li><p><strong>分支操作</strong>（大规模移动）：</p>
+<ul>
+<li>在单独的分支上进行移动操作</li>
+<li>测试验证后再合并到主分支</li>
+<li>避免直接在主分支上进行高风险操作</li>
+</ul></li>
+<li><p><strong>代码审查</strong>：</p>
+<ul>
+<li>移动操作的 PR 需要团队审查</li>
+<li>确认移动的合理性</li>
+<li>检查是否有遗漏或错误</li>
+</ul></li>
+</ol>
+<h3 id="权限管理">权限管理</h3>
+<ul>
+<li>限制谁可以进行跨文件移动操作</li>
+<li>关键文件的移动需要更高权限</li>
+<li>记录移动操作的执行者和时间</li>
+</ul>
+
+</article>

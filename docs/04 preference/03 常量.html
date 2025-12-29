@@ -1,0 +1,330 @@
+<article class="doc-article">
+<h1 id="常量">常量</h1>
+<p><img src="./imgs/img51.png" /></p>
+<p>常量配置功能允许您为项目中的每个 .strings
+文件关联一个常量文件，并定义常量的生成模式。通过使用常量代替硬编码的字符串
+Key，可以显著提升代码质量、降低错误率，并提高开发效率。</p>
+<h2 id="问题背景">问题背景</h2>
+<p>在 Xcode 项目的本地化开发中，传统方式是直接使用字符串 Key
+来引用本地化内容：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Localizable.strings</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;com.auu.localization.language&quot;</span> <span class="op">=</span> <span class="st">&quot;Language&quot;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 代码中直接使用字符串 Key</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span><span class="st">&quot;com.auu.localization.language&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 或使用自定义宏</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localization.language&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>这种方式存在的问题：</strong></p>
+<ol type="1">
+<li><strong>拼写错误难以发现</strong>：字符串内容不会被编译器检查，拼写错误只能在运行时才能发现</li>
+<li><strong>重构困难</strong>：如果需要修改
+Key，必须手动查找和替换所有引用</li>
+<li><strong>缺乏代码提示</strong>：IDE
+无法对字符串提供智能补全和跳转支持</li>
+<li><strong>容易产生不一致</strong>：多人协作时，可能因记忆错误而使用不同的
+Key</li>
+<li><strong>代码可读性差</strong>：长字符串 Key 降低了代码的可读性</li>
+</ol>
+<h2 id="解决方案使用常量">解决方案：使用常量</h2>
+<p>TransX 支持自动生成和管理常量文件，将每个本地化 Key
+定义为一个类型安全的常量：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 自动生成的常量文件 LocalizationConstants.swift</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lLocalizationLanguageKey</span> <span class="op">=</span> <span class="st">&quot;com.auu.localization.language&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lSettingsTitleKey</span> <span class="op">=</span> <span class="st">&quot;com.auu.settings.title&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lErrorNetworkFailureKey</span> <span class="op">=</span> <span class="st">&quot;com.auu.error.networkFailure&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 代码中使用常量</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>lLocalizationLanguageKey<span class="op">)</span>  <span class="co">// ✅ 类型安全，有代码补全</span></span></code></pre></div>
+<p><strong>Objective-C 示例：</strong></p>
+<pre class="objc"><code>// 自动生成的常量文件 LocalizationConstants.h
+extern NSString * const kLocalizationLanguageKey;
+extern NSString * const kSettingsTitleKey;
+extern NSString * const kErrorNetworkFailureKey;
+
+// LocalizationConstants.m
+NSString * const kLocalizationLanguageKey = @&quot;com.auu.localization.language&quot;;
+NSString * const kSettingsTitleKey = @&quot;com.auu.settings.title&quot;;
+NSString * const kErrorNetworkFailureKey = @&quot;com.auu.error.networkFailure&quot;;
+
+// 代码中使用常量
+NSString *text = LL(kLocalizationLanguageKey);  // ✅ 类型安全</code></pre>
+<h2 id="使用常量的优势">使用常量的优势</h2>
+<h3 id="1-避免拼写错误">1. 避免拼写错误</h3>
+<p><strong>问题示例：</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 拼写错误，编译器不会报错，运行时才发现问题</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text1</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localization.langauge&quot;</span><span class="op">)</span>  <span class="co">// &quot;language&quot; 拼成了 &quot;langauge&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text2</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localziation.language&quot;</span><span class="op">)</span>  <span class="co">// &quot;localization&quot; 拼成了 &quot;localziation&quot;</span></span></code></pre></div>
+<p><strong>使用常量后：</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 编译器会检查常量名，拼写错误立即发现</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>lLocalizationLanguageKey<span class="op">)</span>  <span class="co">// IDE 会提示拼写错误的常量名</span></span></code></pre></div>
+<h3 id="2-便于维护和修改">2. 便于维护和修改</h3>
+<p><strong>问题示例：</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 如果需要修改 Key，必须在多个文件中手动查找替换</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">// File1.swift</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localization.language&quot;</span><span class="op">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">// File2.swift</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localization.language&quot;</span><span class="op">)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">// File3.swift</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.auu.localization.language&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>使用常量后：</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 只需要在 .strings 文件中修改 Key，常量文件会自动更新</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 所有引用常量的地方无需修改</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>lLocalizationLanguageKey<span class="op">)</span>  <span class="co">// 自动使用新的 Key</span></span></code></pre></div>
+<h3 id="3-代码可读性更高">3. 代码可读性更高</h3>
+<p><strong>对比：</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 长字符串降低可读性</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>showAlert<span class="op">(</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    title<span class="op">:</span> LL<span class="op">(</span><span class="st">&quot;com.auu.settings.privacy.deleteAccount.confirmDialog.title&quot;</span><span class="op">),</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    message<span class="op">:</span> LL<span class="op">(</span><span class="st">&quot;com.auu.settings.privacy.deleteAccount.confirmDialog.message&quot;</span><span class="op">),</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    confirm<span class="op">:</span> LL<span class="op">(</span><span class="st">&quot;com.auu.settings.privacy.deleteAccount.confirmDialog.confirmButton&quot;</span><span class="op">),</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cancel<span class="op">:</span> LL<span class="op">(</span><span class="st">&quot;com.auu.settings.privacy.deleteAccount.confirmDialog.cancelButton&quot;</span><span class="op">)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 使用常量更清晰</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>showAlert<span class="op">(</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    title<span class="op">:</span> LL<span class="op">(</span>lDeleteAccountConfirmTitleKey<span class="op">),</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    message<span class="op">:</span> LL<span class="op">(</span>lDeleteAccountConfirmMessageKey<span class="op">),</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    confirm<span class="op">:</span> LL<span class="op">(</span>lDeleteAccountConfirmButtonKey<span class="op">),</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    cancel<span class="op">:</span> LL<span class="op">(</span>lDeleteAccountCancelButtonKey<span class="op">)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code></pre></div>
+<h3 id="4-集中管理">4. 集中管理</h3>
+<p>所有本地化 Key 以常量形式集中定义在一个或多个文件中，便于：</p>
+<ul>
+<li><strong>快速浏览</strong>：查看项目中有哪些本地化内容</li>
+<li><strong>查找引用</strong>：使用 IDE
+的"查找引用"功能，快速定位某个本地化内容在哪里使用</li>
+<li><strong>重构支持</strong>：使用 IDE 的重构功能安全地重命名常量</li>
+<li><strong>代码审查</strong>：更容易发现重复或未使用的本地化内容</li>
+</ul>
+<h3 id="5-提高代码一致性">5. 提高代码一致性</h3>
+<p><strong>问题示例：</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 团队成员可能因记忆错误使用不同的 Key</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 开发者 A</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;app.settings.language&quot;</span><span class="op">)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 开发者 B（记错了前缀）</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;com.app.settings.language&quot;</span><span class="op">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">// 开发者 C（记错了层级）</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;app.language.settings&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>使用常量后：</strong></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 所有人都使用同一个常量，确保一致性</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>lSettingsLanguageKey<span class="op">)</span></span></code></pre></div>
+<h3 id="6-ide-智能支持">6. IDE 智能支持</h3>
+<p>使用常量后，可以享受现代 IDE 的各种智能特性：</p>
+<ul>
+<li><strong>代码补全</strong>：输入常量名前缀时，IDE
+会自动提示所有匹配的常量</li>
+<li><strong>快速跳转</strong>：点击常量名可以跳转到定义位置</li>
+<li><strong>查找引用</strong>：快速查看某个常量在哪些地方被使用</li>
+<li><strong>重构支持</strong>：使用 IDE
+的重命名功能，自动更新所有引用</li>
+<li><strong>语法高亮</strong>：常量会以不同颜色显示，与字符串区分</li>
+</ul>
+<h3 id="7-编译时检查">7. 编译时检查</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 引用了不存在的 Key，运行时才发现</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;non.existent.key&quot;</span><span class="op">)</span>  <span class="co">// 编译通过，但运行时显示 Key 本身</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 引用了不存在的常量，编译时就报错</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>nonExistentKey<span class="op">)</span>  <span class="co">// ❌ 编译错误：Use of unresolved identifier &#39;nonExistentKey&#39;</span></span></code></pre></div>
+<h2 id="配置常量文件">配置常量文件</h2>
+<p>在 TransX 中，您可以为每个 .strings 文件配置对应的常量文件：</p>
+<p><strong>配置项说明：</strong></p>
+<ol type="1">
+<li><p><strong>常量文件路径</strong>：</p>
+<ul>
+<li>指定生成的常量文件的保存位置</li>
+<li>支持 Swift (.swift) 和 Objective-C (.h/.m) 文件</li>
+<li>可以为不同的 .strings 文件指定不同的常量文件</li>
+</ul></li>
+<li><p><strong>文件头注释</strong>：</p>
+<ul>
+<li>自定义生成文件的头部注释</li>
+<li>可以包含版权信息、自动生成警告等</li>
+</ul></li>
+</ol>
+<h2 id="常量命名规范">常量命名规范</h2>
+<h3 id="swift-推荐风格">Swift 推荐风格</h3>
+<p><strong>1. 小驼峰 + Key 后缀</strong>（推荐）：</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsLanguageKey</span> <span class="op">=</span> <span class="st">&quot;app.settings.language&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">errorNetworkKey</span> <span class="op">=</span> <span class="st">&quot;app.error.network&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">buttonConfirmKey</span> <span class="op">=</span> <span class="st">&quot;app.button.confirm&quot;</span></span></code></pre></div>
+<p><strong>2. 带前缀的小驼峰</strong>：</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lSettingsLanguage</span> <span class="op">=</span> <span class="st">&quot;app.settings.language&quot;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lErrorNetwork</span> <span class="op">=</span> <span class="st">&quot;app.error.network&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lButtonConfirm</span> <span class="op">=</span> <span class="st">&quot;app.button.confirm&quot;</span></span></code></pre></div>
+<p><strong>3. 枚举命名空间</strong>（大型项目推荐）：</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LocalizationKey <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">settingsLanguage</span> <span class="op">=</span> <span class="st">&quot;app.settings.language&quot;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">errorNetwork</span> <span class="op">=</span> <span class="st">&quot;app.error.network&quot;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">buttonConfirm</span> <span class="op">=</span> <span class="st">&quot;app.button.confirm&quot;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>LocalizationKey<span class="op">.</span>settingsLanguage<span class="op">)</span></span></code></pre></div>
+<p><strong>4. 分组枚举</strong>（超大型项目推荐）：</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LocalizationKey <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">enum</span> Settings <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">language</span> <span class="op">=</span> <span class="st">&quot;app.settings.language&quot;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">privacy</span> <span class="op">=</span> <span class="st">&quot;app.settings.privacy&quot;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">enum</span> Error <span class="op">{</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">network</span> <span class="op">=</span> <span class="st">&quot;app.error.network&quot;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">permission</span> <span class="op">=</span> <span class="st">&quot;app.error.permission&quot;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> LL<span class="op">(</span>LocalizationKey<span class="op">.</span>Settings<span class="op">.</span>language<span class="op">)</span></span></code></pre></div>
+<h3 id="objective-c-推荐风格">Objective-C 推荐风格</h3>
+<p><strong>1. k 前缀 + 驼峰命名</strong>（推荐）：</p>
+<pre class="objc"><code>// .h 文件
+extern NSString * const kSettingsLanguageKey;
+extern NSString * const kErrorNetworkKey;
+
+// .m 文件
+NSString * const kSettingsLanguageKey = @&quot;app.settings.language&quot;;
+NSString * const kErrorNetworkKey = @&quot;app.error.network&quot;;</code></pre>
+<p><strong>2. 带项目前缀的驼峰命名</strong>：</p>
+<pre class="objc"><code>// AUU 是项目前缀
+extern NSString * const kAUUSettingsLanguageKey;
+extern NSString * const kAUUErrorNetworkKey;</code></pre>
+<p><strong>3. 宏定义</strong>（不推荐，仅用于旧项目兼容）：</p>
+<pre class="objc"><code>#define SETTINGS_LANGUAGE_KEY @&quot;app.settings.language&quot;
+#define ERROR_NETWORK_KEY @&quot;app.error.network&quot;</code></pre>
+<h2 id="最佳实践">最佳实践</h2>
+<h3 id="1-统一命名风格">1. 统一命名风格</h3>
+<p>在项目初期确定常量命名风格，并在整个项目中保持一致：</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 推荐：统一使用 Key 后缀</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsLanguageKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsThemeKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 不推荐：命名风格不一致</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsLanguageKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsTheme</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">lButtonConfirm</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span></code></pre></div>
+<h3 id="2-分组管理">2. 分组管理</h3>
+<p>对于大型项目，按功能模块对常量进行分组：</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// MARK: - User Profile</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">profileTitleKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">profileNameKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">// MARK: - Settings</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsTitleKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">settingsLanguageKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">// MARK: - Errors</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">errorNetworkKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">errorPermissionKey</span> <span class="op">=</span> <span class="st">&quot;...&quot;</span></span></code></pre></div>
+<h3 id="3-不要手动编辑生成的文件">3. 不要手动编辑生成的文件</h3>
+<p>常量文件应该由 TransX 自动生成和维护：</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">//  ⚠️ Do not edit this file manually!</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">//  Any changes will be overwritten.</span></span></code></pre></div>
+<p>如果需要自定义常量，创建一个单独的文件：</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// CustomLocalizationKeys.swift（手动维护）</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">myCustomKey</span> <span class="op">=</span> <span class="st">&quot;custom.key&quot;</span></span></code></pre></div>
+<p><strong>原因：</strong></p>
+<ul>
+<li>团队成员可以直接使用常量，无需重新生成</li>
+<li>代码审查时可以看到常量的变更</li>
+<li>构建服务器无需安装 TransX 也能编译项目</li>
+</ul>
+<h3 id="4-清理未使用的常量">4. 清理未使用的常量</h3>
+<p>定期检查并移除代码中不再使用的本地化内容：</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用 IDE 的&quot;查找引用&quot;功能</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 如果某个常量没有任何引用，考虑从 .strings 文件中删除对应的 Key</span></span></code></pre></div>
+<h3 id="5-文档说明">5. 文档说明</h3>
+<p>在项目文档中说明：</p>
+<ul>
+<li>常量文件的位置和命名规范</li>
+<li>如何生成和更新常量文件</li>
+<li>禁止手动编辑自动生成的文件</li>
+<li>新增本地化内容的工作流程</li>
+</ul>
+<h2 id="与手动管理的对比">与手动管理的对比</h2>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>手动管理字符串 Key</th>
+<th>使用常量（TransX 自动生成）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拼写错误检测</td>
+<td>❌ 运行时才发现</td>
+<td>✅ 编译时检测</td>
+</tr>
+<tr>
+<td>IDE 代码补全</td>
+<td>❌ 无</td>
+<td>✅ 有</td>
+</tr>
+<tr>
+<td>重构支持</td>
+<td>❌ 手动查找替换</td>
+<td>✅ IDE 自动重构</td>
+</tr>
+<tr>
+<td>类型安全</td>
+<td>❌ 字符串类型</td>
+<td>✅ 常量类型</td>
+</tr>
+<tr>
+<td>代码可读性</td>
+<td>❌ 较差（长字符串）</td>
+<td>✅ 较好（语义化常量名）</td>
+</tr>
+<tr>
+<td>维护成本</td>
+<td>❌ 高（手动同步）</td>
+<td>✅ 低（自动生成）</td>
+</tr>
+<tr>
+<td>团队协作</td>
+<td>❌ 易出错</td>
+<td>✅ 一致性好</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>✅ 简单直接</td>
+<td>⚠️ 需要配置</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结">总结</h2>
+<p>使用常量代替硬编码的字符串 Key 是本地化开发的最佳实践。TransX
+的常量自动生成功能可以：</p>
+<ul>
+<li><strong>提升代码质量</strong>：编译时检查、类型安全、代码补全</li>
+<li><strong>降低错误率</strong>：避免拼写错误、确保一致性</li>
+<li><strong>提高开发效率</strong>：自动生成、自动同步、IDE 智能支持</li>
+<li><strong>简化维护</strong>：集中管理、重构友好、易于审查</li>
+</ul>
+<p>对于任何规模的项目，特别是团队协作的项目，强烈建议启用 TransX
+的常量管理功能，让工具自动处理这些机械的、容易出错的工作，开发人员可以更专注于业务逻辑的实现。</p>
+
+</article>

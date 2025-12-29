@@ -1,0 +1,272 @@
+<article class="doc-article">
+<h1 id="文件夹配置">文件夹配置</h1>
+<p>文件夹配置用于定义 TransX
+在进行本地化管理时需要扫描和处理的目录范围。通过精确配置代码目录和
+.strings
+文件目录，可以显著提升工具的执行效率，避免不必要的目录扫描，确保本地化管理的准确性和完整性。</p>
+<h2 id="代码目录">代码目录</h2>
+<p><img src="./imgs/img53.png" /></p>
+<p>代码目录配置用于管理 .strings
+文件对应的源代码范围。在本地化处理过程中，TransX
+需要遍历代码文件以实现以下功能：</p>
+<p><strong>功能说明：</strong></p>
+<ul>
+<li><strong>提取本地化调用</strong>：扫描代码，找出所有使用本地化方法的位置</li>
+<li><strong>查找引用</strong>：定位特定 Key 在代码中的使用位置</li>
+<li><strong>未本地化字符串检测</strong>：发现代码中硬编码的字符串，提示需要本地化</li>
+<li><strong>自动替换</strong>：Key 重命名时，自动更新代码中的引用</li>
+<li><strong>代码统计</strong>：统计项目中本地化内容的使用情况</li>
+</ul>
+<h3 id="筛选目录include-directories">筛选目录（Include
+Directories）</h3>
+<p>筛选目录定义了 TransX 应该主动扫描和处理的代码目录范围。</p>
+<p><strong>作用：</strong></p>
+<ul>
+<li>这些目录中的代码文件会被完整遍历和分析</li>
+<li>本地化方法调用会被识别和提取</li>
+<li>未本地化字符串会被检测和报告</li>
+<li>Key 替换操作会在这些目录中执行</li>
+</ul>
+<p><strong>不建议包含的目录：</strong></p>
+<ul>
+<li>构建输出目录（Build、DerivedData）</li>
+<li>第三方依赖目录（Pods、Carthage、Package Dependencies）</li>
+<li>测试代码目录（Tests、UITests）- 除非测试代码也需要本地化</li>
+<li>临时文件目录（Temp、Cache）</li>
+</ul>
+<h3 id="忽略目录exclude-directories">忽略目录（Exclude
+Directories）</h3>
+<p>忽略目录定义了在扫描过程中应该跳过的目录，这些目录不会被遍历，其中的代码文件不会被分析。</p>
+<p><strong>作用：</strong></p>
+<ul>
+<li>提升扫描性能，跳过不需要处理的大型目录</li>
+<li>避免误报，排除不相关的代码</li>
+<li>减少内存占用，特别是在大型项目中</li>
+</ul>
+<h3 id="配置原则">配置原则</h3>
+<p><strong>1. 精确性优于广泛性</strong></p>
+<pre><code>✅ 推荐：精确指定需要扫描的目录
+/ProjectRoot/App/ViewControllers
+/ProjectRoot/App/Views
+/ProjectRoot/App/Models
+
+❌ 不推荐：扫描整个项目根目录
+/ProjectRoot</code></pre>
+<p><strong>2. 使用筛选目录优先于忽略目录</strong></p>
+<pre><code>✅ 推荐：明确指定要扫描的目录（白名单）
+筛选目录：
+- /ProjectRoot/Sources/App
+- /ProjectRoot/Sources/Features
+
+❌ 不推荐：扫描所有目录然后排除大量目录（黑名单）
+筛选目录：/ProjectRoot
+忽略目录：Pods, Carthage, Build, Tests, ...（长长的列表）</code></pre>
+<p><strong>3. 定期审查和更新</strong></p>
+<ul>
+<li>添加新模块时，记得更新筛选目录</li>
+<li>移除已废弃的目录配置</li>
+<li>项目重构后，重新验证目录配置的正确性</li>
+</ul>
+<h2 id="transx-代码目录配置">TransX 代码目录配置</h2>
+<h3 id="筛选目录">筛选目录</h3>
+<ul>
+<li><code>./Sources/App</code>: 主应用代码</li>
+<li><code>./Sources/Features</code>: 功能模块</li>
+<li><code>./Sources/Common</code>: 共享组件</li>
+</ul>
+<h3 id="忽略目录">忽略目录</h3>
+<ul>
+<li><code>./Pods</code>: CocoaPods 依赖</li>
+<li><code>./Build</code>: 构建输出</li>
+<li><code>./Tests</code>: 测试代码（不需要本地化）</li>
+</ul>
+<p><strong>3. 性能优化</strong></p>
+<p>对于超大型项目（&gt;10,000 文件）：</p>
+<ul>
+<li>尽可能精确地指定筛选目录</li>
+<li>积极使用忽略目录排除大型第三方库</li>
+<li>考虑分批处理不同的模块</li>
+</ul>
+<p><strong>4. 团队协作</strong></p>
+<ul>
+<li>将目录配置纳入版本控制（如果 TransX 支持导出配置）</li>
+<li>确保团队成员使用一致的目录配置</li>
+<li>在代码审查时，检查新增目录是否需要配置到 TransX</li>
+</ul>
+<h3 id="故障排查">故障排查</h3>
+<p><strong>问题1：扫描速度很慢</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>筛选目录过于宽泛，包含了大量不相关的文件</li>
+<li>没有忽略第三方依赖目录</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>缩小筛选目录范围，只包含必要的代码目录</li>
+<li>添加 Pods、Carthage 等大型目录到忽略列表</li>
+<li>检查忽略目录路径是否正确</li>
+<li>查看 TransX 日志，确认哪些目录正在被扫描</li>
+</ol>
+<p><strong>问题2：找不到某些本地化调用</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>包含该代码的目录没有添加到筛选目录</li>
+<li>该目录被错误地添加到了忽略列表</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>检查该代码文件所在的目录是否在筛选目录中</li>
+<li>确认该目录没有被忽略</li>
+<li>验证目录路径的正确性（大小写、拼写）</li>
+</ol>
+<h2 id="strings-文件目录">.strings 文件目录</h2>
+<p><img src="./imgs/img54.png" /></p>
+<p>.strings 文件目录配置用于定义 TransX 应该在哪些位置搜索 .strings
+文件。</p>
+<h3 id="搜索目录search-directories">搜索目录（Search Directories）</h3>
+<p>搜索目录定义了 TransX 应该扫描哪些目录来查找 .strings 文件。</p>
+<p><strong>配置规则：</strong></p>
+<ol type="1">
+<li><p><strong>未选择任何目录</strong>：</p>
+<ul>
+<li>TransX 将默认搜索整个项目根目录</li>
+<li>扫描所有子目录中的 .strings 文件</li>
+<li>适合小型项目或初次配置</li>
+</ul></li>
+<li><p><strong>选择一个或多个目录</strong>：</p>
+<ul>
+<li>TransX 仅在指定的目录及其子目录中搜索</li>
+<li>提升搜索效率，特别是在大型项目中</li>
+<li>推荐方式</li>
+</ul></li>
+</ol>
+<h3 id="忽略目录exclude-directories-1">忽略目录（Exclude
+Directories）</h3>
+<p>忽略目录定义了在搜索 .strings 文件时应该跳过的目录。</p>
+<p><strong>应该忽略的目录类型：</strong></p>
+<ol type="1">
+<li><p><strong>构建产物目录</strong>：</p>
+<pre><code>/ProjectRoot/Build
+/ProjectRoot/DerivedData</code></pre></li>
+<li><p><strong>第三方依赖的本地化文件</strong>（如果不需要管理）：</p>
+<pre><code>/ProjectRoot/Pods
+/ProjectRoot/Carthage</code></pre></li>
+<li><p><strong>备份和临时目录</strong>：</p>
+<pre><code>/ProjectRoot/Backup
+/ProjectRoot/Temp</code></pre></li>
+</ol>
+<h3 id="配置原则-1">配置原则</h3>
+<p><strong>1. 组织结构清晰</strong></p>
+<p>推荐的项目结构：</p>
+<p>``` ProjectRoot/ ├── App/ │ ├── en.lproj/ │ │ └── Localizable.strings
+│ ├── zh-Hans.lproj/ │ │ └── Localizable.strings │ └── Sources/ ├──
+Features/ │ ├── UserProfile/ │ │ └── Localizations/ │ │ ├── en.lproj/ │
+│ └── zh-Hans.lproj/ │ └── Settings/ │ └── Localizations/ └── Pods/ //
+忽略 ```</p>
+<p><strong>2. 遵循 Xcode 规范</strong></p>
+<ul>
+<li>使用标准的 `.lproj` 目录结构</li>
+<li>每种语言有独立的 `.lproj` 目录</li>
+<li>.strings 文件放在对应语言的 `.lproj` 目录中</li>
+</ul>
+<h3 id="最佳实践">最佳实践</h3>
+<p><strong>1. 初始配置建议</strong></p>
+<p>新项目开始时：</p>
+<pre><code>第一步：不配置任何搜索目录
+- 让 TransX 扫描整个项目
+- 查看找到了哪些 .strings 文件
+- 识别出所有本地化文件的位置
+
+第二步：添加精确的搜索目录
+- 根据第一步的结果，配置搜索目录
+- 排除不需要的目录
+
+第三步：验证配置
+- 检查所有需要的 .strings 文件都被找到
+- 确认没有多余的文件被包含</code></pre>
+<p><strong>2. 文档化</strong></p>
+<p>在 README 中说明本地化文件的组织结构。</p>
+<h3 id="注意事项">注意事项</h3>
+<p><strong>1. 配置修改后需要重新扫描</strong></p>
+<p>修改搜索目录或忽略目录配置后：</p>
+<ul>
+<li>TransX 不会自动重新扫描</li>
+<li>需要手动触发"重新搜索 .strings 文件"操作</li>
+<li>建议在修改配置后立即重新扫描，确认配置正确</li>
+</ul>
+<p><strong>2. 路径大小写敏感</strong></p>
+<p>在某些文件系统（如 Linux、某些 macOS
+配置）上，路径是大小写敏感的：</p>
+<pre><code>/ProjectRoot/Localizations  ≠  /ProjectRoot/localizations
+/ProjectRoot/EN.lproj       ≠  /ProjectRoot/en.lproj</code></pre>
+<p>建议使用小写的标准命名：`en.lproj`、`zh-hans.lproj`</p>
+<p><strong>3. 符号链接处理</strong></p>
+<ul>
+<li>确认 TransX 是否支持跟随符号链接</li>
+<li>注意避免循环链接导致的无限扫描</li>
+<li>在忽略目录中排除符号链接的目标（如果不需要）</li>
+</ul>
+<h3 id="故障排查-1">故障排查</h3>
+<p><strong>问题1：找不到某些 .strings 文件</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>文件不在配置的搜索目录中</li>
+<li>文件被忽略目录规则排除</li>
+<li>文件名或路径拼写错误</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>检查文件的实际路径</li>
+<li>验证搜索目录配置是否包含该路径</li>
+<li>检查忽略目录列表，确认文件没有被排除</li>
+<li>尝试临时清空搜索目录配置，让 TransX 扫描整个项目</li>
+</ol>
+<p><strong>问题2：找到了不需要的 .strings 文件</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>搜索目录配置过于宽泛</li>
+<li>忽略目录配置不正确或未生效</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>缩小搜索目录范围</li>
+<li>将不需要的文件所在目录添加到忽略列表</li>
+<li>使用 TransX 的"隐藏文件"功能隐藏这些文件</li>
+</ol>
+<p><strong>问题3：扫描后文件列表没有更新</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>没有触发重新扫描</li>
+<li>TransX 使用了缓存的结果</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>保存配置后，点击"重新搜索"按钮</li>
+<li>重启 TransX 应用</li>
+<li>检查配置是否已保存</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>合理配置代码目录和 .strings 文件目录是高效使用 TransX 的基础：</p>
+<p><strong>代码目录配置的关键点：</strong></p>
+<ul>
+<li>精确指定需要扫描的代码目录</li>
+<li>积极排除第三方库和构建产物</li>
+<li>定期更新配置以适应项目结构变化</li>
+</ul>
+<p><strong>.strings 文件目录配置的关键点：</strong></p>
+<ul>
+<li>遵循 Xcode 的标准目录结构</li>
+<li>集中或模块化组织本地化文件</li>
+<li>排除不需要管理的本地化文件</li>
+</ul>
+<p><strong>通用最佳实践：</strong></p>
+<ul>
+<li>在项目初期就规划好目录结构</li>
+<li>将配置文档化，便于团队协作</li>
+<li>定期审查和优化配置</li>
+<li>在 CI/CD 中集成本地化检查</li>
+</ul>
+<p>通过精心配置文件夹，可以显著提升 TransX
+的性能和准确性，为项目的本地化管理提供坚实的基础。</p>
+
+</article>

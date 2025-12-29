@@ -1,0 +1,363 @@
+<article class="doc-article">
+<h1 id="生成常量">生成常量</h1>
+<p><img src="./imgs/img24.png" /></p>
+<h2 id="功能概述">功能概述</h2>
+<p>生成常量是 TransX
+提供的代码集成辅助功能，能够根据在偏好设置中定义的命名规则，自动为本地化
+Key
+生成符合编程规范的常量标识符。此功能是连接本地化内容与应用代码的重要桥梁，实现了从本地化键值到代码常量的自动化转换。</p>
+<p><strong>核心价值</strong>：</p>
+<ul>
+<li><strong>消除硬编码</strong>：用类型安全的常量替代容易出错的字符串字面量</li>
+<li><strong>编译期检查</strong>：IDE
+可在编译时发现拼写错误，避免运行时才暴露问题</li>
+<li><strong>重构友好</strong>：统一管理常量定义，支持批量修改和 IDE
+智能重构</li>
+<li><strong>代码规范</strong>：统一团队的常量命名风格，提升代码可维护性</li>
+<li><strong>开发效率</strong>：提供代码自动补全和智能提示，减少记忆负担</li>
+</ul>
+<p>生成的常量可直接应用于 Swift、Objective-C
+等项目代码中，是构建健壮本地化架构的基础设施。</p>
+<h2 id="功能价值">功能价值</h2>
+<h3 id="代码质量提升">代码质量提升</h3>
+<p><strong>避免硬编码字符串</strong>：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 不推荐：硬编码字符串，容易拼写错误</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span><span class="st">&quot;com.app.login.button.submit&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 推荐：使用常量，编译期检查</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span>kLoginButtonSubmit<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>类型安全</strong>：</p>
+<ul>
+<li>常量名称在编译时会被检查，拼写错误会立即发现</li>
+<li>硬编码字符串的错误只能在运行时发现</li>
+<li>IDE 可以提供代码自动补全和提示</li>
+</ul>
+<p><strong>重构友好</strong>：</p>
+<ul>
+<li>修改 Key 值时，只需要在一处更新常量定义</li>
+<li>使用搜索和替换功能可以快速更新所有引用</li>
+<li>支持 IDE 的重命名重构功能</li>
+</ul>
+<h3 id="团队协作优化">团队协作优化</h3>
+<p><strong>统一规范</strong>：</p>
+<ul>
+<li>所有开发人员使用相同的常量命名规则</li>
+<li>避免每个人自己定义常量，造成命名混乱</li>
+<li>新成员可以快速理解和使用现有常量</li>
+</ul>
+<p><strong>文档化</strong>：</p>
+<ul>
+<li>常量名称本身就是一种文档</li>
+<li>通过常量名称可以大致了解本地化内容的用途</li>
+<li>减少查找 .strings 文件的需要</li>
+</ul>
+<h2 id="工作原理">工作原理</h2>
+<h3 id="规则配置">规则配置</h3>
+<p>常量生成规则在 <strong>偏好设置 &gt; 常量</strong>
+中进行配置，提供丰富的定制选项：</p>
+<p><strong>1. 前缀配置</strong></p>
+<ul>
+<li>定义常量名称的前缀字符</li>
+<li>常见选项：<code>k</code>、<code>K_</code>、<code>CONST_</code>、<code>STR_</code>等</li>
+<li>也可以不使用前缀</li>
+</ul>
+<p><strong>2. 命名风格</strong></p>
+<ul>
+<li><strong>驼峰命名（camelCase）</strong>：首字母小写，后续单词首字母大写
+<ul>
+<li>示例：<code>kLoginButtonSubmit</code></li>
+</ul></li>
+<li><strong>帕斯卡命名（PascalCase）</strong>：所有单词首字母大写
+<ul>
+<li>示例：<code>KLoginButtonSubmit</code></li>
+</ul></li>
+<li><strong>下划线命名（snake_case）</strong>：全小写，单词间用下划线分隔
+<ul>
+<li>示例：<code>k_login_button_submit</code></li>
+</ul></li>
+<li><strong>大写下划线（UPPER_SNAKE_CASE）</strong>：全大写，单词间用下划线分隔
+<ul>
+<li>示例：<code>K_LOGIN_BUTTON_SUBMIT</code></li>
+</ul></li>
+</ul>
+<p><strong>3. 分隔符处理</strong></p>
+<ul>
+<li>如何处理 Key
+中的点号（<code>.</code>）、下划线（<code>_</code>）、连字符（<code>-</code>）等</li>
+<li>可以选择保留、删除或转换为特定字符</li>
+<li>定义单词边界的识别规则</li>
+</ul>
+<p><strong>4. 路径处理</strong></p>
+<ul>
+<li>是否保留完整的 Key 路径</li>
+<li>是否过滤特定前缀（如 <code>com.company.app.</code>
+只保留后续部分）</li>
+<li>是否过滤特定后缀</li>
+</ul>
+<p><strong>5. 特殊字符处理</strong></p>
+<ul>
+<li>非法字符的替换或删除规则</li>
+<li>数字开头的处理方式</li>
+<li>保留字和关键字的处理策略</li>
+</ul>
+<h3 id="生成逻辑详解">生成逻辑详解</h3>
+<p>以 Key 值 <code>com.app.login.button.submit</code>
+为例，展示不同配置下的生成结果：</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>命名风格</th>
+<th>路径处理</th>
+<th>生成的常量名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>k</code></td>
+<td>驼峰命名</td>
+<td>过滤 com.app</td>
+<td><code>kLoginButtonSubmit</code></td>
+</tr>
+<tr>
+<td><code>K_</code></td>
+<td>下划线命名</td>
+<td>过滤 com.app</td>
+<td><code>K_login_button_submit</code></td>
+</tr>
+<tr>
+<td><code>CONST_</code></td>
+<td>大写下划线</td>
+<td>过滤 com.app</td>
+<td><code>CONST_LOGIN_BUTTON_SUBMIT</code></td>
+</tr>
+<tr>
+<td>无前缀</td>
+<td>帕斯卡命名</td>
+<td>过滤 com.app</td>
+<td><code>LoginButtonSubmit</code></td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>驼峰命名</td>
+<td>保留完整路径</td>
+<td><code>kComAppLoginButtonSubmit</code></td>
+</tr>
+<tr>
+<td><code>STR_</code></td>
+<td>大写下划线</td>
+<td>仅保留最后两段</td>
+<td><code>STR_BUTTON_SUBMIT</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>转换过程示例</strong>：</p>
+<p>原始 Key：<code>com.app.login.button.submit</code></p>
+<ol type="1">
+<li><strong>路径过滤</strong>：过滤前缀 <code>com.app.</code> →
+<code>login.button.submit</code></li>
+<li><strong>分隔符处理</strong>：将 <code>.</code> 作为单词分隔符 →
+<code>[login, button, submit]</code></li>
+<li><strong>应用命名风格</strong>：驼峰命名 →
+<code>[Login, Button, Submit]</code></li>
+<li><strong>添加前缀</strong>：添加 <code>k</code> →
+<code>kLoginButtonSubmit</code></li>
+</ol>
+<h3 id="自动更新机制">自动更新机制</h3>
+<p><strong>实时生成选项</strong>：</p>
+<ul>
+<li>在"偏好设置 &gt; 常量"中可以启用"自动生成常量"选项</li>
+<li>创建新条目时，系统会自动根据 Key 值生成常量</li>
+<li>修改 Key 值时，如果启用了自动更新，常量会自动重新生成</li>
+</ul>
+<p><strong>手动生成控制</strong>：</p>
+<ul>
+<li>也可以关闭自动生成，仅在需要时手动触发</li>
+<li>对于已有常量，可以选择是否覆盖更新</li>
+<li>提供批量重新生成功能，用于更新所有条目的常量</li>
+</ul>
+<p><strong>冲突处理</strong>：</p>
+<ul>
+<li>如果不同 Key 生成了相同的常量名，系统会提示警告</li>
+<li>可以通过调整配置规则来避免冲突</li>
+<li>或者为冲突的常量手动指定唯一名称</li>
+</ul>
+<h2 id="操作步骤">操作步骤</h2>
+<h3 id="为单个条目生成常量">为单个条目生成常量</h3>
+<ol type="1">
+<li>在内容列表中选中需要生成常量的条目</li>
+<li>右键点击选中的条目</li>
+<li>选择"生成常量"菜单项</li>
+<li>系统会根据当前的规则配置自动生成常量</li>
+<li>生成的常量会立即显示在常量列中（如果常量列可见）</li>
+<li>条目会被标记为已修改状态</li>
+</ol>
+<h3 id="批量生成常量">批量生成常量</h3>
+<ol type="1">
+<li>选中多个需要生成常量的条目（使用 <code>Command</code> 或
+<code>Shift</code> 键多选）</li>
+<li>右键点击选中区域</li>
+<li>选择"生成常量"</li>
+<li>所有选中的条目都会按照相同规则生成常量</li>
+</ol>
+<h3 id="为所有条目生成常量">为所有条目生成常量</h3>
+<p>如果需要为整个文件或分组生成常量：</p>
+<ol type="1">
+<li>使用 <code>Command + A</code> 全选所有条目</li>
+<li>右键选择"生成常量"</li>
+<li>批量生成完成后保存文件</li>
+</ol>
+<h3 id="重新生成常量">重新生成常量</h3>
+<p>如果修改了常量生成规则，需要更新已有的常量：</p>
+<ol type="1">
+<li>进入“脚本管理”，修改“常量生成”脚本</li>
+<li>返回内容列表，全选需要更新的条目</li>
+<li>执行"生成常量"操作</li>
+<li>旧的常量会被新规则生成的常量覆盖</li>
+</ol>
+<h2 id="使用场景">使用场景</h2>
+<h3 id="场景-1项目初期设置常量规范">场景 1：项目初期设置常量规范</h3>
+<p><strong>背景</strong>： 新项目开始，需要建立统一的常量命名规范。</p>
+<p><strong>操作步骤</strong>：</p>
+<ol type="1">
+<li>在"偏好设置"中配置常量生成规则（如前缀
+<code>k</code>，驼峰命名）</li>
+<li>创建本地化 Key 时，TransX 会自动生成对应的常量</li>
+<li>或在创建完所有 Key 后，全选并批量生成常量</li>
+<li>导出常量列表，生成常量定义文件（如 Swift 的
+<code>Constants.swift</code>）</li>
+</ol>
+<h3 id="场景-2代码中引用本地化字符串">场景
+2：代码中引用本地化字符串</h3>
+<p><strong>背景</strong>： 开发人员需要在代码中使用本地化文本。</p>
+<p><strong>操作步骤</strong>：</p>
+<ol type="1">
+<li>在 TransX 中找到需要的本地化条目</li>
+<li>查看常量列中的常量名称</li>
+<li>在代码中使用该常量：</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Swift 示例</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">buttonTitle</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span>kLoginButtonSubmit<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;登录按钮&quot;</span><span class="op">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 或者使用扩展简化</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">extension</span> String <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">static</span> <span class="kw">let</span> <span class="va">loginButtonSubmit</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span>kLoginButtonSubmit<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">// 使用</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>button<span class="op">.</span>setTitle<span class="op">(.</span>loginButtonSubmit<span class="op">,</span> <span class="cf">for</span><span class="op">:</span> <span class="op">.</span>normal<span class="op">)</span></span></code></pre></div>
+<h3 id="场景-3常量文件自动化生成">场景 3：常量文件自动化生成</h3>
+<p><strong>背景</strong>： 项目较大，需要定期更新常量定义文件。</p>
+<p><strong>工作流程</strong>：</p>
+<ol type="1">
+<li>在 TransX 中维护所有本地化 Key 和常量</li>
+<li>使用导出功能，导出包含常量的列表</li>
+<li>确保常量定义与 .strings 文件始终同步</li>
+</ol>
+<p><strong>脚本示例</strong>（Swift）：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 自动生成的常量文件</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// LocalizationConstants.swift</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">Foundation</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">// MARK: - Login</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">kLoginButtonSubmit</span> <span class="op">=</span> <span class="st">&quot;com.app.login.button.submit&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">kLoginButtonCancel</span> <span class="op">=</span> <span class="st">&quot;com.app.login.button.cancel&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">kLoginErrorMessage</span> <span class="op">=</span> <span class="st">&quot;com.app.login.error.message&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">// MARK: - Profile</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">kProfileTitle</span> <span class="op">=</span> <span class="st">&quot;com.app.profile.title&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">kProfileEditButton</span> <span class="op">=</span> <span class="st">&quot;com.app.profile.button.edit&quot;</span></span></code></pre></div>
+<h3 id="场景-4重构项目的常量命名">场景 4：重构项目的常量命名</h3>
+<p><strong>背景</strong>： 老项目的常量命名不规范，需要统一调整。</p>
+<p><strong>操作步骤</strong>：</p>
+<ol type="1">
+<li>备份当前项目代码和 .strings 文件</li>
+<li>在“脚本管理”内调整“常量生成”脚本的实现</li>
+<li>在 TransX 中全选所有条目，重新生成常量</li>
+<li>导出新旧常量对照表</li>
+<li>测试验证功能正常</li>
+<li>提交代码更改</li>
+</ol>
+<h2 id="与代码集成">与代码集成</h2>
+<h3 id="swift-项目集成">Swift 项目集成</h3>
+<p><strong>常量定义文件</strong>：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// LocalizationKeys.swift</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> LocalizationKeys <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 登录模块</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> Login <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">buttonSubmit</span> <span class="op">=</span> <span class="st">&quot;com.app.login.button.submit&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">buttonCancel</span> <span class="op">=</span> <span class="st">&quot;com.app.login.button.cancel&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">errorInvalidEmail</span> <span class="op">=</span> <span class="st">&quot;com.app.login.error.invalid_email&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 首页模块</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> Home <span class="op">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">title</span> <span class="op">=</span> <span class="st">&quot;com.app.home.title&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">static</span> <span class="kw">let</span> <span class="va">tabProfile</span> <span class="op">=</span> <span class="st">&quot;com.app.home.tab.profile&quot;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><strong>使用示例</strong>：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 在 ViewController 中使用</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">submitButton</span> <span class="op">=</span> UIButton<span class="op">()</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>submitButton<span class="op">.</span>setTitle<span class="op">(</span>LocalizationKeys<span class="op">.</span>Login<span class="op">.</span>buttonSubmit<span class="op">.</span>localized<span class="op">,</span> <span class="cf">for</span><span class="op">:</span> <span class="op">.</span>normal<span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">// String 扩展</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">extension</span> String <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">localized</span><span class="op">:</span> String <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> NSLocalizedString<span class="op">(</span><span class="kw">self</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="objective-c-项目集成">Objective-C 项目集成</h3>
+<p><strong>常量定义头文件</strong>：</p>
+<pre class="objc"><code>// LocalizationConstants.h
+#ifndef LocalizationConstants_h
+#define LocalizationConstants_h
+
+// 登录模块
+#define kLoginButtonSubmit @&quot;com.app.login.button.submit&quot;
+#define kLoginButtonCancel @&quot;com.app.login.button.cancel&quot;
+
+// 首页模块
+#define kHomeTitle @&quot;com.app.home.title&quot;
+
+#endif</code></pre>
+<p><strong>使用示例</strong>：</p>
+<pre class="objc"><code>// 在代码中使用
+NSString *title = NSLocalizedString(kLoginButtonSubmit, @&quot;登录按钮&quot;);
+[button setTitle:title forState:UIControlStateNormal];</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<ol type="1">
+<li><strong>规则一致性</strong>：项目中应统一使用一套常量生成规则，避免混乱</li>
+<li><strong>命名冲突</strong>：注意不同 Key
+生成的常量可能会重复，需要在规则中考虑这种情况</li>
+<li><strong>保留字符</strong>：某些编程语言的保留字不能作为常量名，生成时需要特殊处理</li>
+<li><strong>字符限制</strong>：常量名称应该符合编程语言的标识符规范（如不能以数字开头）</li>
+<li><strong>同步更新</strong>：修改常量生成规则后，记得更新所有已有的常量</li>
+<li><strong>代码引用</strong>：如果代码中已经使用了常量，修改常量名称前要先更新代码引用</li>
+<li><strong>版本控制</strong>：常量定义文件应该纳入版本控制，与 .strings
+文件同步提交</li>
+<li><strong>文档说明</strong>：在项目文档中说明常量的命名规则和使用方法</li>
+<li><strong>多文件项目</strong>：如果项目有多个 .strings
+文件，注意不同文件间的常量不要冲突</li>
+</ol>
+<h2 id="最佳实践">最佳实践</h2>
+<ol type="1">
+<li><strong>模块化组织</strong>：按照应用模块组织常量，使用嵌套结构或前缀分组</li>
+<li><strong>语义化命名</strong>：常量名称应该清晰表达其用途，而不仅仅是
+Key 的转换</li>
+<li><strong>注释说明</strong>：为常量添加注释，说明使用场景和注意事项</li>
+<li><strong>定期审查</strong>：定期审查常量命名是否合理，是否需要调整</li>
+<li><strong>CI/CD 集成</strong>：在持续集成中添加检查，确保常量定义与
+.strings 文件一致</li>
+<li><strong>类型安全封装</strong>：使用枚举或结构体封装常量，利用编译器进行类型检查</li>
+<li><strong>生成即使用</strong>：创建新的本地化条目时立即生成常量，避免遗漏</li>
+<li><strong>工具链支持</strong>：配合 linter
+和代码检查工具，禁止硬编码字符串</li>
+</ol>
+
+</article>

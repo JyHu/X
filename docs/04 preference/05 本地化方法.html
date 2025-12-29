@@ -1,0 +1,262 @@
+<article class="doc-article">
+<h1 id="本地化方法">本地化方法</h1>
+<p><img src="./imgs/img52.png" /></p>
+<p>本地化方法配置是 TransX
+的核心功能之一，用于定义项目中如何调用本地化字符串的函数或宏。通过配置本地化方法，TransX
+能够精确识别代码中的本地化调用，实现智能搜索、自动替换、未本地化字符串检测等高级功能。</p>
+<h2 id="功能概述">功能概述</h2>
+<p>TransX 支持为 Swift 和 Objective-C
+分别配置多个本地化方法，以适应不同的编码风格和框架需求。系统会根据您配置的方法自动生成对应的正则表达式，在代码中精确匹配本地化内容。</p>
+<p><strong>主要功能：</strong></p>
+<ol type="1">
+<li><strong>识别本地化调用</strong>：扫描代码，找出所有本地化方法的调用位置</li>
+<li><strong>提取 Key 和注释</strong>：从本地化调用中提取
+identifier（Key）和 comment（注释）</li>
+<li><strong>查找未本地化字符串</strong>：检测代码中硬编码的字符串，提示需要本地化</li>
+<li><strong>自动替换和重构</strong>：支持 Key
+重命名时自动更新代码中的引用</li>
+<li><strong>支持多种风格</strong>：兼容系统
+API、第三方框架、自定义宏等多种本地化方式</li>
+</ol>
+<h2 id="配置说明">配置说明</h2>
+<h3 id="定义本地化方法">定义本地化方法</h3>
+<p>在配置本地化方法时，使用特殊占位符来表示不同的参数：</p>
+<ul>
+<li><strong><code>#identifier#</code></strong>：表示本地化字符串的
+Key（必需）</li>
+<li><strong><code>#comment#</code></strong>：表示注释信息（可选）</li>
+</ul>
+<p><strong>配置示例：</strong></p>
+<p><strong>Swift 本地化方法：</strong></p>
+<ol type="1">
+<li><p><strong>系统标准方法</strong>：</p>
+<pre><code>NSLocalizedString(#identifier#, comment: #comment#)</code></pre></li>
+<li><p><strong>自定义简化宏</strong>：</p>
+<pre><code>LL(#identifier#, comment: #comment#)
+LL(#identifier#)</code></pre></li>
+<li><p><strong>带 Bundle 参数</strong>：</p>
+<pre><code>NSLocalizedString(#identifier#, bundle: Bundle.main, comment: #comment#)</code></pre></li>
+</ol>
+<p><strong>Objective-C 本地化方法：</strong></p>
+<ol type="1">
+<li><p><strong>系统标准方法</strong>：</p>
+<pre><code>NSLocalizedString(@#identifier#, @#comment#)
+NSLocalizedStringFromTable(@#identifier#, @&quot;TableName&quot;, @#comment#)</code></pre></li>
+<li><p><strong>自定义宏</strong>：</p>
+<pre><code>LL(@#identifier#, @#comment#)
+LL(@#identifier#)</code></pre></li>
+</ol>
+<h3 id="自动生成正则表达式">自动生成正则表达式</h3>
+<p>配置本地化方法后，TransX
+会自动生成对应的正则表达式用于代码扫描。系统会确保：</p>
+<ul>
+<li>正确匹配函数调用语法</li>
+<li>准确捕获 identifier 和 comment 参数</li>
+<li>处理转义字符和字符串边界</li>
+<li>支持参数的可选性</li>
+</ul>
+<p><strong>自动生成示例：</strong></p>
+<p>配置：<code>LL(#identifier#, comment: #comment#)</code></p>
+<p>生成的正则表达式（简化版）：</p>
+<pre class="regex"><code>\bLL\((?&lt;identifier&gt;\w+?|&quot;[\w\.-]+&quot;)(\s*,\s*comment:\s*(?&lt;comment&gt;&quot;.+?&quot;|\w+))?\)</code></pre>
+<p><strong>正则表达式说明：</strong></p>
+<ul>
+<li><code>\bLL\(</code>：匹配函数名 <code>LL(</code></li>
+<li><code>(?&lt;identifier&gt;...)</code>：命名捕获组，捕获 identifier
+参数</li>
+<li><code>(\s*,\s*comment:\s*(?&lt;comment&gt;...))?</code>：可选的
+comment 参数</li>
+<li><code>(?&lt;comment&gt;...)</code>：命名捕获组，捕获 comment
+参数</li>
+</ul>
+<h3 id="命名捕获组规范">命名捕获组规范</h3>
+<p>如果您选择手动调整正则表达式，必须遵循以下命名规范：</p>
+<p><strong>必需的命名捕获组：</strong></p>
+<ol type="1">
+<li><p><strong><code>identifier</code></strong>：捕获本地化 Key 的值</p>
+<pre class="regex"><code>(?&lt;identifier&gt;...)</code></pre></li>
+<li><p><strong><code>comment</code></strong>（如果本地化方法包含 comment
+参数）：捕获注释内容</p>
+<pre class="regex"><code>(?&lt;comment&gt;...)</code></pre></li>
+</ol>
+<p><strong>示例：完整的手动正则表达式</strong></p>
+<p>本地化方法：<code>MyLocalizedString(#identifier#, withComment: #comment#)</code></p>
+<p>手动编写的正则表达式：</p>
+<pre class="regex"><code>\bMyLocalizedString\(\s*(?&lt;identifier&gt;@?&quot;[^&quot;]+&quot;|[a-zA-Z_]\w*)\s*,\s*withComment:\s*(?&lt;comment&gt;@?&quot;[^&quot;]*&quot;|[a-zA-Z_]\w*)\s*\)</code></pre>
+<p><strong>正则说明：</strong></p>
+<ul>
+<li><code>(?&lt;identifier&gt;@?"[^"]+"|[a-zA-Z_]\w*)</code>：匹配字符串字面量或常量名
+<ul>
+<li><code>@?"[^"]+"</code>: Objective-C 字符串字面量（如
+<code>@"key"</code> 或 <code>"key"</code>）</li>
+<li><code>[a-zA-Z_]\w*</code>: 常量名（如 <code>myKey</code>）</li>
+</ul></li>
+<li><code>(?&lt;comment&gt;@?"[^"]*"|[a-zA-Z_]\w*)</code>：匹配注释内容</li>
+</ul>
+<h2 id="常见本地化方法配置">常见本地化方法配置</h2>
+<h3 id="iosmacos-系统-api">iOS/macOS 系统 API</h3>
+<p><strong>Swift：</strong></p>
+<pre><code>NSLocalizedString(#identifier#, comment: #comment#)
+NSLocalizedString(#identifier#, tableName: nil, bundle: Bundle.main, value: &quot;&quot;, comment: #comment#)</code></pre>
+<p><strong>Objective-C：</strong></p>
+<pre><code>NSLocalizedString(@#identifier#, @#comment#)
+NSLocalizedStringFromTable(@#identifier#, @&quot;TableName&quot;, @#comment#)
+NSLocalizedStringFromTableInBundle(@#identifier#, @&quot;TableName&quot;, [NSBundle mainBundle], @#comment#)
+NSLocalizedStringWithDefaultValue(@#identifier#, @&quot;TableName&quot;, [NSBundle mainBundle], @&quot;DefaultValue&quot;, @#comment#)</code></pre>
+<h3 id="自定义宏">自定义宏</h3>
+<p>许多项目会定义自己的本地化宏来简化调用：</p>
+<p><strong>Swift：</strong></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 定义</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">LL</span><span class="op">(</span><span class="va">_</span> <span class="va">key</span><span class="op">:</span> <span class="dt">String</span><span class="op">,</span> <span class="va">comment</span><span class="op">:</span> <span class="dt">String</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">)</span> -&gt; <span class="fu">String</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> NSLocalizedString<span class="op">(</span>key<span class="op">,</span> comment<span class="op">:</span> comment<span class="op">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 配置</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span>#identifier#<span class="op">)</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span>#identifier#<span class="op">,</span> comment<span class="op">:</span> #comment#<span class="op">)</span></span></code></pre></div>
+<p><strong>Objective-C：</strong></p>
+<pre class="objc"><code>// 定义
+#define LL(key) NSLocalizedString(key, @&quot;&quot;)
+#define LL_COMMENT(key, comment) NSLocalizedString(key, comment)
+
+// 配置
+LL(@#identifier#)
+LL_COMMENT(@#identifier#, @#comment#)</code></pre>
+<h2 id="主要本地化方法">主要本地化方法</h2>
+<p>TransX
+允许您为每种语言指定一个"主要的本地化方法"，作为自动本地化未翻译字符串时的默认方法。</p>
+<p><strong>应用场景：</strong></p>
+<p>当 TransX 检测到代码中有硬编码的字符串需要本地化时，会：</p>
+<ol type="1">
+<li>自动生成一个本地化 Key</li>
+<li>在 .strings 文件中创建对应条目</li>
+<li>使用主要本地化方法替换代码中的硬编码字符串</li>
+</ol>
+<p><strong>示例流程：</strong></p>
+<p><strong>检测到的代码：</strong></p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 硬编码字符串</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">title</span> <span class="op">=</span> <span class="st">&quot;Settings&quot;</span></span></code></pre></div>
+<p><strong>配置主要方法为</strong> <code>LL(#identifier#)</code>
+<strong>后，TransX 可以自动：</strong></p>
+<ol type="1">
+<li>生成 Key：<code>"app.settings.title"</code></li>
+<li>添加到 Localizable.strings：
+<pre><code>&quot;app.settings.title&quot; = &quot;Settings&quot;;</code></pre></li>
+<li>替换代码：
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 使用本地化方法</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">title</span> <span class="op">=</span> LL<span class="op">(</span>settingsTitleKey<span class="op">)</span></span></code></pre></div></li>
+</ol>
+<p><strong>最佳实践：</strong></p>
+<ul>
+<li>选择项目中最常用的本地化方法作为主要方法</li>
+<li>确保主要方法在整个项目中都可用（已定义或导入）</li>
+<li>对于 Swift 和 Objective-C 混编项目，分别设置各自的主要方法</li>
+</ul>
+<h2 id="配置多个本地化方法">配置多个本地化方法</h2>
+<p>在实际项目中，可能会同时使用多种本地化方法：</p>
+<p><strong>示例场景：</strong></p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 场景 1：使用系统 API</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text1</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span><span class="st">&quot;key1&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;Description&quot;</span><span class="op">)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 场景 2：使用自定义简化宏</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text2</span> <span class="op">=</span> LL<span class="op">(</span><span class="st">&quot;key2&quot;</span><span class="op">)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 场景 3：使用带 Bundle 的方法（用于 Framework）</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">text3</span> <span class="op">=</span> NSLocalizedString<span class="op">(</span><span class="st">&quot;key3&quot;</span><span class="op">,</span> bundle<span class="op">:</span> MyFramework<span class="op">.</span>bundle<span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>配置方法：</strong></p>
+<p>在 TransX 中为 Swift 添加多个本地化方法配置：</p>
+<ol type="1">
+<li><code>NSLocalizedString(#identifier#, comment: #comment#)</code></li>
+<li><code>LL(#identifier#)</code></li>
+<li><code>LL(#identifier#, comment: #comment#)</code></li>
+<li><code>NSLocalizedString(#identifier#, bundle: Bundle.main, comment: #comment#)</code></li>
+</ol>
+<p>TransX
+会使用所有配置的方法进行代码扫描，确保不遗漏任何本地化调用。</p>
+<h2 id="最佳实践">最佳实践</h2>
+<h3 id="1-统一本地化方法">1. 统一本地化方法</h3>
+<p>在项目初期确定一种或几种本地化方法，并在整个项目中统一使用：</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 推荐：统一使用自定义宏</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;key1&quot;</span><span class="op">)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;key2&quot;</span><span class="op">)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;key3&quot;</span><span class="op">)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 不推荐：混用多种风格</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>NSLocalizedString<span class="op">(</span><span class="st">&quot;key1&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;key2&quot;</span><span class="op">)</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>Localize<span class="op">(</span><span class="st">&quot;key3&quot;</span><span class="op">)</span>  <span class="co">// 第三种方法</span></span></code></pre></div>
+<h3 id="2-使用类型安全的常量">2. 使用类型安全的常量</h3>
+<p>结合常量配置，使用类型安全的 Key：</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 推荐：使用常量</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span>settingsTitleKey<span class="op">)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ⚠️ 可接受：使用字符串字面量</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;app.settings.title&quot;</span><span class="op">)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 不推荐：动态生成 Key</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;app.</span><span class="er">\(</span><span class="st">moduleName).title&quot;</span><span class="op">)</span>  <span class="co">// 无法被 TransX 识别</span></span></code></pre></div>
+<h3 id="3-提供有意义的-comment">3. 提供有意义的 Comment</h3>
+<p>虽然 comment 参数在运行时不起作用，但它对于本地化管理很有价值：</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ✅ 推荐：提供有意义的 comment</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;app.settings.title&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;The title displayed on settings screen&quot;</span><span class="op">)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">// ❌ 不推荐：无意义的 comment</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>LL<span class="op">(</span><span class="st">&quot;app.settings.title&quot;</span><span class="op">,</span> comment<span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Comment 的作用：</strong></p>
+<ul>
+<li>帮助翻译人员理解上下文</li>
+<li>在 .strings 文件中作为注释保存</li>
+<li>使用 genstrings 工具时会自动提取</li>
+<li>便于团队成员理解本地化内容的用途</li>
+</ul>
+<h3 id="4-在项目文档中说明">4. 在项目文档中说明</h3>
+<p>在 README 或开发文档中明确说明：</p>
+<ul>
+<li>项目使用的本地化方法</li>
+<li>如何定义和调用本地化宏</li>
+<li>如何在 TransX 中配置这些方法</li>
+<li>什么时候应该使用本地化，什么时候不需要</li>
+</ul>
+<h2 id="注意事项">注意事项</h2>
+<ul>
+<li><strong>避免动态 Key</strong>：TransX 依赖静态分析，动态生成的 Key
+无法被识别</li>
+<li><strong>正则表达式验证</strong>：手动编写的正则表达式必须包含正确的命名捕获组</li>
+<li><strong>多行调用</strong>：确保正则表达式能够处理跨行的函数调用</li>
+<li><strong>特殊字符转义</strong>：在正则表达式中正确转义特殊字符</li>
+</ul>
+<h2 id="故障排查">故障排查</h2>
+<p><strong>问题：TransX 无法识别本地化调用</strong></p>
+<p><strong>可能原因：</strong></p>
+<ul>
+<li>本地化方法未配置或配置错误</li>
+<li>正则表达式不匹配实际的调用语法</li>
+<li>代码中使用了未配置的本地化方法</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ol type="1">
+<li>检查本地化方法配置是否正确</li>
+<li>使用正则测试工具验证正则表达式</li>
+<li>查看 TransX 日志，确认错误信息</li>
+<li>尝试添加更多本地化方法配置</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>本地化方法配置是 TransX
+正确识别和管理项目本地化内容的基础。通过合理配置：</p>
+<ul>
+<li><strong>提升识别准确性</strong>：精确匹配代码中的本地化调用</li>
+<li><strong>支持多种风格</strong>：兼容不同的本地化方法和框架</li>
+<li><strong>自动化处理</strong>：支持自动查找、替换、重构等功能</li>
+<li><strong>灵活扩展</strong>：可以随时添加新的本地化方法配置</li>
+</ul>
+<p>建议在项目开始时就明确本地化方法，并在 TransX
+中正确配置，确保整个开发周期中本地化管理的顺畅进行。</p>
+
+</article>

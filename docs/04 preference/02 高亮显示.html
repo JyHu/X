@@ -1,0 +1,222 @@
+<article class="doc-article">
+<h1 id="高亮显示">高亮显示</h1>
+<p><img src="./imgs/img49.png" /></p>
+<p>高亮显示功能用于在本地化文件的内容区中以视觉化方式标识特定的文本模式，帮助开发者快速识别和区分不同类型的内容。通过自定义高亮规则，您可以让重要的格式化信息、占位符、特殊标记等内容更加醒目，提升开发效率和内容管理的准确性。</p>
+<h2 id="功能概述">功能概述</h2>
+<p>高亮显示模式允许您：</p>
+<ul>
+<li><strong>创建自定义规则</strong>：根据项目需求定义任意数量的高亮规则</li>
+<li><strong>正则表达式匹配</strong>：使用强大的正则表达式精确匹配需要高亮的内容</li>
+<li><strong>视觉区分</strong>：为不同类型的内容设置不同的颜色和样式</li>
+<li><strong>灵活控制</strong>：可随时启用或禁用特定的高亮规则</li>
+<li><strong>提升可读性</strong>：在内容列表中直观地看到哪些字符串包含特定模式</li>
+</ul>
+<h2 id="应用场景">应用场景</h2>
+<p><strong>1. 占位符高亮</strong></p>
+<p>在本地化字符串中，占位符用于表示动态内容的插入位置。高亮占位符可以帮助您：</p>
+<ul>
+<li>快速识别哪些字符串包含动态内容</li>
+<li>检查占位符的格式是否正确</li>
+<li>确保翻译时保留了所有占位符</li>
+</ul>
+<p>常见占位符格式：</p>
+<pre><code>// iOS/macOS 格式化字符串
+&quot;Welcome, %@!&quot; = &quot;欢迎，%@！&quot;;
+&quot;You have %d messages&quot; = &quot;您有 %d 条消息&quot;;
+&quot;Progress: %.2f%%&quot; = &quot;进度：%.2f%%&quot;;
+
+// 自定义占位符
+&quot;Hello, {username}!&quot; = &quot;你好，{username}！&quot;;
+&quot;Count: {{count}}&quot; = &quot;数量：{{count}}&quot;;</code></pre>
+<p><strong>2. 格式标记高亮</strong></p>
+<p>高亮 HTML、Markdown 或自定义的格式标记：</p>
+<pre><code>// HTML 标签
+&quot;&lt;b&gt;Bold text&lt;/b&gt;&quot; = &quot;&lt;b&gt;粗体文本&lt;/b&gt;&quot;;
+&quot;Click &lt;a href=&#39;...&#39;&gt;here&lt;/a&gt;&quot; = &quot;点击&lt;a href=&#39;...&#39;&gt;这里&lt;/a&gt;&quot;;
+
+// Markdown 语法
+&quot;**Important**: Read this&quot; = &quot;**重要**：请阅读&quot;;
+&quot;Visit [our site](url)&quot; = &quot;访问[我们的网站](url)&quot;;</code></pre>
+<p><strong>3. 特殊字符高亮</strong></p>
+<p>标识需要特别注意的特殊字符：</p>
+<pre><code>// 转义字符
+&quot;Line 1\nLine 2&quot; = &quot;第一行\n第二行&quot;;
+&quot;Tab\tseparated&quot; = &quot;制表符\t分隔&quot;;
+
+// 特殊符号
+&quot;Price: $10.99&quot; = &quot;价格：$10.99&quot;;
+&quot;Ratio: 16:9&quot; = &quot;比例：16:9&quot;;</code></pre>
+<p><strong>4. 变量和常量标记</strong></p>
+<p>在某些框架中，使用特定语法表示变量：</p>
+<pre><code>// Angular i18n
+&quot;Hello {{name}}&quot; = &quot;你好 {{name}}&quot;;
+
+// Vue i18n
+&quot;Total: {count} items&quot; = &quot;总计：{count} 项&quot;;
+
+// ICU MessageFormat
+&quot;{count, plural, one {# item} other {# items}}&quot;</code></pre>
+<h2 id="配置说明">配置说明</h2>
+<p><img src="./imgs/img50.png" /></p>
+<p>创建或编辑高亮规则时，您需要配置以下选项：</p>
+<p><strong>1. 规则名称</strong></p>
+<ul>
+<li>为高亮规则指定一个描述性的名称</li>
+<li>建议使用能够说明匹配内容的名称，如"占位符"、"HTML标签"等</li>
+</ul>
+<p><strong>2. 匹配正则表达式</strong></p>
+<ul>
+<li>使用正则表达式语法定义匹配模式</li>
+<li>正则表达式会在每个本地化字符串的值中进行搜索</li>
+<li>支持捕获组、前后断言等高级特性</li>
+</ul>
+<p><strong>3. 显示位置</strong></p>
+<ul>
+<li><strong>前景色</strong>：高亮匹配的文本本身</li>
+<li><strong>背景色</strong>：高亮匹配文本的背景区域</li>
+<li><strong>下划线</strong>：在匹配文本下方添加下划线</li>
+<li><strong>删除线</strong>：在匹配文本上添加删除线（用于标记废弃内容）</li>
+</ul>
+<p><strong>4. 高亮颜色</strong></p>
+<ul>
+<li>选择合适的颜色以区分不同类型的内容</li>
+<li>建议使用对比度较高的颜色，确保在不同主题下都清晰可见</li>
+</ul>
+<p><strong>5. 启用状态</strong></p>
+<ul>
+<li>勾选以启用该高亮规则</li>
+<li>未勾选的规则不会在列表中应用，但配置会被保留</li>
+<li>可以临时禁用某些规则而无需删除配置</li>
+</ul>
+<h2 id="正则表达式示例">正则表达式示例</h2>
+<p><strong>匹配常见占位符格式：</strong></p>
+<ol type="1">
+<li><p><strong>iOS/macOS 格式化字符串</strong>：</p>
+<pre class="regex"><code>%[@dfiuxXocsfeEgGpn]|\%\d+\$[@dfiuxXocsfeEgGpn]</code></pre>
+<p>匹配：<code>%@</code>、<code>%d</code>、<code>%1$@</code>、<code>%2$d</code>
+等</p></li>
+<li><p><strong>自定义花括号占位符</strong>：</p>
+<pre class="regex"><code>\{[a-zA-Z_][a-zA-Z0-9_]*\}</code></pre>
+<p>匹配：<code>{name}</code>、<code>{count}</code>、<code>{user_id}</code>
+等</p></li>
+<li><p><strong>双花括号占位符</strong>：</p>
+<pre class="regex"><code>\{\{[^}]+\}\}</code></pre>
+<p>匹配：<code>{{name}}</code>、<code>{{count}}</code> 等</p></li>
+</ol>
+<p><strong>匹配 HTML 标签：</strong></p>
+<ol type="1">
+<li><p><strong>所有 HTML 标签</strong>：</p>
+<pre class="regex"><code>&lt;[^&gt;]+&gt;</code></pre>
+<p>匹配：<code>&lt;b&gt;</code>、<code>&lt;a href="..."&gt;</code>、<code>&lt;/div&gt;</code>
+等</p></li>
+<li><p><strong>特定标签（如粗体、斜体）</strong>：</p>
+<pre class="regex"><code>&lt;\/?[bi]&gt;</code></pre>
+<p>匹配：<code>&lt;b&gt;</code>、<code>&lt;/b&gt;</code>、<code>&lt;i&gt;</code>、<code>&lt;/i&gt;</code></p></li>
+</ol>
+<p><strong>匹配 Markdown 语法：</strong></p>
+<ol type="1">
+<li><p><strong>粗体和斜体</strong>：</p>
+<pre class="regex"><code>\*\*[^*]+\*\*|\*[^*]+\*|__[^_]+__|_[^_]+_</code></pre>
+<p>匹配：<code>**bold**</code>、<code>*italic*</code>、<code>__bold__</code>、<code>_italic_</code></p></li>
+<li><p><strong>链接语法</strong>：</p>
+<pre class="regex"><code>\[([^\]]+)\]\([^\)]+\)</code></pre>
+<p>匹配：<code>[text](url)</code></p></li>
+</ol>
+<p><strong>匹配转义字符：</strong></p>
+<pre class="regex"><code>\\[nrtfvb0&#39;&quot;\\]</code></pre>
+<p>匹配：<code>\n</code>、<code>\t</code>、<code>\r</code>、<code>\\</code>
+等</p>
+<h2 id="最佳实践">最佳实践</h2>
+<p><strong>1. 合理使用颜色</strong></p>
+<ul>
+<li>不要使用过多不同的颜色，避免界面过于花哨</li>
+<li>建议使用 3-5 种主要颜色，每种颜色代表一类内容</li>
+<li>选择与编辑器主题协调的颜色</li>
+</ul>
+<p><strong>2. 优先高亮重要内容</strong></p>
+<ul>
+<li>占位符、格式标记等重要内容应使用醒目的颜色</li>
+<li>次要内容可使用较淡的颜色或仅使用下划线</li>
+</ul>
+<p><strong>3. 正则表达式优化</strong></p>
+<ul>
+<li>避免使用过于宽泛的正则表达式，可能导致意外匹配</li>
+<li>测试正则表达式确保其准确性，避免误报或漏报</li>
+<li>对于复杂的匹配需求，可以拆分成多个简单的规则</li>
+</ul>
+<p><strong>4. 定期审查规则</strong></p>
+<ul>
+<li>随着项目演进，定期检查高亮规则是否仍然适用</li>
+<li>移除不再需要的规则，保持配置的简洁性</li>
+</ul>
+<p><strong>5. 团队协作</strong></p>
+<ul>
+<li>在团队中统一高亮规则配置，确保所有成员看到一致的界面</li>
+<li>将高亮规则配置写入项目文档，说明每种颜色的含义</li>
+</ul>
+<p><strong>6. 性能考虑</strong></p>
+<ul>
+<li>如果项目包含大量本地化条目，过多的高亮规则可能影响性能</li>
+<li>如果发现界面卡顿，可以尝试禁用部分规则或简化正则表达式</li>
+</ul>
+<h2 id="示例配置">示例配置</h2>
+<p>以下是一个完整的高亮配置示例：</p>
+<table>
+<thead>
+<tr>
+<th>规则名称</th>
+<th>正则表达式</th>
+<th>显示位置</th>
+<th>颜色</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iOS占位符</td>
+<td><code>%[@dfiuxXocsfeEgGpn]</code></td>
+<td>前景色</td>
+<td>#FF6B6B</td>
+<td>标识iOS格式化占位符</td>
+</tr>
+<tr>
+<td>自定义占位符</td>
+<td><code>\{[a-zA-Z_][a-zA-Z0-9_]*\}</code></td>
+<td>背景色</td>
+<td>#FFD93D</td>
+<td>标识自定义占位符</td>
+</tr>
+<tr>
+<td>HTML标签</td>
+<td><code>&lt;[^&gt;]+&gt;</code></td>
+<td>前景色</td>
+<td>#6BCF7F</td>
+<td>标识HTML格式标记</td>
+</tr>
+<tr>
+<td>转义字符</td>
+<td><code>\\[nrtfvb0'"\\]</code></td>
+<td>下划线</td>
+<td>#A78BFA</td>
+<td>标识转义序列</td>
+</tr>
+<tr>
+<td>废弃标记</td>
+<td><code>\[DEPRECATED\]</code></td>
+<td>删除线</td>
+<td>#9CA3AF</td>
+<td>标识已废弃的内容</td>
+</tr>
+</tbody>
+</table>
+<h2 id="注意事项">注意事项</h2>
+<ul>
+<li>高亮显示仅影响 TransX 界面的视觉呈现，不会修改 .strings
+文件的实际内容</li>
+<li>正则表达式必须是有效的正则表达式，否则该规则会被忽略</li>
+<li>高亮规则按照配置顺序依次应用，后面的规则可能覆盖前面的效果</li>
+<li>如果某个规则的正则表达式性能较差，可能影响界面响应速度</li>
+<li>建议在测试环境中验证高亮规则，确保其按预期工作后再应用到生产项目</li>
+</ul>
+
+</article>

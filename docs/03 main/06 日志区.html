@@ -1,0 +1,101 @@
+<article class="doc-article">
+<h1 id="日志区">日志区</h1>
+<p><img src="./imgs/img43.png" /></p>
+<p>日志区位于主窗口底部，是 TransX
+的操作记录和系统信息输出区域。该区域实时显示应用程序的所有操作日志、警告信息、错误提示和系统事件，为用户提供了透明的操作追踪和问题诊断能力。日志内容支持交互，可以点击链接快速执行相关操作或跳转到对应位置。</p>
+<h2 id="功能概述">功能概述</h2>
+<h3 id="日志类型">日志类型</h3>
+<p>日志区会记录和显示多种类型的信息：</p>
+<p><strong>操作日志：</strong>
+记录用户的所有操作行为，便于追溯和审计</p>
+<ul>
+<li>文案创建、编辑、删除</li>
+<li>文件切换</li>
+<li>导入导出操作</li>
+<li>分组管理</li>
+<li>设置修改</li>
+</ul>
+<p><strong>系统事件：</strong> 记录应用程序内部的关键事件</p>
+<ul>
+<li>应用启动和关闭</li>
+<li>文件加载和保存</li>
+<li>数据同步</li>
+</ul>
+<p><strong>警告信息：</strong> 提示潜在的问题或需要注意的情况</p>
+<ul>
+<li>内容缺失提醒</li>
+<li>格式不规范警告</li>
+<li>占位符不匹配</li>
+<li>未保存的修改</li>
+</ul>
+<p><strong>错误提示：</strong> 显示操作失败或系统异常</p>
+<ul>
+<li>文件读写错误</li>
+<li>网络请求失败</li>
+<li>API 调用异常</li>
+<li>数据验证失败</li>
+<li>脚本执行错误</li>
+</ul>
+<p><strong>翻译日志：</strong> 记录翻译服务的调用和结果</p>
+<ul>
+<li>翻译请求发起</li>
+<li>API 调用状态</li>
+<li>翻译结果返回</li>
+<li>失败原因分析</li>
+</ul>
+<h2 id="日志格式">日志格式</h2>
+<h3 id="标准日志条目">标准日志条目</h3>
+<p>每条日志包含以下信息：</p>
+<p><strong>时间戳：</strong></p>
+<ul>
+<li>精确到毫秒的时间记录</li>
+<li>格式：<code>2025-12-27 14:30:25.123</code></li>
+</ul>
+<p><strong>交互链接：</strong></p>
+<ul>
+<li>相关文件路径（点击打开）</li>
+<li>文案 Key（点击定位）</li>
+<li>错误代码（点击查看文档）</li>
+</ul>
+<h3 id="日志示例">日志示例</h3>
+<pre><code>2025/12/28 10:45:36.210 已切换到文件: /Localization/Resources/Localizable.strings
+2025/12/28 10:46:36.014 使用 zh-Hans 语言内容补齐了 /Localization/Resources/Localizable.strings 中以下缺失的内容：
+- com.auu.localization.about: de
+- com.auu.localization.all: de
+- com.auu.localization.allOtherLangs: ja
+- com.auu.localization.backgroundColor: ja
+2025/12/28 10:46:59.771 删除了本地化字符串：
+com.auu.localization.createNewEntry
+ ├╴ de: Neuen Eintrag erstellen
+ ├╴ en: Create New Entry
+ ├╴ ja: 新しい文言を作成
+ ├╴ zh-Hans: 新建文案
+ └╴ zh-Hant: 新建文案
+com.auu.localization.createString
+ ├╴ de: Neue Lokalisierungszeichenkette
+ ├╴ en: New Localization String
+ ├╴ ja: 新しいローカライズ文字列
+ ├╴ zh-Hans: 新建文案
+ └╴ zh-Hant: 新建文案
+</code></pre>
+<h2 id="交互功能">交互功能</h2>
+<h3 id="点击链接">点击链接</h3>
+<p>日志中的链接都可以点击执行相应操作：</p>
+<p><strong>文件路径链接：</strong></p>
+<ul>
+<li>点击后在 Finder 中打开文件位置</li>
+<li>或在编辑器中打开文件</li>
+<li>支持相对路径和绝对路径</li>
+</ul>
+<p><strong>文案 Key 链接：</strong></p>
+<ul>
+<li>点击后在内容区中定位该文案</li>
+</ul>
+<p><strong>查看详情链接：</strong></p>
+<ul>
+<li>展开显示完整的日志信息</li>
+<li>包括堆栈跟踪（错误日志）</li>
+<li>显示请求/响应数据（网络日志）</li>
+</ul>
+
+</article>

@@ -1,0 +1,331 @@
+<article class="doc-article">
+<h1 id="导出">导出</h1>
+<p><img src="./imgs/img36.png" /></p>
+<h2 id="功能概述">功能概述</h2>
+<p>导出功能允许将本地化条目导出为外部文件格式,便于团队协作、数据备份、翻译外包或生成文档。TransX
+支持将选中的条目或全部内容导出,默认导出格式为
+CSV（逗号分隔值）,该格式可被 Excel、Google Sheets
+等工具直接打开和编辑。</p>
+<h2 id="核心特性">核心特性</h2>
+<h3 id="灵活的导出范围">灵活的导出范围</h3>
+<p><strong>选中内容导出</strong>:</p>
+<ul>
+<li>导出当前选中的一条或多条本地化条目</li>
+<li>支持从搜索结果、筛选结果或暂存区中导出选中内容</li>
+<li>适用于部分内容的分享或审核</li>
+</ul>
+<p><strong>全部内容导出</strong>:</p>
+<ul>
+<li>导出当前文件或分组的所有本地化条目</li>
+<li>生成完整的本地化内容清单</li>
+<li>适用于备份、归档或完整导出</li>
+</ul>
+<h3 id="csv-格式优势">CSV 格式优势</h3>
+<p><strong>通用性强</strong>:</p>
+<ul>
+<li>几乎所有表格工具都支持 CSV 格式</li>
+<li>Excel、Numbers、Google Sheets 可直接打开</li>
+<li>便于使用各种工具进行数据分析</li>
+</ul>
+<p><strong>易于编辑</strong>:</p>
+<ul>
+<li>使用表格工具可视化编辑</li>
+<li>支持批量查找替换</li>
+<li>便于添加审核意见和批注</li>
+</ul>
+<p><strong>便于导入</strong>:</p>
+<ul>
+<li>修改后可重新导入 TransX</li>
+<li>支持与翻译管理平台集成</li>
+<li>便于版本对比和合并</li>
+</ul>
+<h2 id="导出内容结构">导出内容结构</h2>
+<h3 id="标准导出列">标准导出列</h3>
+<p>导出的 CSV 文件通常包含以下列:</p>
+<ol type="1">
+<li><strong>Key</strong>: 本地化条目的唯一标识符</li>
+<li><strong>Constant/常量</strong>: 生成的常量名称（如果有）</li>
+<li><strong>各语言列</strong>: 每种语言对应一列
+<ul>
+<li>中文（简体）</li>
+<li>中文（繁体）</li>
+<li>English</li>
+<li>日本語</li>
+<li>等项目中配置的所有语言</li>
+</ul></li>
+</ol>
+<h3 id="导出示例">导出示例</h3>
+<pre class="csv"><code>Key,Comment,Constant,中文（简体）,English,日本語
+com.app.login.title,登录页标题,LOGIN_TITLE,登录,Login,ログイン
+com.app.button.submit,提交按钮,BUTTON_SUBMIT,提交,Submit,送信
+com.app.error.network,网络错误提示,ERROR_NETWORK,网络连接失败,Network connection failed,ネットワーク接続に失敗しました</code></pre>
+<h2 id="操作步骤">操作步骤</h2>
+<h3 id="导出选中内容">导出选中内容</h3>
+<ol type="1">
+<li><p><strong>选择条目</strong>:</p>
+<ul>
+<li>在内容列表中选中需要导出的条目</li>
+<li>可使用 <code>Command + 点击</code> 多选不连续的条目</li>
+<li>使用 <code>Shift + 点击</code> 选择连续的多条</li>
+<li>使用 <code>Command + A</code> 全选当前视图的所有条目</li>
+</ul></li>
+<li><p><strong>执行导出</strong>:</p>
+<ul>
+<li>在选中的条目上右键点击</li>
+<li>选择"导出选中内容"菜单项</li>
+</ul></li>
+<li><p><strong>选择保存位置</strong>:</p>
+<ul>
+<li>在弹出的保存对话框中选择目标文件夹</li>
+<li>输入文件名</li>
+<li>确认文件格式为 .csv</li>
+</ul></li>
+<li><p><strong>完成导出</strong>:</p>
+<ul>
+<li>点击"保存"按钮</li>
+<li>TransX 生成 CSV 文件</li>
+<li>完成后会显示成功提示</li>
+</ul></li>
+</ol>
+<h3 id="导出全部内容">导出全部内容</h3>
+<ol type="1">
+<li><p><strong>确认导出范围</strong>:</p>
+<ul>
+<li>确认当前在正确的 .strings 文件</li>
+<li>如果应用了筛选,确认是否需要清除筛选</li>
+<li>确定是要导出全部还是当前分组</li>
+</ul></li>
+<li><p><strong>执行导出</strong>:</p>
+<ul>
+<li>在内容列表区域右键点击（不选中任何条目）</li>
+<li>选择"导出全部内容"或"导出"菜单项</li>
+<li>或使用菜单栏的"文件 &gt; 导出"</li>
+</ul></li>
+<li><p><strong>保存文件</strong>:</p>
+<ul>
+<li>选择保存位置和文件名</li>
+<li>点击保存</li>
+</ul></li>
+</ol>
+<h2 id="使用场景">使用场景</h2>
+<h3 id="场景-1-翻译外包">场景 1: 翻译外包</h3>
+<p><strong>背景</strong>:
+公司新增了韩语和西班牙语支持,需要将所有条目发给翻译公司进行翻译。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>清除所有筛选,确保显示全部内容</li>
+<li>导出全部内容为 CSV 文件</li>
+<li>将文件发送给翻译公司</li>
+<li>翻译公司在 Excel 中填写韩语和西班牙语列</li>
+<li>收到译文后,通过导入功能更新到 TransX</li>
+</ol>
+<p><strong>优势</strong>:</p>
+<ul>
+<li>翻译公司无需安装 TransX</li>
+<li>使用熟悉的 Excel 工具</li>
+<li>便于管理翻译进度</li>
+</ul>
+<h3 id="场景-2-内容审核">场景 2: 内容审核</h3>
+<p><strong>背景</strong>:
+产品经理需要审核所有用户可见的文案,确保措辞准确、语气一致。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>筛选出特定分组（如"用户界面"）</li>
+<li>导出筛选结果</li>
+<li>在 Excel 中添加"审核意见"列</li>
+<li>产品经理标注需要修改的地方</li>
+<li>开发人员根据审核意见在 TransX 中修改</li>
+</ol>
+<h3 id="场景-3-术语一致性检查">场景 3: 术语一致性检查</h3>
+<p><strong>背景</strong>:
+需要检查"用户"、"账号"等核心术语的使用是否统一。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>搜索"用户",将结果加入暂存区</li>
+<li>搜索"账号",继续加入暂存区</li>
+<li>导出暂存区内容</li>
+<li>在 Excel 中使用排序、筛选功能分析</li>
+<li>标记不一致的地方</li>
+<li>返回 TransX 修正</li>
+</ol>
+<h3 id="场景-4-版本备份">场景 4: 版本备份</h3>
+<p><strong>背景</strong>: 重大版本发布前,备份当前的本地化内容。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>导出所有 .strings 文件的全部内容</li>
+<li>按文件名和版本号命名（如 <code>Localizable_v2.0.csv</code>）</li>
+<li>保存到版本归档目录</li>
+<li>如果后续需要回退,可以从备份恢复</li>
+</ol>
+<h3 id="场景-5-翻译进度报告">场景 5: 翻译进度报告</h3>
+<p><strong>背景</strong>: 项目经理需要统计各语言的翻译完成度。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>导出全部内容</li>
+<li>在 Excel 中分析:
+<ul>
+<li>统计每种语言的空白单元格数量</li>
+<li>计算翻译完成百分比</li>
+<li>生成进度图表</li>
+</ul></li>
+<li>制作翻译进度报告</li>
+</ol>
+<h3 id="场景-6-跨项目复用">场景 6: 跨项目复用</h3>
+<p><strong>背景</strong>: 新项目需要复用旧项目的部分本地化内容。</p>
+<p><strong>操作流程</strong>:</p>
+<ol type="1">
+<li>在旧项目中筛选可复用的条目（如通用按钮、错误提示）</li>
+<li>导出选中的内容</li>
+<li>在新项目中通过导入功能添加这些条目</li>
+<li>根据需要调整 Key 和内容</li>
+</ol>
+<h2 id="导出后的处理">导出后的处理</h2>
+<h3 id="excel-编辑技巧">Excel 编辑技巧</h3>
+<p><strong>查找重复翻译</strong>:</p>
+<ul>
+<li>使用 Excel 的"条件格式 &gt; 突出显示单元格规则 &gt; 重复值"</li>
+<li>快速识别重复的翻译文本</li>
+<li>检查这些重复是否合理</li>
+</ul>
+<p><strong>翻译进度统计</strong>:</p>
+<ul>
+<li>使用 <code>COUNTBLANK()</code> 函数统计空白单元格</li>
+<li>使用 <code>COUNTA()</code> 函数统计已填充单元格</li>
+<li>计算完成百分比</li>
+</ul>
+<p><strong>术语一致性检查</strong>:</p>
+<ul>
+<li>使用 Excel 的筛选功能</li>
+<li>搜索特定术语</li>
+<li>检查不同上下文中的使用是否一致</li>
+</ul>
+<h3 id="版本对比">版本对比</h3>
+<p><strong>对比两个版本的差异</strong>:</p>
+<ol type="1">
+<li>导出旧版本为 <code>v1.csv</code></li>
+<li>导出新版本为 <code>v2.csv</code></li>
+<li>使用对比工具（如 Beyond Compare、diff 命令）</li>
+<li>识别新增、删除、修改的条目</li>
+</ol>
+<h2 id="注意事项">注意事项</h2>
+<ol type="1">
+<li><strong>编码问题</strong>: 确保 CSV 文件使用 UTF-8
+编码,避免中文乱码</li>
+<li><strong>Excel 打开 CSV</strong>: Excel 可能需要通过"数据 &gt;
+导入文本"正确打开 UTF-8 编码的 CSV</li>
+<li><strong>逗号转义</strong>: 如果翻译内容包含逗号,CSV
+会用引号包裹,导入时注意处理</li>
+<li><strong>换行符处理</strong>: 多行文本在 CSV
+中需要特殊处理,查看时可能显示异常</li>
+<li><strong>筛选状态</strong>:
+导出时注意当前是否应用了筛选,避免遗漏内容</li>
+<li><strong>暂存区导出</strong>:
+从暂存区导出的内容仅限暂存区中的条目</li>
+<li><strong>大文件性能</strong>:
+导出数千条记录可能需要一些时间,请耐心等待</li>
+<li><strong>重新导入</strong>: 如果计划修改后重新导入,确保 Key
+列不要被修改</li>
+<li><strong>备份原文件</strong>: 导出是只读操作,不会修改原始 .strings
+文件</li>
+</ol>
+<h2 id="最佳实践">最佳实践</h2>
+<h3 id="导出前的准备">导出前的准备</h3>
+<ol type="1">
+<li><p><strong>清理数据</strong>:</p>
+<ul>
+<li>检查是否有明显的错误条目</li>
+<li>确认筛选和搜索已清除（除非有意导出部分内容）</li>
+</ul></li>
+<li><p><strong>确认范围</strong>:</p>
+<ul>
+<li>明确导出目的（全部、部分、特定分组）</li>
+<li>检查当前文件和分组是否正确</li>
+</ul></li>
+<li><p><strong>命名规范</strong>:</p>
+<ul>
+<li>使用清晰的文件命名（如
+<code>Localizable_2024-12-27.csv</code>）</li>
+<li>包含版本号、日期等标识信息</li>
+</ul></li>
+</ol>
+<h3 id="导出后的检查">导出后的检查</h3>
+<ol type="1">
+<li><p><strong>打开验证</strong>:</p>
+<ul>
+<li>用 Excel 或其他工具打开导出文件</li>
+<li>检查编码是否正确（无乱码）</li>
+<li>确认列数和行数符合预期</li>
+</ul></li>
+<li><p><strong>抽查内容</strong>:</p>
+<ul>
+<li>随机抽查几条内容</li>
+<li>确认 Key、翻译、注释等都完整</li>
+</ul></li>
+<li><p><strong>文件归档</strong>:</p>
+<ul>
+<li>将导出文件保存到合适的位置</li>
+<li>添加到版本控制系统（如需要）</li>
+</ul></li>
+</ol>
+<h3 id="协作流程">协作流程</h3>
+<p><strong>翻译协作流程</strong>:</p>
+<ol type="1">
+<li>导出待翻译内容</li>
+<li>在文件名或邮件中说明需要翻译的语言列</li>
+<li>提供翻译指南和术语表</li>
+<li>设置截止日期</li>
+<li>收到译文后导入并审核</li>
+</ol>
+<p><strong>审核流程</strong>:</p>
+<ol type="1">
+<li>导出需要审核的内容</li>
+<li>在 Excel 中添加"审核状态"、"意见"等列</li>
+<li>审核人员填写意见</li>
+<li>开发人员根据意见修改</li>
+<li>再次导出验证</li>
+</ol>
+<h2 id="与版本控制的配合">与版本控制的配合</h2>
+<h3 id="git-工作流">Git 工作流</h3>
+<p><strong>场景</strong>: 使用 Git 追踪导出文件的变化</p>
+<p><strong>操作</strong>:</p>
+<ol type="1">
+<li>定期导出本地化内容到固定路径</li>
+<li>将导出文件加入 Git 仓库</li>
+<li>每次更新后重新导出并提交</li>
+<li>通过 Git diff 查看本地化内容的变化历史</li>
+</ol>
+<p><strong>优势</strong>:</p>
+<ul>
+<li>文本格式易于 diff</li>
+<li>便于追踪谁修改了什么</li>
+<li>可以回退到历史版本</li>
+</ul>
+<h3 id="cicd-集成">CI/CD 集成</h3>
+<p><strong>自动化导出</strong>:</p>
+<ul>
+<li>在 CI 流程中自动导出本地化内容</li>
+<li>生成翻译覆盖率报告</li>
+<li>检测缺失翻译并标记 PR</li>
+<li>自动发送待翻译内容给翻译团队</li>
+</ul>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>Q: 导出的 CSV 在 Excel 中打开显示乱码怎么办?</strong><br />
+A: Excel 默认可能不识别 UTF-8 编码。解决方法:</p>
+<ol type="1">
+<li>使用"数据 &gt; 获取数据 &gt; 从文本/CSV"导入</li>
+<li>选择编码为 UTF-8</li>
+<li>或使用 Numbers、Google Sheets 等工具打开</li>
+</ol>
+<p><strong>Q: 导出的文件可以直接修改后导入吗?</strong><br />
+A: 可以,但注意:</p>
+<ul>
+<li>不要修改 Key 列（否则会被识别为新条目）</li>
+<li>保持文件结构和列顺序</li>
+<li>确保编码仍为 UTF-8</li>
+</ul>
+<p><strong>Q: 导出时是否包含回收区的内容?</strong><br />
+A: 通常不包含。回收区内容需要单独导出。</p>
+<p><strong>Q: 如何确保导出的内容是最新的?</strong><br />
+A: 导出前先保存文件,确保所有修改都已写入 .strings 文件。</p>
+
+</article>

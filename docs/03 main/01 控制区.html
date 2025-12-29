@@ -1,0 +1,337 @@
+<article class="doc-article">
+<h1 id="控制区">控制区</h1>
+<p><img src="./imgs/img7.png" /></p>
+<p>控制区位于主窗口左侧，是 TransX
+多语言内容管理的核心导航区域。该区域以树形结构组织和展示项目中的所有本地化资源，提供了强大的分类、筛选和数据统计功能，帮助开发者高效管理
+Xcode 项目中的 <code>.strings</code> 文件内容。</p>
+<h2 id="分组">分组</h2>
+<h3 id="功能概述">功能概述</h3>
+<p>分组功能是 TransX
+提供的多语言文案组织管理机制。在控制区顶部会以列表形式展示所有用户自定义的分组，每个分组项会实时显示该分组下包含的文案条目数量，便于快速评估各模块的本地化工作量。</p>
+<h3 id="使用场景">使用场景</h3>
+<p>在大型 iOS/macOS 项目开发中，<code>.strings</code>
+文件往往包含数百甚至上千条本地化字符串。合理的分组管理能够：</p>
+<ul>
+<li><strong>模块化管理</strong>：按功能模块划分，便于团队协作时明确责任归属</li>
+<li><strong>快速定位</strong>：在需要修改特定功能的文案时，可以快速缩小查找范围</li>
+<li><strong>版本迭代</strong>：新版本功能的文案可以单独分组，便于统一检查和导出</li>
+<li><strong>质量控制</strong>：针对特定分组进行集中审查，确保术语和风格的一致性</li>
+</ul>
+<h3 id="分组示例">分组示例</h3>
+<p>根据不同的项目特点，可以采用多种分组策略：</p>
+<p><strong>按功能模块分组：</strong></p>
+<ul>
+<li>用户认证（登录、注册、密码找回）</li>
+<li>交易系统（下单、支付、订单管理）</li>
+<li>行情数据（K线、深度、实时报价）</li>
+<li>个人中心（资料编辑、安全设置）</li>
+</ul>
+<p><strong>按内容类型分组：</strong></p>
+<ul>
+<li>提示信息（Toast、Alert 提示文本）</li>
+<li>错误信息（网络错误、业务错误、系统错误）</li>
+<li>按钮标签（确认、取消、提交等操作按钮）</li>
+<li>占位文本（TextField placeholder）</li>
+</ul>
+<p><strong>按业务场景分组：</strong></p>
+<ul>
+<li>新手引导</li>
+<li>活动运营</li>
+<li>客服支持</li>
+<li>法律条款</li>
+</ul>
+<h3 id="操作说明">操作说明</h3>
+<ol type="1">
+<li>点击任意分组名称，内容区会自动筛选并显示该分组下的所有文案条目</li>
+<li>分组后的数字标识表示该分组包含的文案总数，帮助评估工作量</li>
+<li>可以在项目设置中创建、编辑或删除分组</li>
+<li>支持将文案在不同分组间移动，便于后期调整组织结构</li>
+</ol>
+<h2 id="筛选">筛选</h2>
+<h3 id="功能概述-1">功能概述</h3>
+<p>筛选功能是 TransX
+的智能内容过滤系统，能够根据文案的不同状态和特征，快速定位需要处理的条目。在
+Xcode
+项目的本地化开发流程中，开发者经常需要处理各种特定场景的文案问题，筛选功能可以大幅提升问题定位和处理效率。</p>
+<h3 id="1-内容缺失">1. 内容缺失</h3>
+<p><strong>功能说明：</strong><br />
+自动检测并显示所有存在内容缺失问题的多语言条目。缺失类型包括：</p>
+<ul>
+<li>某个或多个目标语言的翻译文本为空</li>
+<li>启用常量模式后，缺少对应的常量定义</li>
+<li>部分语言的文案被意外删除</li>
+</ul>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>提交前检查</strong>：在将代码推送到仓库前，统一检查是否有遗漏的翻译</li>
+<li><strong>App Store
+提审</strong>：确保所有支持的语言都有完整的本地化内容，避免审核被拒</li>
+<li><strong>质量保证</strong>：防止因内容缺失导致的界面显示异常或崩溃问题</li>
+</ul>
+<p><strong>操作建议：</strong></p>
+<ol type="1">
+<li>在导出 <code>.strings</code> 文件前，先使用此筛选检查一遍</li>
+<li>按语言维度查看缺失情况，优先处理主要市场的语言</li>
+<li>对于暂时无法翻译的内容，可以先使用英文作为 fallback</li>
+</ol>
+<h3 id="2-新建内容">2. 新建内容</h3>
+<p><strong>功能说明：</strong><br />
+显示当前编辑会话中新创建的所有多语言文案条目。一旦用户执行导出操作，这些条目将从"新建内容"状态转为正常状态。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>版本功能跟踪</strong>：在开发新功能时，可以清晰看到本次新增了哪些文案</li>
+<li><strong>文案审核</strong>：产品经理或本地化团队可以集中审查新增的所有文案</li>
+<li><strong>增量导出</strong>：只导出新增的文案条目，避免全量导出造成的文件冲突</li>
+</ul>
+<p><strong>工作流程：</strong></p>
+<ol type="1">
+<li>开发阶段：随着功能开发，实时记录新建的文案条目</li>
+<li>审核阶段：使用此筛选统一查看、编辑新增文案</li>
+<li>导出阶段：确认无误后导出到本地 <code>.strings</code> 文件</li>
+<li>状态重置：导出后，条目从"新建"状态清除</li>
+</ol>
+<h3 id="3-改动内容">3. 改动内容</h3>
+<p><strong>功能说明：</strong><br />
+跟踪并显示在当前使用过程中被修改过的多语言条目。修改包括：</p>
+<ul>
+<li>修改任何语言的翻译文本</li>
+<li>更改 Key 值或常量名</li>
+<li>调整分组归属</li>
+</ul>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>变更追踪</strong>：在多人协作时，了解哪些文案被修改过</li>
+<li><strong>版本对比</strong>：对比不同版本间的文案差异</li>
+<li><strong>回归测试</strong>：修改文案后，需要对相关界面进行回归测试</li>
+<li><strong>提交说明</strong>：生成详细的 commit
+message，记录本次修改的文案范围</li>
+</ul>
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>导出到本地后，改动状态会被清除</li>
+<li>建议在导出前截图或导出改动列表，便于后续追溯</li>
+<li>如果使用 Git 管理，可以配合 diff 工具查看具体变更</li>
+</ul>
+<h3 id="4-未使用的-key">4. 未使用的 Key</h3>
+<p><img src="./imgs/img8.png" /></p>
+<p><strong>功能说明：</strong><br />
+通过扫描项目源代码，检测在代码中未被引用的本地化字符串
+Key。这个功能会分析
+<code>.swift</code>、<code>.m</code>、<code>.mm</code>
+等源代码文件，查找 <code>NSLocalizedString</code>
+或类似的本地化调用。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>代码清理</strong>：删除废弃功能后遗留的无用文案，减少维护成本</li>
+<li><strong>性能优化</strong>：减少 <code>.strings</code> 文件体积，降低
+App 包大小</li>
+<li><strong>质量提升</strong>：避免过时的文案造成混淆</li>
+<li><strong>审计检查</strong>：定期清理无用资源，保持项目整洁</li>
+</ul>
+<p><strong>使用流程：</strong></p>
+<ol type="1">
+<li>点击"未使用的 Key"筛选选项</li>
+<li>在弹出的页面中设置筛选参数</li>
+<li>TransX 会扫描指定的代码目录</li>
+<li>分析结果显示在内容区，标注未被引用的 Key</li>
+<li>人工审核确认（某些 Key 可能通过字符串拼接方式使用）</li>
+<li>批量删除或移至回收站</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<blockquote>
+<p>⚠️ 此筛选结果仅供参考，实际项目中可能存在：</p>
+<ul>
+<li>动态字符串拼接：<code>NSLocalizedString("error_\(code)", comment: "")</code></li>
+<li>OC 运行时调用：通过 <code>performSelector</code> 等方式间接调用</li>
+<li>服务端配置：某些 Key 值由服务端下发</li>
+<li>第三方库引用：被依赖的 framework 使用</li>
+</ul>
+<p>删除前请务必进行人工确认和测试！</p>
+</blockquote>
+<h3 id="5-完全重复">5. 完全重复</h3>
+<p><strong>功能说明：</strong><br />
+智能检测所有多语言条目中，所有语言的翻译文本都完全相同的情况。例如：</p>
+<pre><code>// 条目 A
+Key: &quot;button.submit&quot;
+en: &quot;Submit&quot;
+zh-Hans: &quot;提交&quot;
+
+// 条目 B
+Key: &quot;button.confirm&quot;  
+en: &quot;Submit&quot;
+zh-Hans: &quot;提交&quot;
+
+// 以上两条会被识别为完全重复</code></pre>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>资源优化</strong>：合并重复文案，减少翻译和维护成本</li>
+<li><strong>统一管理</strong>：相同含义的文案使用同一个
+Key，保证一致性</li>
+<li><strong>重构整理</strong>：清理历史遗留的重复定义</li>
+<li><strong>术语统一</strong>：确保同一概念在不同界面使用相同的表述</li>
+</ul>
+<p><strong>操作建议：</strong></p>
+<ol type="1">
+<li>审查重复文案的使用场景，确认是否真的可以合并</li>
+<li>选择保留语义更清晰的 Key 值</li>
+<li>使用"查找引用"功能，确认代码中的使用情况</li>
+<li>在代码中批量替换 Key 值后，再删除多余的条目</li>
+<li>建立命名规范，从源头减少重复创建</li>
+</ol>
+<h3 id="6-关联内容">6. 关联内容</h3>
+<p><strong>功能说明：</strong><br />
+关联内容筛选采用蛛网式算法，以多语言文案为关联节点进行深度查找。只要任意语言的文本内容相同，即被认定为关联项，并通过传递性扩展关联范围。</p>
+<p><strong>算法示例：</strong></p>
+<pre><code>条目 A: en=&quot;hello&quot;     zh-Hans=&quot;你好&quot;
+条目 B: en=&quot;hi&quot;        zh-Hans=&quot;你好&quot;  
+条目 C: en=&quot;hi&quot;        zh-Hans=&quot;嗨&quot;
+条目 D: en=&quot;greeting&quot;  zh-Hans=&quot;嗨&quot;
+
+关联链：
+A ←→ B (通过 zh-Hans 关联)
+B ←→ C (通过 en 关联)
+C ←→ D (通过 zh-Hans 关联)
+
+结果：A、B、C、D 四个条目被识别为一个关联组</code></pre>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li><strong>术语统一</strong>：发现不同 Key 使用了相同的翻译文本</li>
+<li><strong>翻译复用</strong>：为相似条目提供翻译参考</li>
+<li><strong>质量审查</strong>：检查是否存在翻译不一致的情况</li>
+<li><strong>本地化优化</strong>：评估是否可以合并相似的文案条目</li>
+</ul>
+<p><strong>高级选项：</strong></p>
+<ul>
+<li><strong>全语言比对</strong>：检查所有语言的关联关系（默认模式）</li>
+<li><strong>单语言比对</strong>：仅基于某个特定语言（如中文）进行关联分析</li>
+<li><strong>设置阈值</strong>：可以设定最小关联度，过滤弱关联关系</li>
+</ul>
+<p><strong>实际应用案例：</strong><br />
+在一个金融交易应用中，发现以下关联组：</p>
+<pre><code>&quot;trade.buy.button&quot; → &quot;买入&quot;
+&quot;order.buy.action&quot; → &quot;买入&quot;  
+&quot;market.buy.title&quot; → &quot;买入&quot;</code></pre>
+<p>通过关联内容分析，团队决定统一使用 <code>"action.buy"</code> 作为标准
+Key，并在代码中进行重构，最终减少了 30% 的重复文案。</p>
+<h2 id="关联内容详情">关联内容详情</h2>
+<p><img src="./imgs/img9.png" /></p>
+<h3 id="显示条件">显示条件</h3>
+<p>只有在执行"关联内容"筛选后，控制区才会展开显示关联内容详情面板。该面板会列出所有检测到的关联内容组，并提供详细的统计信息和操作选项。</p>
+<h3 id="统计信息">统计信息</h3>
+<p>每个关联内容组会显示该组包含的文案条目总数。</p>
+<h3 id="可视化标记">可视化标记</h3>
+<p><img src="./imgs/img10.png" /></p>
+<p>为了更直观地展示关联关系，TransX
+提供了多种可视化标记方案，可通过左上角菜单访问：</p>
+<h4 id="1-标记所有重复内容">1. 标记所有重复内容</h4>
+<p><strong>选中状态：</strong><br />
+在多语言文案列表中，会将关联组内所有相同的文案条目都进行标记，无论当前是否选中。这样可以一眼看出整个关联网络的全貌，便于全局分析。</p>
+<p><strong>未选中状态：</strong><br />
+仅对当前选中的关联文案组进行标记，方便聚焦于特定条目的关联关系，避免信息过载。</p>
+<p><strong>使用建议：</strong></p>
+<ul>
+<li>初次分析时，开启"标记所有"获取全局视图</li>
+<li>深入分析特定条目时，关闭以聚焦当前项</li>
+</ul>
+<h4 id="2-标记样式">2. 标记样式</h4>
+<p><strong>背景色模式：</strong><br />
+<img src="./imgs/img11.png" /></p>
+<ul>
+<li>为关联组内的条目设置相同的背景颜色</li>
+<li>不同关联组使用不同颜色区分</li>
+<li>适合查看大量数据时的快速识别</li>
+<li>支持自定义颜色方案</li>
+</ul>
+<p><strong>前置标识模式：</strong><br />
+<img src="./imgs/img12.png" /></p>
+<ul>
+<li>在每个条目的 Key 前添加特殊标识符</li>
+<li>相同关联组使用相同颜色</li>
+<li>不影响原有的界面布局</li>
+</ul>
+<p><strong>高亮边框模式：</strong><br />
+<img src="./imgs/img13.png" /></p>
+<ul>
+<li>为关联条目添加彩色边框</li>
+<li>保持内容区域清晰，不遮挡文本</li>
+<li>可以与其他模式组合使用</li>
+</ul>
+<h4 id="3-导出选项">3. 导出选项</h4>
+<p><strong>全部导出：</strong></p>
+<ul>
+<li>导出所有检测到的关联内容组</li>
+<li>生成完整的关联分析报告</li>
+<li>适合团队共享和存档</li>
+</ul>
+<p><strong>导出格式支持：</strong></p>
+<ul>
+<li>CSV (.csv)：便于导入其他工具分析</li>
+<li>Markdown (.md)：生成可读性强的文档报告</li>
+</ul>
+<p><strong>当前组导出：</strong></p>
+<ul>
+<li>仅导出当前选中的关联内容组</li>
+<li>快速生成针对性报告</li>
+<li>适合向特定负责人汇报某个模块的问题</li>
+</ul>
+<p><strong>导出内容示例：</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 关联内容组 #3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## 基本信息</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>条目数量: 5</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>关联度: 85%</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>涉及语言: zh-Hans, en</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## 详细列表</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Key <span class="pp">|</span> en <span class="pp">|</span> zh-Hans <span class="pp">|</span> 分组 <span class="pp">|</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----|----|----|------|</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> error.network.timeout <span class="pp">|</span> Request timeout <span class="pp">|</span> 请求超时 <span class="pp">|</span> 错误信息 <span class="pp">|</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> alert.timeout <span class="pp">|</span> Request timeout <span class="pp">|</span> 请求超时 <span class="pp">|</span> 提示信息 <span class="pp">|</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<h2 id="本地化进度">本地化进度</h2>
+<h3 id="功能概述-2">功能概述</h3>
+<p>本地化进度区域提供了项目整体和各语言维度的翻译完成度统计，帮助项目管理者实时掌握本地化工作进展。</p>
+<h3 id="显示内容">显示内容</h3>
+<p><strong>各语言进度：</strong></p>
+<ul>
+<li>每种支持的语言单独显示一行</li>
+<li>显示格式：<code>语言名称 进度条 已翻译数/总数</code></li>
+<li>示例：<code>简体中文 +++++++--- 856/1024</code></li>
+</ul>
+<h3 id="交互功能">交互功能</h3>
+<p><strong>打开本地文件：</strong></p>
+<ol type="1">
+<li>点击任意语言名称</li>
+<li>系统会在 Finder 中打开对应的 <code>.strings</code> 文件所在目录</li>
+<li>便于直接查看或手动编辑原始文件</li>
+</ol>
+<p><strong>展开/收起：</strong></p>
+<ul>
+<li>点击右上角的箭头图标</li>
+<li>展开：显示所有语言的详细进度</li>
+<li>收起：仅显示整体进度，节省屏幕空间</li>
+</ul>
+<h3 id="使用场景-1">使用场景</h3>
+<p><strong>项目管理：</strong></p>
+<ul>
+<li>每日站会汇报本地化进度</li>
+<li>评估距离发布还需要多少翻译工作</li>
+<li>识别进度落后的语言，分配更多资源</li>
+</ul>
+<p><strong>质量保证：</strong></p>
+<ul>
+<li>确保每个语言都达到 100% 完成度再提审</li>
+<li>对低于阈值的语言进行重点审查</li>
+</ul>
+<p><strong>多语言优先级：</strong></p>
+<ul>
+<li>优先完成主要市场语言（如中文、英文）</li>
+<li>次要市场语言可以分批发布</li>
+</ul>
+<h3 id="计算规则">计算规则</h3>
+<pre><code>单语言完成度 = (已填写内容的条目数 / 该语言总条目数) × 100%
+
+整体完成度 = Σ(各语言完成度) / 支持的语言总数</code></pre>
+
+</article>
