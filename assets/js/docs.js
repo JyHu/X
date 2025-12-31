@@ -3,6 +3,9 @@
  * 负责文档树的渲染和文档内容的加载
  */
 
+// 全局变量：扁平化的文档列表
+var flatDocList = [];
+
 /**
  * 获取基础路径前缀
  * 判断当前页面是否在 /pages/ 目录下，返回相应的相对路径前缀
@@ -24,6 +27,32 @@ function fetchManifest() {
         if (!r.ok) throw new Error('manifest'); 
         return r.json() 
     }) 
+}
+
+/**
+ * 将树形结构扁平化为文档列表
+ * @param {Array} nodes - 树节点数组
+ * @returns {Array} 扁平化的文档列表
+ */
+function flattenTree(nodes) {
+    var result = [];
+    
+    function traverse(nodeList) {
+        nodeList.forEach(function(node) {
+            // 添加当前节点
+            result.push({
+                path: node.path,
+                title: node.title
+            });
+            // 递归处理子节点
+            if (node.children && node.children.length > 0) {
+                traverse(node.children);
+            }
+        });
+    }
+    
+    traverse(nodes);
+    return result;
 }
 
 /**
@@ -61,7 +90,7 @@ function renderTree(nodes, container, onSelect) {
             
             // 创建可点击的名称区域
             var nameSpan = document.createElement('span');
-            nameSpan.textContent = node.name;
+            nameSpan.textContent = node.title;
             nameSpan.dataset.path = node.path;
             nameSpan.className = 'tree-name';
             
@@ -92,7 +121,7 @@ function renderTree(nodes, container, onSelect) {
             var a = document.createElement('a'); 
             a.className = 'tree-file'; 
             a.href = '#'; 
-            a.textContent = node.name; 
+            a.textContent = node.title; 
             a.dataset.path = node.path; 
             a.addEventListener('click', function (e) { 
                 e.preventDefault();
@@ -164,9 +193,51 @@ function rewriteAssets(dir){
         // 点击内部链接时加载对应文档
         a.addEventListener('click',function(e){
             e.preventDefault();
+            setActiveDocLink(target);
             loadDoc(target)
         })
     })
+}
+
+/**
+ * 展开指定路径所在的所有父节点
+ * 确保目标节点在树中可见
+ * @param {string} path - 文档路径
+ */
+function expandParentNodes(path){
+    // 查找包含该路径的所有节点（包括普通文件和带子节点的文件）
+    var allLinks = document.querySelectorAll('.tree-file[data-path]');
+    var allNames = document.querySelectorAll('.tree-name[data-path]');
+    
+    var targetElement = null;
+    
+    // 在普通文件中查找
+    allLinks.forEach(function(l){
+        if(l.dataset.path === path){
+            targetElement = l;
+        }
+    });
+    
+    // 在带子节点的文件中查找
+    if(!targetElement){
+        allNames.forEach(function(s){
+            if(s.dataset.path === path){
+                targetElement = s;
+            }
+        });
+    }
+    
+    // 如果找到目标元素，展开其所有父节点
+    if(targetElement){
+        var current = targetElement.parentElement;
+        while(current){
+            // 如果是折叠的文件夹节点，展开它
+            if(current.classList && current.classList.contains('tree-folder')){
+                current.classList.add('open');
+            }
+            current = current.parentElement;
+        }
+    }
 }
 
 /**
@@ -175,6 +246,9 @@ function rewriteAssets(dir){
  * @param {string} path - 文档路径
  */
 function setActiveDocLink(path){
+    // 先展开父节点
+    expandParentNodes(path);
+    
     var allLinks = document.querySelectorAll('.tree-file');
     var allNames = document.querySelectorAll('.tree-name[data-path]');
     
@@ -207,6 +281,75 @@ function showEmptyState(){
 }
 
 /**
+ * 添加页面导航按钮（上一页/下一页）
+ * @param {string} currentPath - 当前文档路径
+ */
+function addPageNavigation(currentPath) {
+    // 查找当前文档在列表中的索引
+    var currentIndex = -1;
+    for (var i = 0; i < flatDocList.length; i++) {
+        if (flatDocList[i].path === currentPath) {
+            currentIndex = i;
+            break;
+        }
+    }
+    
+    if (currentIndex === -1) return;
+    
+    var prevDoc = currentIndex > 0 ? flatDocList[currentIndex - 1] : null;
+    var nextDoc = currentIndex < flatDocList.length - 1 ? flatDocList[currentIndex + 1] : null;
+    
+    // 创建导航容器
+    var nav = document.createElement('div');
+    nav.className = 'doc-navigation';
+    nav.innerHTML = `
+        <div class="doc-nav-buttons">
+            <button class="doc-nav-btn doc-nav-prev ${!prevDoc ? 'disabled' : ''}" ${!prevDoc ? 'disabled' : ''}>
+                <span class="doc-nav-arrow">←</span>
+                <div class="doc-nav-text">
+                    <div class="doc-nav-label">上一页</div>
+                    ${prevDoc ? '<div class="doc-nav-title">' + prevDoc.title + '</div>' : ''}
+                </div>
+            </button>
+            <button class="doc-nav-btn doc-nav-next ${!nextDoc ? 'disabled' : ''}" ${!nextDoc ? 'disabled' : ''}>
+                <div class="doc-nav-text">
+                    <div class="doc-nav-label">下一页</div>
+                    ${nextDoc ? '<div class="doc-nav-title">' + nextDoc.title + '</div>' : ''}
+                </div>
+                <span class="doc-nav-arrow">→</span>
+            </button>
+        </div>
+    `;
+    
+    // 添加点击事件
+    var prevBtn = nav.querySelector('.doc-nav-prev');
+    var nextBtn = nav.querySelector('.doc-nav-next');
+    
+    if (prevDoc && prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            setActiveDocLink(prevDoc.path);
+            loadDoc(prevDoc.path);
+        });
+    }
+    
+    if (nextDoc && nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            setActiveDocLink(nextDoc.path);
+            loadDoc(nextDoc.path);
+        });
+    }
+    
+    // 将导航添加到文档内容区域
+    var container = document.getElementById('doc-content');
+    var article = container.querySelector('.doc-article');
+    if (article) {
+        article.appendChild(nav);
+    } else {
+        container.appendChild(nav);
+    }
+}
+
+/**
  * 加载并显示文档内容
  * 通过 fetch 从服务器获取 HTML 文档并渲染到页面
  * @param {string} path - 文档路径
@@ -226,6 +369,8 @@ function loadDoc(path) {
         .then(function (html) { 
             c.innerHTML = html; 
             rewriteAssets(dir);  // 修正资源路径
+            setActiveDocLink(path);  // 更新 doc-tree 选中状态
+            addPageNavigation(path);  // 添加页面导航
             window.scrollTo({ top: 0, behavior: 'smooth' })  // 滚动到顶部
         })
         .catch(function () { 
@@ -244,6 +389,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchManifest()
         .then(function (man) { 
             var tree = (man && man.files || []);  // 直接使用树形结构
+            // 扁平化文档列表
+            flatDocList = flattenTree(tree);
             var container = document.getElementById('doc-tree'); 
             // 渲染文档树，并设置选中回调
             renderTree(tree, container, function(p){

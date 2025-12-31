@@ -1,251 +1,211 @@
 {
   "files": [
     {
-      "path": "00 TransX - 概览.html",
+      "path": "00_guide.html",
       "title": "TransX - 概览",
-      "name": "TransX - 概览",
       "type": "file"
     },
     {
-      "path": "01 欢迎页面.html",
+      "path": "01_entrance.html",
       "title": "欢迎页面",
-      "name": "欢迎页面",
       "type": "file"
     },
     {
-      "path": "02 新建项目.html",
+      "path": "02_new_project.html",
       "title": "新建项目",
-      "name": "新建项目",
       "type": "file"
     },
     {
-      "path": "03 主窗口.html",
+      "path": "03_main.html",
       "title": "主窗口",
-      "name": "主窗口",
       "type": "file",
       "children": [
         {
-          "path": "03 main/01 控制区.html",
+          "path": "03_main/01_control.html",
           "title": "控制区",
-          "name": "控制区",
           "type": "file"
         },
         {
-          "path": "03 main/02 导航区.html",
+          "path": "03_main/02_navigation.html",
           "title": "导航区",
-          "name": "导航区",
           "type": "file"
         },
         {
-          "path": "03 main/03 内容区.html",
+          "path": "03_main/03_content.html",
           "title": "内容区",
-          "name": "内容区",
           "type": "file",
           "children": [
             {
-              "path": "03 main/03 content/01 分支管理.html",
+              "path": "03_main/03_content/01_branch.html",
               "title": "分支管理",
-              "name": "分支管理",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/02 搜索与替换.html",
+              "path": "03_main/03_content/02_search_replace.html",
               "title": "搜索与替换",
-              "name": "搜索与替换",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/03 列表显示模式.html",
+              "path": "03_main/03_content/03_list_mode.html",
               "title": "列表显示模式",
-              "name": "列表显示模式",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/04 显示选项.html",
+              "path": "03_main/03_content/04_display.html",
               "title": "显示选项",
-              "name": "显示选项",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/05 补齐多语言文本.html",
+              "path": "03_main/03_content/05_fillup.html",
               "title": "补齐多语言文本",
-              "name": "补齐多语言文本",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/06 生成常量.html",
+              "path": "03_main/03_content/06_build_const.html",
               "title": "生成常量",
-              "name": "生成常量",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/07 拷贝信息.html",
+              "path": "03_main/03_content/07_copy_message.html",
               "title": "拷贝信息",
-              "name": "拷贝信息",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/08 复制到.html",
+              "path": "03_main/03_content/08_dumplicate_to.html",
               "title": "复制到",
-              "name": "复制到",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/09 移动到分组.html",
+              "path": "03_main/03_content/09_move_to_group.html",
               "title": "移动到分组",
-              "name": "移动到分组",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/10 移动到....html",
+              "path": "03_main/03_content/10_move_to_file.html",
               "title": "移动到...",
-              "name": "移动到...",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/11 加入暂存区.html",
+              "path": "03_main/03_content/11_stash.html",
               "title": "加入暂存区",
-              "name": "加入暂存区",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/12 删除.html",
+              "path": "03_main/03_content/12_delete.html",
               "title": "删除",
-              "name": "删除",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/13 反向选择.html",
+              "path": "03_main/03_content/13_reverse_select.html",
               "title": "反向选择",
-              "name": "反向选择",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/14 快速搜索.html",
+              "path": "03_main/03_content/14_qucik_search.html",
               "title": "快速搜索",
-              "name": "快速搜索",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/15 筛选.html",
+              "path": "03_main/03_content/15_filter.html",
               "title": "筛选",
-              "name": "筛选",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/16 跳转.html",
+              "path": "03_main/03_content/16_jump.html",
               "title": "跳转",
-              "name": "跳转",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/17 导出.html",
+              "path": "03_main/03_content/17_export.html",
               "title": "导出",
-              "name": "导出",
               "type": "file"
             },
             {
-              "path": "03 main/03 content/18 返回列表.html",
+              "path": "03_main/03_content/18_back.html",
               "title": "返回列表",
-              "name": "返回列表",
               "type": "file"
             }
           ]
         },
         {
-          "path": "03 main/04 编辑区.html",
+          "path": "03_main/04_editor.html",
           "title": "编辑区",
-          "name": "编辑区",
           "type": "file"
         },
         {
-          "path": "03 main/05 预览区.html",
+          "path": "03_main/05_preview.html",
           "title": "内容浏览区",
-          "name": "预览区",
           "type": "file"
         },
         {
-          "path": "03 main/06 日志区.html",
+          "path": "03_main/06_log.html",
           "title": "日志区",
-          "name": "日志区",
           "type": "file"
         },
         {
-          "path": "03 main/07 Dock栏.html",
+          "path": "03_main/07_dock.html",
           "title": "Dock 栏",
-          "name": "Dock栏",
           "type": "file"
         }
       ]
     },
     {
-      "path": "04 项目配置.html",
+      "path": "04_project_setting.html",
       "title": "项目配置",
-      "name": "项目配置",
       "type": "file",
       "children": [
         {
-          "path": "04 preference/01 通用设置.html",
+          "path": "04_preference/01_common.html",
           "title": "通用设置",
-          "name": "通用设置",
           "type": "file"
         },
         {
-          "path": "04 preference/02 高亮显示.html",
+          "path": "04_preference/02_highlight.html",
           "title": "高亮显示",
-          "name": "高亮显示",
           "type": "file"
         },
         {
-          "path": "04 preference/03 常量.html",
+          "path": "04_preference/03_const.html",
           "title": "常量",
-          "name": "常量",
           "type": "file"
         },
         {
-          "path": "04 preference/05 本地化方法.html",
+          "path": "04_preference/04_localized.html",
           "title": "本地化方法",
-          "name": "本地化方法",
           "type": "file"
         },
         {
-          "path": "04 preference/06 文件夹配置.html",
+          "path": "04_preference/05_folder.html",
           "title": "文件夹配置",
-          "name": "文件夹配置",
           "type": "file"
         }
       ]
     },
     {
-      "path": "05 偏好设置.html",
+      "path": "05_preference.html",
       "title": "偏好设置",
-      "name": "偏好设置",
       "type": "file",
       "children": [
         {
-          "path": "05 setting/01 显示设置.html",
+          "path": "05_setting/01_display.html",
           "title": "显示设置",
-          "name": "显示设置",
           "type": "file"
         },
         {
-          "path": "05 setting/02 列表设置.html",
+          "path": "05_setting/02_list.html",
           "title": "列表设置",
-          "name": "列表设置",
           "type": "file"
         },
         {
-          "path": "05 setting/03 关于 TransX.html",
+          "path": "05_setting/03_about.html",
           "title": "关于 TransX",
-          "name": "关于 TransX",
           "type": "file"
         }
       ]
     },
     {
-      "path": "06 菜单.html",
+      "path": "06_menu.html",
       "title": "菜单",
-      "name": "菜单",
       "type": "file"
     }
   ]

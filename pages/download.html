@@ -53,11 +53,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-content">
-        <div>© 2024 TransX. All rights reserved.</div>
-        <div class="footer-links">
-          <a href="quickstart.html" class="footer-link">快速上手</a>
-          <a href="docs.html" class="footer-link">文档</a>
-        </div>
+        <div>© 2026 TransX. All rights reserved.</div>
       </div>
     </div>
   </footer>
@@ -68,12 +64,15 @@
     const timestamp = new Date().getTime();
     console.log('开始加载配置文件，时间戳:', timestamp);
     
+    // 从GitHub远端获取配置文件
+    const baseUrl = 'https://raw.githubusercontent.com/JyHu/X/assets';
+    
     Promise.all([
-      fetch(`../assets/app_config.json?t=${timestamp}`).then(r => {
+      fetch(`${baseUrl}/app_config.json?t=${timestamp}`).then(r => {
         console.log('app_config响应状态:', r.status);
         return r.json();
       }),
-      fetch(`../assets/update_history.json?t=${timestamp}`).then(r => {
+      fetch(`${baseUrl}/update_history.json?t=${timestamp}`).then(r => {
         console.log('update_history响应状态:', r.status);
         return r.json();
       })
