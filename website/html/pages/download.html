@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下载 - TransX</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-wrap">
+        <a href="../index.html" class="brand"><img src="../assets/logo/logo.png" alt="TransX Logo" style="height: 32px; width: auto;"><span>TransX</span></a>
+        <nav class="nav">
+          <a href="../index.html" class="nav-link">首页</a>
+          <a href="quickstart.html" class="nav-link">快速上手</a>
+          <a href="docs.html" class="nav-link">文档</a>
+          <a href="download.html" class="nav-link active">下载</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-section" style="padding-top:40px">
+    <div class="container">
+      <div style="text-align:center;padding:80px 0 60px;background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(147,51,234,.1));border-radius:16px;margin-bottom:60px">
+        <div style="display:inline-block;background:var(--accent);color:#fff;padding:8px 16px;border-radius:20px;font-size:.875rem;font-weight:600;margin-bottom:24px" id="current-version">最新版本 v2.0.0</div>
+        <h1 style="font-size:2.5rem;margin-bottom:16px;background:linear-gradient(135deg,var(--accent),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="app-title">下载 TransX</h1>
+        <p style="color:var(--text-secondary);font-size:1.125rem;margin-bottom:32px" id="app-slogan">专为 Xcode 项目打造的多语言管理工具</p>
+        <a href="https://apps.apple.com/cn/app/transx/id123456789" id="download-btn" class="btn btn-primary" style="padding:16px 32px;font-size:1.125rem" target="_blank">下载 for macOS</a>
+        <p style="color:var(--text-secondary);font-size:.875rem;margin-top:16px" id="system-requirements">支持 macOS 15.0 及以上版本 · Intel & Apple Silicon</p>
+      </div>
+
+      <h2 style="color:var(--accent);font-size:1.75rem;margin-bottom:24px">项目要求</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:40px;box-shadow:0 2px 8px rgba(0,0,0,.04)">
+        <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;list-style:none;padding:0;color:var(--muted);line-height:2">
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>项目类型：iOS / macOS</span></li>
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>文件格式：.strings</span></li>
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>编码格式：UTF-8 / UTF-16</span></li>
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>项目结构：标准 Xcode 结构</span></li>
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>Xcode：12.0+ (推荐)</span></li>
+          <li style="display:flex;align-items:center;gap:10px"><span style="color:var(--accent);font-size:20px">✓</span><span>Swift：5.0+ (常量生成)</span></li>
+        </ul>
+      </div>
+
+      <h2 style="color:var(--accent);font-size:1.75rem;margin-bottom:24px">更新历史</h2>
+      <div class="update-history" id="update-history">
+        <p style="text-align:center;color:var(--muted)">加载中...</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>© 2026 TransX. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // 加载应用配置（添加时间戳避免缓存）
+    const timestamp = new Date().getTime();
+    console.log('开始加载配置文件，时间戳:', timestamp);
+    
+    // 从GitHub远端获取配置文件
+    const baseUrl = 'https://raw.githubusercontent.com/JyHu/X/assets';
+    
+    Promise.all([
+      fetch(`${baseUrl}/app_config.json?t=${timestamp}`).then(r => {
+        console.log('app_config响应状态:', r.status);
+        return r.json();
+      }),
+      fetch(`${baseUrl}/update_history.json?t=${timestamp}`).then(r => {
+        console.log('update_history响应状态:', r.status);
+        return r.json();
+      })
+    ])
+      .then(([appConfig, historyData]) => {
+        console.log('加载的配置:', appConfig);
+        console.log('加载的历史:', historyData);
+        
+        // 更新应用信息
+        document.getElementById('current-version').textContent = '最新版本 v' + appConfig.currentVersion;
+        document.getElementById('app-title').textContent = '下载 ' + appConfig.name;
+        document.getElementById('app-slogan').textContent = appConfig.slogan;
+        document.getElementById('download-btn').href = appConfig.appStoreUrl;
+        document.getElementById('system-requirements').textContent = 
+          '支持 macOS ' + appConfig.minOSVersion + ' 及以上版本 · Intel & Apple Silicon';
+        
+        console.log('页面内容已更新');
+        
+        // 更新历史列表
+        const container = document.getElementById('update-history');
+        if (historyData.updates && historyData.updates.length > 0) {
+          container.innerHTML = historyData.updates.map((update, index) => `
+            <div class="update-item">
+              <div class="update-header" onclick="toggleUpdate(this)" style="cursor:pointer">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span class="update-toggle">▸</span>
+                  <div class="update-version">v${update.version}</div>
+                </div>
+                <div class="update-date">${update.date}</div>
+              </div>
+              <div class="update-content" style="display:none;margin-top:12px">
+                <ul>
+                  ${update.changes.map(change => `<li>${change}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          `).join('');
+          
+          // 默认展开第一个
+          const firstItem = container.querySelector('.update-item');
+          if (firstItem) {
+            const content = firstItem.querySelector('.update-content');
+            const toggle = firstItem.querySelector('.update-toggle');
+            content.style.display = 'block';
+            toggle.textContent = '▾';
+            firstItem.classList.add('expanded');
+          }
+        } else {
+          container.innerHTML = '<p style="text-align:center;color:var(--muted)">暂无更新历史</p>';
+        }
+      })
+      .catch(err => {
+        console.error('加载配置失败:', err);
+        alert('配置加载失败: ' + err.message + '\n\n请通过HTTP服务器访问此页面，而不是直接双击HTML文件。\n例如: http://localhost:8080/pages/download.html');
+        document.getElementById('update-history').innerHTML = 
+          '<p style="text-align:center;color:#ef4444">配置加载失败 - 请通过HTTP服务器访问</p>';
+      });
+    
+    // 切换更新详情展开/收起
+    function toggleUpdate(header) {
+      const item = header.parentElement;
+      const content = item.querySelector('.update-content');
+      const toggle = item.querySelector('.update-toggle');
+      const isExpanded = content.style.display === 'block';
+      
+      if (isExpanded) {
+        content.style.display = 'none';
+        toggle.textContent = '▸';
+        item.classList.remove('expanded');
+      } else {
+        content.style.display = 'block';
+        toggle.textContent = '▾';
+        item.classList.add('expanded');
+      }
+    }
+  </script>
+</body>
+</html>

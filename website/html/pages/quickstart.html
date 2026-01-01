@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速上手 - TransX</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-wrap">
+        <a href="../index.html" class="brand"><img src="../assets/logo/logo.png" alt="TransX Logo" style="height: 32px; width: auto;"><span>TransX</span></a>
+        <nav class="nav">
+          <a href="../index.html" class="nav-link">首页</a>
+          <a href="quickstart.html" class="nav-link active">快速上手</a>
+          <a href="docs.html" class="nav-link">文档</a>
+          <a href="download.html" class="nav-link">下载</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container-narrow">
+      <div class="section-header">
+        <h1 class="section-title">快速上手</h1>
+        <p class="section-subtitle">5 分钟学会使用 TransX 管理多语言</p>
+      </div>
+
+      <div class="doc-article">
+        <!-- 简介部分 -->
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05)); padding: 24px; border-radius: 12px; margin-bottom: 40px; border-left: 4px solid var(--accent);">
+          <h2 style="margin-top: 0;">TransX 能帮你做什么？</h2>
+          <p style="margin-bottom: 0;">TransX 是专为 Xcode 项目设计的多语言管理工具，让 iOS/macOS 应用的本地化工作变得简单高效。它解决了手动编辑 .strings 文件容易出错、难以维护、缺乏类型安全等问题。</p>
+        </div>
+
+        <!-- 欢迎界面图片 -->
+        <div style="text-align: center; margin-bottom: 48px;">
+          <img src="../docs/imgs/img1.png" alt="TransX 欢迎界面" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border: 1px solid var(--border);">
+          <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">TransX 欢迎界面 - 快速访问最近项目</p>
+        </div>
+
+        <h2 style="text-align: center; color: var(--accent); margin-bottom: 32px;">四步开始使用</h2>
+
+        <!-- 第一步 -->
+        <div class="feature-card" style="margin-bottom: 32px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">1</div>
+            <h3 style="margin: 0; color: var(--accent);">创建项目</h3>
+          </div>
+          <ol style="margin-bottom: 16px;">
+            <li>打开 TransX，点击"新建项目"</li>
+            <li>选择你的 Xcode 项目文件夹</li>
+            <li>（可选）设置搜索目录和忽略规则，排除不需要管理的文件夹（如 Pods）</li>
+            <li>点击"检索"，让 TransX 自动扫描所有 .strings 文件</li>
+          </ol>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="../docs/imgs/img3.png" alt="项目选择界面" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+            <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">项目选择 - 设置搜索和忽略规则</p>
+          </div>
+          <blockquote>
+            <strong>💡 提示：</strong>如果不确定如何设置，保持默认即可，TransX 会扫描整个项目。
+          </blockquote>
+        </div>
+
+        <!-- 第二步 -->
+        <div class="feature-card" style="margin-bottom: 32px; background: var(--alt);">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">2</div>
+            <h3 style="margin: 0; color: var(--accent);">配置参数</h3>
+          </div>
+          <p>设置两个关键参数：</p>
+          <ul style="margin-bottom: 16px;">
+            <li>
+              <strong>基础语言</strong>：选择你的主要开发语言（如"中文"或"英文"）
+              <br><span style="color: var(--muted);">这个语言会作为分组依据和翻译参考</span>
+            </li>
+            <li>
+              <strong>常量模式（推荐开启）</strong>：为每个本地化字符串生成类型安全的常量
+              <br><span style="color: var(--muted);">避免手写字符串 key 时的拼写错误</span>
+            </li>
+          </ul>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="../docs/imgs/img4.png" alt="参数配置界面" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+            <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">参数配置 - 设置基础语言和常量模式</p>
+          </div>
+          <blockquote>
+            <strong>💡 提示：</strong>首次使用建议开启"去除空白字符"和"常量模式"，这能避免很多常见问题。
+          </blockquote>
+        </div>
+
+        <!-- 第三步 -->
+        <div class="feature-card" style="margin-bottom: 32px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">3</div>
+            <h3 style="margin: 0; color: var(--accent);">编辑内容</h3>
+          </div>
+          <p>进入主工作区，界面分为多个区域：</p>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="../docs/imgs/img6.png" alt="主工作区界面" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+            <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">主工作区 - 左侧导航、中间列表、右侧编辑</p>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0;">
+            <div style="background: var(--alt); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent);">
+              <strong style="color: var(--accent);">左侧导航栏</strong>
+              <p style="color: var(--muted); font-size: 14px; margin: 8px 0 0 0;">显示所有 .strings 文件，点击切换</p>
+            </div>
+            <div style="background: var(--alt); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent);">
+              <strong style="color: var(--accent);">中间列表区</strong>
+              <p style="color: var(--muted); font-size: 14px; margin: 8px 0 0 0;">显示所有条目，支持搜索和筛选</p>
+            </div>
+            <div style="background: var(--alt); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent);">
+              <strong style="color: var(--accent);">右侧编辑器</strong>
+              <p style="color: var(--muted); font-size: 14px; margin: 8px 0 0 0;">编辑各语言的内容</p>
+            </div>
+          </div>
+          <p><strong>常用操作：</strong></p>
+          <ul style="margin-bottom: 0;">
+            <li>新建条目：按 <kbd>⌘N</kbd> 或点击工具栏的"新建"按钮</li>
+            <li>编辑内容：选中条目，在右侧编辑器修改</li>
+            <li>查找内容：按 <kbd>⌘F</kbd> 打开搜索框</li>
+            <li>筛选状态：使用工具栏的筛选按钮（缺失翻译、新建、修改等）</li>
+          </ul>
+          <blockquote style="margin-top: 16px;">
+            <strong>💡 提示：</strong>在基础语言文件中使用 <code>// MARK: - 分组名</code> 可以组织条目，让内容更清晰。
+          </blockquote>
+        </div>
+
+        <!-- 第四步 -->
+        <div class="feature-card" style="margin-bottom: 40px; background: var(--alt);">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">4</div>
+            <h3 style="margin: 0; color: var(--accent);">导出保存</h3>
+          </div>
+          <p>编辑完成后<strong style="color: #ef4444;">必须导出</strong>才能生效：</p>
+          <ol style="margin-bottom: 16px;">
+            <li>点击工具栏的"导出到项目"按钮</li>
+            <li>TransX 会将所有修改写回 .strings 文件</li>
+            <li>如果启用了常量模式，还会生成常量代码文件</li>
+            <li>回到 Xcode，刷新项目即可看到更新</li>
+          </ol>
+          <blockquote style="background: rgba(239, 68, 68, 0.1); border-left-color: #ef4444;">
+            <strong>⚠️ 重要：</strong>如果不导出，所有修改只保存在 TransX 中，不会写入项目文件！
+          </blockquote>
+        </div>
+
+        <!-- 实用技巧部分 -->
+        <h2 style="text-align: center; color: var(--accent); margin: 48px 0 32px 0;">实用技巧</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 48px;">
+          <!-- 提高效率 -->
+          <div class="feature-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05));">
+            <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+            <h3 style="color: var(--accent); margin-bottom: 12px;">提高效率</h3>
+            <ul style="color: var(--muted); font-size: 14px; line-height: 1.8;">
+              <li>使用<strong>筛选器</strong>快速找到需要处理的条目</li>
+              <li>选中多个条目后可以<strong>批量操作</strong></li>
+              <li>记住常用<strong>快捷键</strong>：⌘N 新建、⌘S 保存、⌘F 搜索</li>
+            </ul>
+          </div>
+
+          <!-- 避免问题 -->
+          <div class="feature-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(234, 88, 12, 0.05));">
+            <div style="font-size: 32px; margin-bottom: 12px;">🛡️</div>
+            <h3 style="color: #ef4444; margin-bottom: 12px;">避免问题</h3>
+            <ul style="color: var(--muted); font-size: 14px; line-height: 1.8;">
+              <li>定期导出，不要积累太多修改</li>
+              <li>注意 Git 分支切换提醒</li>
+              <li>删除的条目会进入回收站，可恢复</li>
+            </ul>
+          </div>
+
+          <!-- 团队协作 -->
+          <div class="feature-card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(16, 185, 129, 0.05));">
+            <div style="font-size: 32px; margin-bottom: 12px;">👥</div>
+            <h3 style="color: #22c55e; margin-bottom: 12px;">团队协作</h3>
+            <ul style="color: var(--muted); font-size: 14px; line-height: 1.8;">
+              <li>项目配置可提交 Git，自动共享设置</li>
+              <li>使用导出功能（CSV/JSON）协作</li>
+              <li>利用常量模式，代码更易 review</li>
+            </ul>
+          </div>
+
+          <!-- 个性化定制 -->
+          <div class="feature-card" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(236, 72, 153, 0.05));">
+            <div style="font-size: 32px; margin-bottom: 12px;">🎨</div>
+            <h3 style="color: #a855f7; margin-bottom: 12px;">个性化定制</h3>
+            <ul style="color: var(--muted); font-size: 14px; line-height: 1.8;">
+              <li><strong>偏好设置</strong>：调整界面主题、字体大小和列显示</li>
+              <li><strong>项目配置</strong>：为不同项目设置专属的工作环境</li>
+              <li>配置高亮规则让问题条目一目了然</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 下一步部分 -->
+        <div style="background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 32px; text-align: center; margin: 48px 0;">
+          <h2 style="color: var(--accent); margin-bottom: 16px;">🎉 恭喜！你已掌握 TransX 基础</h2>
+          <p style="color: var(--muted); margin-bottom: 24px; font-size: 16px;">现在可以开始管理你的多语言项目了</p>
+          <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <div style="color: var(--muted); font-size: 14px; text-align: left; max-width: 400px;">
+              <p style="margin: 8px 0;">📚 查看<a href="docs.html" style="color: var(--accent); text-decoration: none;">完整文档</a>了解高级功能</p>
+              <p style="margin: 8px 0;">⚙️ 探索项目配置，定制工作流程</p>
+              <p style="margin: 8px 0;">❓ 遇到问题？查看文档或联系支持</p>
+            </div>
+          </div>
+          <div style="margin-top: 32px;">
+            <a href="docs.html" class="btn btn-primary" style="margin-right: 12px;">查看完整文档</a>
+            <a href="download.html" class="btn btn-secondary">下载 TransX</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>© 2026 TransX. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

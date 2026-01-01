@@ -1,0 +1,162 @@
+# TransX Privacy
+
+## 中文
+
+生效日期： [2024-07-21]
+
+感谢您使用TransX。本隐私协议旨在向您说明我们如何处理您的个人信息。
+
+1. 我们收集的信息
+
+我们不会收集或存储任何形式的个人信息。我们的应用程序仅用于处理Xcode项目的本地化语言，不涉及用户的任何个人数据。
+
+2. 信息的使用
+
+由于我们不收集任何个人信息，因此不会使用您的任何个人数据。我们专注于为您提供最佳的本地化语言处理体验。
+
+3. 信息的分享
+
+我们不会与任何第三方分享、出售、出租或交易任何形式的个人信息。
+
+4. 数据安全
+
+尽管我们不会存储您的个人信息，但我们依然重视您的数据安全。我们采取了一系列措施确保您在使用我们应用程序时的安全，包括但不限于：
+
+- 采用最新的加密技术保护应用程序的操作。
+- 定期更新和维护应用程序以防止潜在的安全漏洞。
+
+5. 隐私协议的变更
+
+我们可能会不时更新本隐私协议。我们将在应用程序内发布更新后的协议，并在协议顶部注明生效日期。建议您定期查看隐私协议以了解最新信息。
+
+6. 联系我们
+
+如果您对本隐私协议有任何疑问或建议，请通过以下方式联系我们：
+
+- 电子邮件：aug_88@163.com
+- 官方网站：www.auu.space/X
+
+感谢您使用TransX，我们致力于为您提供最优质的本地化语言处理工具。
+
+TransX团队
+
+
+## English
+
+Effective Date: [2024-07-21]
+
+Thank you for using TransX. This privacy policy is designed to explain how we handle your personal information.
+
+1. Information We Collect
+
+We do not collect or store any form of personal information. Our application is solely used for processing localization languages for Xcode projects and does not involve any user personal data.
+
+2. Use of Information
+
+Since we do not collect any personal information, we do not use any of your personal data. Our focus is on providing you with the best localization language processing experience.
+
+3. Sharing of Information
+
+We do not share, sell, rent, or trade any form of personal information with any third parties.
+
+4. Data Security
+
+Even though we do not store your personal information, we still prioritize your data security. We take a series of measures to ensure your safety while using our application, including but not limited to:
+
+- Utilizing the latest encryption technology to protect the operation of the application.
+- Regularly updating and maintaining the application to prevent potential security vulnerabilities.
+
+5. Changes to the Privacy Policy
+
+We may update this privacy policy from time to time. We will post the updated policy within the application and indicate the effective date at the top of the policy. It is recommended that you review the privacy policy periodically to stay informed of the latest information.
+
+6. Contact Us
+
+If you have any questions or suggestions regarding this privacy policy, please contact us through the following methods:
+
+- Email: aug_88@163.com
+- Official website: www.auu.space/X
+
+Thank you for using TransX. We are dedicated to providing you with the highest quality localization language processing tool.
+
+TransX Team
+
+## Deutsch
+
+Gültigkeitsdatum: [2024-07-21]
+
+Vielen Dank, dass Sie TransX verwenden. Diese Datenschutzrichtlinie soll erklären, wie wir mit Ihren persönlichen Informationen umgehen.
+
+1. Informationen, die wir sammeln
+
+Wir sammeln oder speichern keine persönlichen Informationen. Unsere Anwendung wird ausschließlich zur Verarbeitung von Lokalisierungssprachen für Xcode-Projekte verwendet und betrifft keine persönlichen Daten der Benutzer.
+
+2. Nutzung der Informationen
+
+Da wir keine persönlichen Informationen sammeln, nutzen wir keine Ihrer persönlichen Daten. Unser Fokus liegt darauf, Ihnen die bestmögliche Lokalisierungssprachverarbeitungserfahrung zu bieten.
+
+3. Weitergabe von Informationen
+
+Wir geben keine persönlichen Informationen an Dritte weiter, verkaufen, vermieten oder handeln sie nicht.
+
+4. Datensicherheit
+
+Obwohl wir Ihre persönlichen Informationen nicht speichern, priorisieren wir dennoch Ihre Datensicherheit. Wir ergreifen eine Reihe von Maßnahmen, um Ihre Sicherheit bei der Nutzung unserer Anwendung zu gewährleisten, einschließlich, aber nicht beschränkt auf:
+
+- Nutzung der neuesten Verschlüsselungstechnologie zum Schutz der Anwendung.
+- Regelmäßige Aktualisierung und Wartung der Anwendung, um potenzielle Sicherheitslücken zu verhindern.
+
+5. Änderungen der Datenschutzrichtlinie
+
+Wir können diese Datenschutzrichtlinie von Zeit zu Zeit aktualisieren. Wir werden die aktualisierte Richtlinie innerhalb der Anwendung veröffentlichen und das Gültigkeitsdatum oben in der Richtlinie angeben. Es wird empfohlen, die Datenschutzrichtlinie regelmäßig zu überprüfen, um über die neuesten Informationen informiert zu bleiben.
+
+6. Kontaktieren Sie uns
+
+Wenn Sie Fragen oder Anregungen zu dieser Datenschutzrichtlinie haben, kontaktieren Sie uns bitte auf folgende Weise:
+
+- E-Mail: aug_88@163.com
+- Offizielle Website: www.auu.space/X
+
+Vielen Dank, dass Sie TransX verwenden. Wir sind bestrebt, Ihnen das hochwertigste Lokalisierungssprachverarbeitungstool zur Verfügung zu stellen.
+
+TransX Team
+
+## 日本語
+
+発効日： [2024-07-21]
+
+TransXをご利用いただきありがとうございます。本プライバシーポリシーは、当社がどのようにお客様の個人情報を取り扱うかを説明するものです。
+
+1. 収集する情報
+
+当社は、いかなる形式の個人情報も収集または保存しません。当社のアプリケーションは、Xcodeプロジェクトのローカリゼーション言語の処理のみに使用され、ユーザーの個人データに関与するものではありません。
+
+2. 情報の使用
+
+当社は、個人情報を収集しないため、お客様の個人データを使用することはありません。当社の焦点は、お客様に最良のローカリゼーション言語処理体験を提供することにあります。
+
+3. 情報の共有
+
+当社は、いかなる形式の個人情報も第三者と共有、販売、賃貸、取引することはありません。
+
+4. データのセキュリティ
+
+当社は、お客様の個人情報を保存しないにもかかわらず、お客様のデータセキュリティを重視しています。当社は、お客様が当社のアプリケーションを使用する際の安全を確保するために、以下を含む一連の措置を講じていますが、これに限定されません：
+
+- アプリケーションの操作を保護するために最新の暗号化技術を利用。
+- 潜在的なセキュリティ脆弱性を防ぐためにアプリケーションを定期的に更新および維持。
+
+5. プライバシーポリシーの変更
+
+当社は、このプライバシーポリシーを随時更新することがあります。当社は、アプリケーション内で更新されたポリシーを公開し、ポリシーの上部に発効日を示します。最新情報を把握するために、定期的にプライバシーポリシーを確認することをお勧めします。
+
+6. お問い合わせ
+
+本プライバシーポリシーに関してご質問やご提案がございましたら、以下の方法でお問い合わせください：
+
+- メール：aug_88@163.com
+- 公式ウェブサイト：www.auu.space/X
+
+TransXをご利用いただきありがとうございます。当社は、お客様に最高品質のローカリゼーション言語処理ツールを提供することに尽力しています。
+
+TransXチーム
